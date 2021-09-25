@@ -4,6 +4,9 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Dosis.h</itemPath>
+      <itemPath>VDinamico.h</itemPath>
+      <itemPath>fecha.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -12,6 +15,8 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Dosis.cpp</itemPath>
+      <itemPath>fecha.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -36,6 +41,16 @@
       </toolsSet>
       <compileType>
       </compileType>
+      <item path="Dosis.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Dosis.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="VDinamico.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="fecha.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="fecha.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -59,6 +74,16 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Dosis.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Dosis.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="VDinamico.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="fecha.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="fecha.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
