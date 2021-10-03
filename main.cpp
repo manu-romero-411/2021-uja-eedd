@@ -66,29 +66,47 @@ int main() {
 	}
 
         char espera;
-        for (int i = 0; i < 50; ++i){
-            std::cout << "Dosis " << i << ": ID " << vectorDosis[i].GetId() << endl;
+        for (unsigned i = 0; i < 50; ++i){
+            std::cout << "Dosis " << i << ": ID " << vectorDosis->leer(i).GetId() << endl;
         }
         std::cin >> espera;
         
         vectorDosis.ordenarRev();
         for (int i = 0; i < 50; ++i){
-            std::cout << "Dosis " << i << ": ID " << vectorDosis[i].GetId() << endl;
+            std::cout << "Dosis " << i << ": ID " << vectorDosis.lee(i).GetId() << endl;
         }
         std::cin >> espera;
         
         vectorDosis.ordenar();
         for (int i = 0; i < 50; ++i){
-            std::cout << "Dosis " << i << ": ID " << vectorDosis[i].GetId() << endl;
+            std::cout << "Dosis " << i << ": ID " << vectorDosis.lee(i).GetId() << endl;
         }
         std::cin >> espera;
         
         Dosis dosisBusqueda1(346335905,680,0,24,10,2021);
-        Dosis dosisBusqueda1(346335905,680,0,24,10,2021);
-        Dosis dosisBusqueda1(346335905,680,0,24,10,2021);
-        Dosis dosisBusqueda1(346335905,680,0,24,10,2021);
+        Dosis dosisBusqueda2(346335905,680,0,24,10,2021);
+        Dosis dosisBusqueda3(346335905,680,0,24,10,2021);
+        Dosis dosisBusqueda4(346335905,680,0,24,10,2021);
 
-        int busqueda1 = vectorDosis.busquedaBin()
+        int busqueda1 = vectorDosis.busquedaBin(dosisBusqueda1);
+        if(busqueda1 == -1){
+            std::cout << "No encontrado" << endl;
+        }
+        
+        int busqueda2 = vectorDosis.busquedaBin(dosisBusqueda2);
+        if(busqueda2 == -1){
+            std::cout << "No encontrado" << endl;
+        }
+        
+        int busqueda3 = vectorDosis.busquedaBin(dosisBusqueda3);
+        if(busqueda3 == -1){
+            std::cout << "No encontrado" << endl;
+        }
+        
+        int busqueda4 = vectorDosis.busquedaBin(dosisBusqueda4);
+        if(busqueda4 == -1){
+            std::cout << "No encontrado" << endl;
+        }
 	is.close();
 
 	cout << "Tiempo lectura: " << ((clock() - t_ini) / (float)CLOCKS_PER_SEC) << " segs." << endl;

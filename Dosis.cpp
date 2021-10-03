@@ -57,13 +57,20 @@ int Dosis::GetId() const {
     return id;
 }
 
-template<class T>
-bool Dosis<T>::operator==(Dosis &arr) {
-    if (tam != arr.tam)
-        return false;
-    for (int c = 0; c < tam; c++) {
-        if (mem[c] != arr.mem[c])
-        return false;
+bool Dosis::operator==(Dosis &otra) {
+    //if(otra.GetFabricante() != this->idFabricante) return false;
+    //if(otra.GetFechaFabricacion() != this->fechaFabricacion ) return false;
+    if(otra.GetId() != this->id) return false;
+    //if(otra.GetIdLote() != this->idLote) return false;
     return true;
 }
 
+bool Dosis::operator<(Dosis &otra) {
+    if(otra.GetId() > this->id) return true;
+    else return false;
+}
+
+bool Dosis::operator>(Dosis &otra) {
+    if(otra.GetId() < this->id) return true;
+    else return false;
+}
