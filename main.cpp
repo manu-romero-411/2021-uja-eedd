@@ -34,6 +34,8 @@ int main() {
         VDinamico<Dosis> vectorDosis();
 	clock_t t_ini = clock();
 
+        vectorDosis->insertar(new Dosis(1,1,1,24,03,2020));
+       
 	while (getline(is, palabra)) {
                 
 		corte = palabra.find(';');
@@ -58,28 +60,29 @@ int main() {
 
 		anno = stoi(palabra);
                 Dosis nuevaDosis(id, idLote, fabricante, dia, mes, anno);
-                //vectorDosis.insertar(nuevaDosis);
+                vectorDosis->insertar(nuevaDosis);
 
 		cout << "Dosis: (ID=" << id << "; Lote=" << idLote << "; Fabricante=\"" << fabricante
 		<< "\"; Fecha=" << dia << "/" << mes << "/" << anno << ")" << endl;
 
 	}
-
+ 
         char espera;
         for (unsigned i = 0; i < 50; ++i){
-            std::cout << "Dosis " << i << ": ID " << vectorDosis->leer(i).GetId() << endl;
+            std::cout << "Dosis " << i << ": ID " << vectorDosis->leer()->GetId() << endl;
         }
         std::cin >> espera;
         
+        /*
         vectorDosis.ordenarRev();
         for (int i = 0; i < 50; ++i){
-            std::cout << "Dosis " << i << ": ID " << vectorDosis.lee(i).GetId() << endl;
+            std::cout << "Dosis " << i << ": ID " << vectorDosis.leer(i).GetId() << endl;
         }
         std::cin >> espera;
         
         vectorDosis.ordenar();
         for (int i = 0; i < 50; ++i){
-            std::cout << "Dosis " << i << ": ID " << vectorDosis.lee(i).GetId() << endl;
+            std::cout << "Dosis " << i << ": ID " << vectorDosis.leer(i).GetId() << endl;
         }
         std::cin >> espera;
         
@@ -110,6 +113,5 @@ int main() {
 	is.close();
 
 	cout << "Tiempo lectura: " << ((clock() - t_ini) / (float)CLOCKS_PER_SEC) << " segs." << endl;
-        
-        
+        */
 }

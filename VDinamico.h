@@ -38,7 +38,7 @@ public:
     T borrar( unsigned int pos = UINT_MAX);
     void ordenar();
     void ordenarRev();
-    T leer(unsigned pos);
+    T* leer(unsigned pos);
     int getTamLogico();
     int busquedaBin(T& dato);
     void ampliar();
@@ -109,7 +109,7 @@ template <class T>
     
     template<class T>
     void VDinamico<T>::insertar(const T& dato, unsigned int pos) {
-        if (pos > tamLogico) throw std::out_of_range("[insertar] Posicion no valida");
+        /*if (pos > tamLogico) throw std::out_of_range("[insertar] Posicion no valida");
 
         ampliar();
 
@@ -121,7 +121,8 @@ template <class T>
             }
             v[pos] = dato;
         }
-        tamLogico++;
+        tamLogico++;*/
+        std::cout << "hola" << std::endl;
         
     }
 
@@ -164,7 +165,7 @@ template <class T>
      * @brief Devuelve el dato almacenado en la posición dada por el parámetro.
      */
     template <class T>
-    T VDinamico<T>::leer(unsigned pos){
+    T* VDinamico<T>::leer(unsigned pos){
         return v[pos];
     }
     
