@@ -33,11 +33,11 @@ public:
     VDinamico<T>(const VDinamico<T>& orig);
     VDinamico<T>(const VDinamico<T>& orig, unsigned int desde, unsigned int num);
     VDinamico<T>& operator=(VDinamico<T>& comp);
-    T& operator[](int pos);
+    T& operator[](const int pos) const;
     void insertar(const T& dato, unsigned int pos = UINT_MAX);
     T borrar( unsigned int pos = UINT_MAX);
-    void ordenar();
-    void ordenarRev();
+    void ordenar() const;
+    void ordenarRev() const;
     T* leer(unsigned pos);
     int getTamLogico();
     int busquedaBin(T& dato);
@@ -102,27 +102,29 @@ template <class T>
     }
     
     template<class T>
-    T& VDinamico<T>::operator[](int pos) {
+    T& VDinamico<T>::operator[](const int pos) const{
         if (pos > tamLogico) throw std::out_of_range("[ operator[] ] Posición no valida al usar el operador []");
         return v[pos];
     }
     
     template<class T>
     void VDinamico<T>::insertar(const T& dato, unsigned int pos) {
-        /*if (pos > tamLogico) throw std::out_of_range("[insertar] Posicion no valida");
+        if (pos > tamLogico) throw std::out_of_range("[insertar] Posicion no valida");
 
         ampliar();
 
-        if (pos == UINT_MAX){
+        // INSERTAR AL FINAL (O(1))
+        if ((pos == tamLogico) || (pos == UINT_MAX)){
             v[tamLogico] = dato;
         } else {
+            
+            // INSERTAR AL PRINCIPIO O ENMEDIO (O(n))
             for (unsigned i = tamFisico - 1; i >= pos; --i) {
                 v[i + 1] = v[i];
             }
             v[pos] = dato;
         }
-        tamLogico++;*/
-        std::cout << "hola" << std::endl;
+        tamLogico++;
         
     }
 
@@ -131,31 +133,65 @@ template <class T>
 
         if (pos>tamLogico) throw std::out_of_range("[borrar] Posición no valida");
 
-        if (pos == UINT_MAX){ 
-                return v[--tamLogico];
-            } else{
-                for (unsigned i = pos; i < tamLogico; i++){
-                    v[i] = v[i+1];
-                }
-                tamLogico--;
-                return v[tamLogico];
+        if ((pos == tamLogico) || (pos == UINT_MAX)){
+            return v[--tamLogico];
+        } else {
+            for (unsigned i = pos; i < tamLogico; i++){
+                v[i] = v[i+1];
             }
+            tamLogico--;
+            return v[tamLogico];
+        }
 
         reducir();
     }
     
     template<class T>
-    void VDinamico<T>::ordenar() {
-        std::sort(v, v + tamLogico);
+    void VDinamico<T>::ordenar() const {
+        
+        bool ordenado=false;
+        while (!ordenado){
+            for (int i = 0; i < tamLogico; ++i) {
+                if ((v[i] > v[i + 1]) && ((i - 1 >= 0) && (i + 1 < tamLogico))) {
+                    T tmp = v[i];
+                    v[i] = v[i + 1];
+                    v[i + 1] = tmp;
+                }
+                if ((v[i] < v[i - 1]) && ((i - 1 >= 0) && (i + 1 < tamLogico))) {
+                    T tmp = v[i];
+                    v[i] = v[i - 1];
+                    v[i - 1] = tmp;
+                }
+
+            }
+            bool ord = false;
+            for (int i = 1; i < tamLogico - 1; ++i) {
+                if (v[i] < v[i - 1]) {
+                    ord = false;
+                    break;
+                }
+                if (v[i] > v[i + 1]) {
+                    ord = false;
+                    break;
+                }
+                ord = true;
+            }
+            if (ord) ordenado = true;
+        }
     }
     
     template<class T>
-    void VDinamico<T>::ordenarRev() {
-        std::sort(v, v + tamLogico, std::greater<int>());
+    void VDinamico<T>::ordenarRev() const {
+        ordenar();
+        for(int i = 0, j = tamLogico - 1; i < tamLogico/2; ++i, --j){
+            T auxiliar;
+            auxiliar = this->v[i];
+            this->v[i] = this->v[j];
+            this->v[j] = auxiliar;
+            
+        }
     }
-    
-    
-  
+
     template <class T>
     VDinamico<T>::~VDinamico() {
         delete [] v;
@@ -166,7 +202,7 @@ template <class T>
      */
     template <class T>
     T* VDinamico<T>::leer(unsigned pos){
-        return v[pos];
+        return &v[pos];
     }
     
     template <class T>

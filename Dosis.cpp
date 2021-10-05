@@ -19,7 +19,7 @@ Dosis::Dosis() {
 Dosis::Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno) {
     this->id = id;
     this->idLote = idLote;
-    this->idFabricante = idFabricante;
+    this->fabricante = nombreFabricante(idFabricante);
     this->fechaFabricacion.asignarDia(dia, mes, anno);
     this->fechaCaducidad = this->fechaFabricacion;
     this->fechaCaducidad.anadirMeses(2);
@@ -39,7 +39,7 @@ Fecha Dosis::GetFechaFabricacion() const {
     return fechaFabricacion;
 }
 
-int Dosis::GetFabricante() const{return idFabricante;}
+int Dosis::GetFabricante() const {return fabricante;}
 
 void Dosis::SetIdLote(int idLote) {
     this->idLote = idLote;
@@ -65,12 +65,12 @@ bool Dosis::operator==(Dosis &otra) {
     return true;
 }
 
-bool Dosis::operator<(Dosis &otra) {
+bool Dosis::operator<(const Dosis &otra) const{
     if(otra.GetId() > this->id) return true;
     else return false;
 }
 
-bool Dosis::operator>(Dosis &otra) {
+bool Dosis::operator>(Dosis &otra) const {
     if(otra.GetId() < this->id) return true;
     else return false;
 }
