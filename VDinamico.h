@@ -109,7 +109,7 @@ template <class T>
     
     template<class T>
     void VDinamico<T>::insertar(const T& dato, unsigned int pos) {
-        /*if (pos > tamLogico) throw std::out_of_range("[insertar] Posicion no valida");
+        if (pos > tamLogico) throw std::out_of_range("[insertar] Posicion no valida");
 
         ampliar();
 
@@ -121,7 +121,7 @@ template <class T>
             }
             v[pos] = dato;
         }
-        tamLogico++;*/
+        tamLogico++;
         std::cout << "hola" << std::endl;
         
     }
