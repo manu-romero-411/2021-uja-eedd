@@ -12,6 +12,7 @@
  */
 
 #include "Dosis.h"
+#include <iostream>
 
 Dosis::Dosis() {
 }
@@ -58,11 +59,11 @@ int Dosis::GetId() const {
 }
 
 bool Dosis::operator==(Dosis &otra) {
-    //if(otra.GetFabricante() != this->idFabricante) return false;
-    //if(otra.GetFechaFabricacion() != this->fechaFabricacion ) return false;
-    if(otra.GetId() != this->id) return false;
-    //if(otra.GetIdLote() != this->idLote) return false;
-    return true;
+    if(otra.GetId() != this->GetId()){
+        return false;
+    } else {
+        return true;
+    }
 }
 
 bool Dosis::operator<(const Dosis &otra) const{
@@ -73,4 +74,11 @@ bool Dosis::operator<(const Dosis &otra) const{
 bool Dosis::operator>(Dosis &otra) const {
     if(otra.GetId() < this->id) return true;
     else return false;
+}
+
+void Dosis::imprimir(){
+    std::cout << "Dosis nº "<< id << ": "<<
+                                     "\n* ID lote: " << idLote <<
+                                     "\n* ID Fabricante: " << fabricante <<
+                                     "\n* Fecha de elaboración: " << fechaFabricacion.cadenaDia() << "\n";
 }

@@ -29,10 +29,10 @@ private:
     nombreFabricante fabricante;
     Fecha fechaFabricacion;
     Fecha fechaCaducidad;
-    
+
 public:
     Dosis();
-    Dosis(const Dosis& orig);
+    Dosis(const Dosis &orig);
     Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno);
     virtual ~Dosis();
     void SetFechaFabricacion(Fecha fechaFabricacion);
@@ -45,8 +45,7 @@ public:
     bool operator<(const Dosis &otra) const;
     bool operator>(Dosis &otra) const;
     bool operator==(Dosis &otra);
-
+    void imprimir();
 };
-
 #endif /* DOSIS_H */
 

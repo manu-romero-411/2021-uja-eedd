@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/manuel/Desarrollo/uja4-1/eedd/Dosis.h
+cstdlib
+-
+fecha.h
+/Users/manuel/Desarrollo/uja4-1/eedd/fecha.h
+
+/Users/manuel/Desarrollo/uja4-1/eedd/VDinamico.h
+algorithm
+-
+math.h
+-
+stdexcept
+-
+Dosis.h
+/Users/manuel/Desarrollo/uja4-1/eedd/Dosis.h
+
+/Users/manuel/Desarrollo/uja4-1/eedd/fecha.h
+string
+-
+
+/Users/manuel/Desarrollo/uja4-1/eedd/main.cpp
+iostream
+-
+fstream
+-
+string
+-
+VDinamico.h
+/Users/manuel/Desarrollo/uja4-1/eedd/VDinamico.h
+Dosis.h
+/Users/manuel/Desarrollo/uja4-1/eedd/Dosis.h
+
