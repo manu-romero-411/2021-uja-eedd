@@ -15,25 +15,24 @@
 #define DOSIS_H
 #include <cstdlib>
 #include "fecha.h"
-/*struct fabricante {
-    "Pfizer";
-    "Moderna";
-    "AstraZeneca";
-    "Johnson";
-} std::string;*/
+enum nombreFabricante {
+    Pfizer = 0,
+    Moderna = 1,
+    AstraZeneca = 2,
+    Johnson = 3,
+};
 
 class Dosis {
 private:
     int id;
     int idLote;
-    std::string fabricante[4] = {"Pfizer","Moderna","AstraZeneca","Johnson"};
-    int idFabricante;
+    nombreFabricante fabricante;
     Fecha fechaFabricacion;
     Fecha fechaCaducidad;
-    
+
 public:
     Dosis();
-    Dosis(const Dosis& orig);
+    Dosis(const Dosis &orig);
     Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno);
     virtual ~Dosis();
     void SetFechaFabricacion(Fecha fechaFabricacion);
@@ -43,11 +42,11 @@ public:
     int GetIdLote() const;
     void SetId(int id);
     int GetId() const;
-    bool operator<(Dosis &otra);
-    bool operator>(Dosis &otra);
-    bool operator==(Dosis &otra);
-
+    bool operator<(const Dosis &otra) const;
+    bool operator>(const Dosis &otra) const;
+    bool operator==(const Dosis &otra) const;
+    bool isEqual(const int b) const;    
+    void imprimir();
 };
-
 #endif /* DOSIS_H */
 
