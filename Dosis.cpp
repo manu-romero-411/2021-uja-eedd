@@ -58,12 +58,12 @@ int Dosis::GetId() const {
     return id;
 }
 
-bool Dosis::operator==(Dosis &otra) {
-    if(otra.GetId() != this->GetId()){
-        return false;
-    } else {
-        return true;
-    }
+bool Dosis::isEqual(const int b) const{
+    return b == id;
+}
+
+bool Dosis::operator==(const Dosis &otra) const {
+    return otra.isEqual(otra.GetId());
 }
 
 bool Dosis::operator<(const Dosis &otra) const{
@@ -71,7 +71,7 @@ bool Dosis::operator<(const Dosis &otra) const{
     else return false;
 }
 
-bool Dosis::operator>(Dosis &otra) const {
+bool Dosis::operator>(const Dosis &otra) const {
     if(otra.GetId() < this->id) return true;
     else return false;
 }

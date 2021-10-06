@@ -43,8 +43,9 @@ public:
     void SetId(int id);
     int GetId() const;
     bool operator<(const Dosis &otra) const;
-    bool operator>(Dosis &otra) const;
-    bool operator==(Dosis &otra);
+    bool operator>(const Dosis &otra) const;
+    bool operator==(const Dosis &otra) const;
+    bool isEqual(const int b) const;    
     void imprimir();
 };
 #endif /* DOSIS_H */

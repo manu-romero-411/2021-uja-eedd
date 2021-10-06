@@ -167,8 +167,7 @@ template <class T>
             T auxiliar;
             auxiliar = this->v[i];
             this->v[i] = this->v[j];
-            this->v[j] = auxiliar;
-            
+            this->v[j] = auxiliar;     
         }
     }
 
