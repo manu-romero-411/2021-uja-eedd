@@ -38,7 +38,7 @@ public:
     T borrar( unsigned int pos = UINT_MAX);
     void ordenar();
     void ordenarRev();
-    T lee(unsigned pos);
+    T leer(unsigned pos);
     int getTamLogico();
     int busquedaBin(T& dato);
     void ampliar();
@@ -164,7 +164,7 @@ template <class T>
      * @brief Devuelve el dato almacenado en la posición dada por el parámetro.
      */
     template <class T>
-    T VDinamico<T>::lee(unsigned pos){
+    T VDinamico<T>::leer(unsigned pos){
         return v[pos];
     }
     

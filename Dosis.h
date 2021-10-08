@@ -43,6 +43,9 @@ public:
     int GetIdLote() const;
     void SetId(int id);
     int GetId() const;
+    bool operator<(Dosis &otra);
+    bool operator>(Dosis &otra);
+    bool operator==(Dosis &otra);
 
 };
 
