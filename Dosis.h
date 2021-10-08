@@ -15,40 +15,39 @@
 #define DOSIS_H
 #include <cstdlib>
 #include "fecha.h"
-//fabricante de la dosis
-enum nombreFabricante {
-    Pfizer = 0,
-    Moderna = 1,
-    AstraZeneca = 2,
-    Johnson = 3,
-};
+/*struct fabricante {
+    "Pfizer";
+    "Moderna";
+    "AstraZeneca";
+    "Johnson";
+} std::string;*/
 
 class Dosis {
 private:
-    int id; //identificador de la dosis concreta
-    int idLote; //identificador del lote en la que se contiene
-    nombreFabricante fabricante; //Fabricante de la dosis
+    int id;
+    int idLote;
+    std::string fabricante[4] = {"Pfizer","Moderna","AstraZeneca","Johnson"};
+    int idFabricante;
     Fecha fechaFabricacion;
     Fecha fechaCaducidad;
-
+    
 public:
-    Dosis();//Constructor por defecto
-    Dosis(const Dosis &orig);//Constructor Copia
-    Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno);//Constructor parametrizado
-    Dosis(int _id);
-    virtual ~Dosis();//Destructor
-    void SetFechaFabricacion(Fecha fechaFabricacion);//Cambia la fecha de fabricación
-    Fecha GetFechaFabricacion() const;//Devuelve la fecha de fabricación
-    int GetFabricante() const;//Devuelve el fabricante
-    void SetIdLote(int idLote);//Cambia el identificador del lote
-    int GetIdLote() const;//Devuelve el identificador del lote
-    void SetId(int id);//Cambia el identificador de dosis
-    int GetId() const;//Cambia el identificador de dosis
-    bool operator<(const Dosis &otra) const;//Compara dosis dependiendo de su identificador
-    Dosis& operator=(const Dosis &otro);//Asigna dosis dependiendo de su identificador
-    bool operator>(const Dosis &otra) const;//Compara dosis dependiendo de su identificador
-    bool operator==(const Dosis &otra) const;//Compara dosis dependiendo de su identificador
-    void imprimir();//Muestra por pantalla información básica de la dosis
+    Dosis();
+    Dosis(const Dosis& orig);
+    Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno);
+    virtual ~Dosis();
+    void SetFechaFabricacion(Fecha fechaFabricacion);
+    Fecha GetFechaFabricacion() const;
+    int GetFabricante() const;
+    void SetIdLote(int idLote);
+    int GetIdLote() const;
+    void SetId(int id);
+    int GetId() const;
+    bool operator<(Dosis &otra);
+    bool operator>(Dosis &otra);
+    bool operator==(Dosis &otra);
+
 };
+
 #endif /* DOSIS_H */
 
