@@ -84,6 +84,9 @@
 		<Unit filename="/Users/manuel/Desarrollo/uja4-1/eedd/Dosis.h">
 			<Option target="eedd"/>
 		</Unit>
+		<Unit filename="/Users/manuel/Desarrollo/uja4-1/eedd/ListaEnlazada.h">
+			<Option target="eedd"/>
+		</Unit>
 		<Unit filename="/Users/manuel/Desarrollo/uja4-1/eedd/VDinamico.h">
 			<Option target="eedd"/>
 		</Unit>
