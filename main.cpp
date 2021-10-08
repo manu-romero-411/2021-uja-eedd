@@ -78,68 +78,67 @@ int main() {
             << ")" << endl;
             ++iterador;
     }
-    /*Dosis *prueba1 = new Dosis(654187074,1,1,1,1,2001);
-    Dosis *prueba2 = new Dosis(1,1,1,1,1,2001);
     
-    if (*prueba1 > *prueba2) {
-        std::cout << "prueba1 mayor que prueba2" << endl;
-    } else {
-        std::cout << "prueba1 no mayor ni igual que prueba2" << endl;
-    }
-    
-    if (*prueba1 < *prueba2) {
-        std::cout << "prueba1 menor que prueba2" << endl;
-    } else {
-        std::cout << "prueba1 no menor ni igual que prueba2" << endl;
-    }
-    
-    if (*prueba1 == *prueba2) {
-        std::cout << "prueba1 igual que prueba2" << endl;
-    } else {
-        std::cout << "prueba1 no igual que prueba2" << endl;
-    }*/
-    
-    //vectorDosis.ordenar(0,vectorDosis.getTamLogico());
-    
-    /*for (unsigned i = 0; i < 50; ++i){
+    // Ordenación de dosis
+    std::cout << "\n\n***Dosis sin ordenar:\n";
+    for (unsigned i = 0; i < 50; ++i){
         std::cout << "Dosis " << i << ": ID " << vectorDosis.leer(i)->GetId() << endl;
     }        
-
-    vectorDosis.ordenarRev()
+    
+    std::cout << "\n\n***Dosis ordenadas al revés:\n";
+    vectorDosis.ordenarRev();
     for (int i = 0; i < 50; ++i){
         std::cout << "Dosis " << i << ": ID " << vectorDosis.leer(i)->GetId() << endl;
     }
 
-    vectorDosis.ordenar()
+    std::cout << "\n\n***Dosis ordenadas de menor a mayor:\n";
+    vectorDosis.ordenar();
     for (int i = 0; i < 50; ++i){
         std::cout << "Dosis " << i << ": ID " << vectorDosis.leer(i)->GetId() << endl;
-    }*/
-    
-    /*VDinamico<int> prueba223;
-    for (int i = 0; i < 100000; i++){
-        prueba223.insertar(200000 - i, i);
     }
     
-    for (int i = 0; i < 100000; i++){
-        std::cout << "  " << *prueba223.leer(i);
-    }
+    // Búsqueda de dosis
+    Dosis dosisbusq1(346335905);
+    Dosis dosisbusq2(999930245);
+    Dosis dosisbusq3(165837);
+    Dosis dosisbusq4(486415569);
+    Dosis dosisbusq5(61385551);
     
-    std::cout << std::endl;
-    int numero = 199;
+    int busq1=vectorDosis.busquedaBin(dosisbusq1,0,vectorDosis.getTamLogico());
+    if(busq1==-1)
+        cout<<"Dosis " << dosisbusq1.GetId() << " no encontrada \n";
+    else   
+        cout<<"Dosis " << dosisbusq1.GetId() << " encontrada en la posición " << busq1 << "\n";
     
-    if (prueba223.busquedaBin(numero,0,9) == -1) {
-        std::cout << "no encontrao" << endl;
-    }
-    for (int i = 0; i < 100000; i++){
-        std::cout << "  " << *prueba223.leer(i);
-    }
+    int busq2=vectorDosis.busquedaBin(dosisbusq2,0,vectorDosis.getTamLogico());
+    if(busq2==-1)
+        cout<<"Dosis " << dosisbusq2.GetId() << " no encontrada \n";
+    else   
+        cout<<"Dosis " << dosisbusq2.GetId() << " encontrada en la posición " << busq2 << "\n";
     
-    return 0;*/
+    int busq3=vectorDosis.busquedaBin(dosisbusq3,0,vectorDosis.getTamLogico());
+    if(busq3==-1)
+        cout<<"Dosis " << dosisbusq3.GetId() << " no encontrada \n";
+    else   
+        cout<<"Dosis " << dosisbusq3.GetId() << " encontrada en la posición " << busq3 << "\n";
     
+    int busq4=vectorDosis.busquedaBin(dosisbusq4,0,vectorDosis.getTamLogico());
+    if(busq4==-1)
+        cout<<"Dosis " << dosisbusq4.GetId() << " no encontrada \n";
+    else   
+        cout<<"Dosis " << dosisbusq4.GetId() << " encontrada en la posición " << busq4 << "\n";
+    
+    int busq5=vectorDosis.busquedaBin(dosisbusq5,0,vectorDosis.getTamLogico());
+    if(busq5==-1)
+        cout<<"Dosis " << dosisbusq5.GetId() << " no encontrada \n";
+    else   
+        cout<<"Dosis " << dosisbusq5.GetId() << " encontrada en la posición " << busq5 << "\n";
+    
+    //Dosis defectuosas
     VDinamico<Dosis> dosisDefectuosas;
     cout << "Vector de dosis: Tamaño lógico " << vectorDosis.getTamLogico() << endl;
     cout << "Vector de defectuosas: Tamaño lógico " << dosisDefectuosas.getTamLogico() << endl;
-
+    
     int contadorDefect = 0;
     for (int i = 0; i < vectorDosis.getTamLogico(); ++i){
         if(vectorDosis.leer(i)->GetFechaFabricacion().verAnio() == 2020){
@@ -163,4 +162,9 @@ int main() {
 
     cout << "Tiempo lectura: " << ((clock() - t_ini) / (float)CLOCKS_PER_SEC) << " segs." << endl;
     is.close();
-}
+    
+  return 0;
+
+    }
+  
+
