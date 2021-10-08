@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/eedd.dir/Dosis.cpp.o"
-  "CMakeFiles/eedd.dir/fecha.cpp.o"
+  "CMakeFiles/eedd.dir/Fecha.cpp.o"
+  "CMakeFiles/eedd.dir/Usuario.cpp.o"
   "CMakeFiles/eedd.dir/main.cpp.o"
   "eedd"
   "eedd.pdb"

@@ -9,8 +9,20 @@
 /Users/manuel/Desarrollo/uja4-1/eedd/Dosis.h
 cstdlib
 -
-fecha.h
-/Users/manuel/Desarrollo/uja4-1/eedd/fecha.h
+Fecha.h
+/Users/manuel/Desarrollo/uja4-1/eedd/Fecha.h
+
+/Users/manuel/Desarrollo/uja4-1/eedd/Fecha.h
+string
+-
+
+/Users/manuel/Desarrollo/uja4-1/eedd/Usuario.h
+cstdlib
+-
+iostream
+-
+Fecha.h
+/Users/manuel/Desarrollo/uja4-1/eedd/Fecha.h
 
 /Users/manuel/Desarrollo/uja4-1/eedd/VDinamico.h
 algorithm
@@ -21,10 +33,6 @@ stdexcept
 -
 Dosis.h
 /Users/manuel/Desarrollo/uja4-1/eedd/Dosis.h
-
-/Users/manuel/Desarrollo/uja4-1/eedd/fecha.h
-string
--
 
 /Users/manuel/Desarrollo/uja4-1/eedd/main.cpp
 iostream
@@ -37,4 +45,6 @@ VDinamico.h
 /Users/manuel/Desarrollo/uja4-1/eedd/VDinamico.h
 Dosis.h
 /Users/manuel/Desarrollo/uja4-1/eedd/Dosis.h
+Usuario.h
+/Users/manuel/Desarrollo/uja4-1/eedd/Usuario.h
 

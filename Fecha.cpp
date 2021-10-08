@@ -33,7 +33,7 @@
 
 #include <iostream>
 #include <ctime>
-#include "fecha.h"
+#include "Fecha.h"
 
 const unsigned Fecha::diasMes[12] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 

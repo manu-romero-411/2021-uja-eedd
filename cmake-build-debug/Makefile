@@ -153,29 +153,53 @@ Dosis.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/eedd.dir/build.make CMakeFiles/eedd.dir/Dosis.cpp.s
 .PHONY : Dosis.cpp.s
 
-fecha.o: fecha.cpp.o
-.PHONY : fecha.o
+Fecha.o: Fecha.cpp.o
+.PHONY : Fecha.o
 
 # target to build an object file
-fecha.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/eedd.dir/build.make CMakeFiles/eedd.dir/fecha.cpp.o
-.PHONY : fecha.cpp.o
+Fecha.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/eedd.dir/build.make CMakeFiles/eedd.dir/Fecha.cpp.o
+.PHONY : Fecha.cpp.o
 
-fecha.i: fecha.cpp.i
-.PHONY : fecha.i
+Fecha.i: Fecha.cpp.i
+.PHONY : Fecha.i
 
 # target to preprocess a source file
-fecha.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/eedd.dir/build.make CMakeFiles/eedd.dir/fecha.cpp.i
-.PHONY : fecha.cpp.i
+Fecha.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/eedd.dir/build.make CMakeFiles/eedd.dir/Fecha.cpp.i
+.PHONY : Fecha.cpp.i
 
-fecha.s: fecha.cpp.s
-.PHONY : fecha.s
+Fecha.s: Fecha.cpp.s
+.PHONY : Fecha.s
 
 # target to generate assembly for a file
-fecha.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/eedd.dir/build.make CMakeFiles/eedd.dir/fecha.cpp.s
-.PHONY : fecha.cpp.s
+Fecha.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/eedd.dir/build.make CMakeFiles/eedd.dir/Fecha.cpp.s
+.PHONY : Fecha.cpp.s
+
+Usuario.o: Usuario.cpp.o
+.PHONY : Usuario.o
+
+# target to build an object file
+Usuario.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/eedd.dir/build.make CMakeFiles/eedd.dir/Usuario.cpp.o
+.PHONY : Usuario.cpp.o
+
+Usuario.i: Usuario.cpp.i
+.PHONY : Usuario.i
+
+# target to preprocess a source file
+Usuario.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/eedd.dir/build.make CMakeFiles/eedd.dir/Usuario.cpp.i
+.PHONY : Usuario.cpp.i
+
+Usuario.s: Usuario.cpp.s
+.PHONY : Usuario.s
+
+# target to generate assembly for a file
+Usuario.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/eedd.dir/build.make CMakeFiles/eedd.dir/Usuario.cpp.s
+.PHONY : Usuario.cpp.s
 
 main.o: main.cpp.o
 .PHONY : main.o
@@ -213,9 +237,12 @@ help:
 	@echo "... Dosis.o"
 	@echo "... Dosis.i"
 	@echo "... Dosis.s"
-	@echo "... fecha.o"
-	@echo "... fecha.i"
-	@echo "... fecha.s"
+	@echo "... Fecha.o"
+	@echo "... Fecha.i"
+	@echo "... Fecha.s"
+	@echo "... Usuario.o"
+	@echo "... Usuario.i"
+	@echo "... Usuario.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

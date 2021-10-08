@@ -9,7 +9,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/manuel/Desarrollo/uja4-1/eedd/Dosis.cpp" "/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles/eedd.dir/Dosis.cpp.o"
-  "/Users/manuel/Desarrollo/uja4-1/eedd/fecha.cpp" "/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles/eedd.dir/fecha.cpp.o"
+  "/Users/manuel/Desarrollo/uja4-1/eedd/Fecha.cpp" "/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles/eedd.dir/Fecha.cpp.o"
+  "/Users/manuel/Desarrollo/uja4-1/eedd/Usuario.cpp" "/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles/eedd.dir/Usuario.cpp.o"
   "/Users/manuel/Desarrollo/uja4-1/eedd/main.cpp" "/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles/eedd.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")

@@ -1,10 +1,4 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
  * File:   main.cpp
  * Author: manuel
  *
@@ -16,13 +10,14 @@
 #include <string>
 #include "VDinamico.h"
 #include "Dosis.h"
+#include "Usuario.h"
 
 using namespace std;
 
 int main() {
-
-    ifstream is("dosis.txt");
-    string palabra;
+    ifstream archivoDosis("dosis.txt");
+    ifstream archivoUsuarios("usuarios.txt");
+    string palabraA;
     int corte = 0;
 
     int id = 0;
@@ -31,54 +26,92 @@ int main() {
     int dia = 0;
     int mes = 0;
     int anno = 0;
-    std::cout << "hola" <<endl;
-            std::cout << "hola" <<endl;
-    std::cout << "hola" <<endl;
-    std::cout << "hola" <<endl;
 
     clock_t t_ini = clock();
     VDinamico<Dosis> vectorDosis;
 
-    int iterador = 0;
-    while (getline(is, palabra)) {
+    int iteradorA = 0;
+    /*while (getline(archivoDosis, palabraA)) {
 
-            corte = palabra.find(';');
-            id = stoi(palabra.substr(0, corte));
-            palabra.erase(0, corte + 1);
+            corte = palabraA.find(';');
+            id = stoi(palabraB.substr(0, corte));
+            palabraB.erase(0, corte + 1);
 
-            corte = palabra.find(';');
-            idLote = stoi(palabra.substr(0, corte));
-            palabra.erase(0, corte + 1);
+            corte = palabraB.find(';');
+            idLote = stoi(palabraB.substr(0, corte));
+            palabraB.erase(0, corte + 1);
 
-            corte = palabra.find(';');
-            fabricante = stoi(palabra.substr(0, corte));
-            palabra.erase(0, corte + 1);
+            corte = palabraB.find(';');
+            fabricante = stoi(palabraB.substr(0, corte));
+            palabraB.erase(0, corte + 1);
 
-            corte = palabra.find('/');
-            dia = stoi(palabra.substr(0, corte));
-            palabra.erase(0, corte + 1);
+            corte = palabraB.find('/');
+            dia = stoi(palabraB.substr(0, corte));
+            palabraB.erase(0, corte + 1);
 
-            corte = palabra.find('/');
-            mes = stoi(palabra.substr(0, corte));
-            palabra.erase(0, corte + 1);
+            corte = palabraB.find('/');
+            mes = stoi(palabraB.substr(0, corte));
+            palabraB.erase(0, corte + 1);
 
-            anno = stoi(palabra);
+            anno = stoi(palabraB);
             Dosis nuevaDosis(id, idLote, fabricante, dia, mes, anno);
-            vectorDosis.insertar(nuevaDosis, iterador);
+            vectorDosis.insertar(nuevaDosis, iteradorA);
 
-            cout << "Dosis: (ID=" << vectorDosis.leer(iterador)->GetId() 
-            << "; Lote=" << vectorDosis.leer(iterador)->GetIdLote()
-            << "; Fabricante=\"" << vectorDosis.leer(iterador)->GetFabricante()
+            /*cout << "Dosis: (ID=" << vectorDosis.leer(iteradorA)->GetId()
+            << "; Lote=" << vectorDosis.leer(iteradorA)->GetIdLote()
+            << "; Fabricante=\"" << vectorDosis.leer(iteradorA)->GetFabricante()
             << "\"; Fecha="
-            << vectorDosis.leer(iterador)->GetFechaFabricacion().verDia()
+            << vectorDosis.leer(iteradorA)->GetFechaFabricacion().verDia()
             << "/"
-            <<vectorDosis.leer(iterador)->GetFechaFabricacion().verMes()
+            <<vectorDosis.leer(iteradorA)->GetFechaFabricacion().verMes()
             << "/"
-            << vectorDosis.leer(iterador)->GetFechaFabricacion().verAnio()
+            << vectorDosis.leer(iteradorA)->GetFechaFabricacion().verAnio()
             << ")" << endl;
-            ++iterador;
+            ++iteradorA;
+    }*/
+    archivoDosis.close();
+
+    //ListaEnlazada<Usuario> listaUsuarios;
+
+    string palabraB;
+    corte = 0;
+    string nombre, apellido, nss;
+
+    int iteradorB = 0;
+    while (getline(archivoUsuarios, palabraB)) {
+
+        corte = palabraB.find(';');
+        nombre = stoi(palabraB.substr(0, corte));
+        palabraB.erase(0, corte + 1);
+
+        corte = palabraB.find(';');
+        apellido = stoi(palabraB.substr(0, corte));
+        palabraB.erase(0, corte + 1);
+
+        corte = palabraB.find(';');
+        nss = stoi(palabraB.substr(0, corte));
+        palabraB.erase(0, corte + 1);
+
+        corte = palabraB.find('/');
+        dia = stoi(palabraB.substr(0, corte));
+        palabraB.erase(0, corte + 1);
+
+        corte = palabraB.find('/');
+        mes = stoi(palabraB.substr(0, corte));
+        palabraB.erase(0, corte + 1);
+
+        corte = palabraB.find(';');
+        anno = stoi(palabraB.substr(0, corte));
+        palabraB.erase(0, corte + 1);
+
+        Usuario nuevoUsuario(nombre,apellido,nss,dia,mes,anno);
+
+        cout << nuevoUsuario << endl;
+
+        ++iteradorB;
     }
-    
+    archivoUsuarios.close();
+    return 0;
     // Ordenación de dosis
     std::cout << "\n\n***Dosis sin ordenar:\n";
     for (unsigned i = 0; i < 50; ++i){
@@ -161,10 +194,7 @@ int main() {
     }
 
     cout << "Tiempo lectura: " << ((clock() - t_ini) / (float)CLOCKS_PER_SEC) << " segs." << endl;
-    is.close();
-    
-  return 0;
-
-    }
+    return 0;
+}
   
 

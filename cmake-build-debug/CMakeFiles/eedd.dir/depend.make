@@ -4,12 +4,17 @@
 CMakeFiles/eedd.dir/Dosis.cpp.o: \
  ../Dosis.cpp \
  ../Dosis.h \
- ../fecha.h
-CMakeFiles/eedd.dir/fecha.cpp.o: \
- ../fecha.cpp \
- ../fecha.h
+ ../Fecha.h
+CMakeFiles/eedd.dir/Fecha.cpp.o: \
+ ../Fecha.cpp \
+ ../Fecha.h
+CMakeFiles/eedd.dir/Usuario.cpp.o: \
+ ../Fecha.h \
+ ../Usuario.cpp \
+ ../Usuario.h
 CMakeFiles/eedd.dir/main.cpp.o: \
  ../Dosis.h \
+ ../Fecha.h \
+ ../Usuario.h \
  ../VDinamico.h \
- ../fecha.h \
  ../main.cpp

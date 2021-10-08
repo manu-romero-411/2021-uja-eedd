@@ -79,18 +79,18 @@ CMakeFiles/eedd.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/eedd.dir/main.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/manuel/Desarrollo/uja4-1/eedd/main.cpp -o CMakeFiles/eedd.dir/main.cpp.s
 
-CMakeFiles/eedd.dir/fecha.cpp.o: CMakeFiles/eedd.dir/flags.make
-CMakeFiles/eedd.dir/fecha.cpp.o: ../fecha.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/eedd.dir/fecha.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/eedd.dir/fecha.cpp.o -c /Users/manuel/Desarrollo/uja4-1/eedd/fecha.cpp
+CMakeFiles/eedd.dir/Fecha.cpp.o: CMakeFiles/eedd.dir/flags.make
+CMakeFiles/eedd.dir/Fecha.cpp.o: ../Fecha.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/eedd.dir/Fecha.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/eedd.dir/Fecha.cpp.o -c /Users/manuel/Desarrollo/uja4-1/eedd/Fecha.cpp
 
-CMakeFiles/eedd.dir/fecha.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/eedd.dir/fecha.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/manuel/Desarrollo/uja4-1/eedd/fecha.cpp > CMakeFiles/eedd.dir/fecha.cpp.i
+CMakeFiles/eedd.dir/Fecha.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/eedd.dir/Fecha.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/manuel/Desarrollo/uja4-1/eedd/Fecha.cpp > CMakeFiles/eedd.dir/Fecha.cpp.i
 
-CMakeFiles/eedd.dir/fecha.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/eedd.dir/fecha.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/manuel/Desarrollo/uja4-1/eedd/fecha.cpp -o CMakeFiles/eedd.dir/fecha.cpp.s
+CMakeFiles/eedd.dir/Fecha.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/eedd.dir/Fecha.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/manuel/Desarrollo/uja4-1/eedd/Fecha.cpp -o CMakeFiles/eedd.dir/Fecha.cpp.s
 
 CMakeFiles/eedd.dir/Dosis.cpp.o: CMakeFiles/eedd.dir/flags.make
 CMakeFiles/eedd.dir/Dosis.cpp.o: ../Dosis.cpp
@@ -105,21 +105,36 @@ CMakeFiles/eedd.dir/Dosis.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/eedd.dir/Dosis.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/manuel/Desarrollo/uja4-1/eedd/Dosis.cpp -o CMakeFiles/eedd.dir/Dosis.cpp.s
 
+CMakeFiles/eedd.dir/Usuario.cpp.o: CMakeFiles/eedd.dir/flags.make
+CMakeFiles/eedd.dir/Usuario.cpp.o: ../Usuario.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/eedd.dir/Usuario.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/eedd.dir/Usuario.cpp.o -c /Users/manuel/Desarrollo/uja4-1/eedd/Usuario.cpp
+
+CMakeFiles/eedd.dir/Usuario.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/eedd.dir/Usuario.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/manuel/Desarrollo/uja4-1/eedd/Usuario.cpp > CMakeFiles/eedd.dir/Usuario.cpp.i
+
+CMakeFiles/eedd.dir/Usuario.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/eedd.dir/Usuario.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/manuel/Desarrollo/uja4-1/eedd/Usuario.cpp -o CMakeFiles/eedd.dir/Usuario.cpp.s
+
 # Object files for target eedd
 eedd_OBJECTS = \
 "CMakeFiles/eedd.dir/main.cpp.o" \
-"CMakeFiles/eedd.dir/fecha.cpp.o" \
-"CMakeFiles/eedd.dir/Dosis.cpp.o"
+"CMakeFiles/eedd.dir/Fecha.cpp.o" \
+"CMakeFiles/eedd.dir/Dosis.cpp.o" \
+"CMakeFiles/eedd.dir/Usuario.cpp.o"
 
 # External object files for target eedd
 eedd_EXTERNAL_OBJECTS =
 
 eedd: CMakeFiles/eedd.dir/main.cpp.o
-eedd: CMakeFiles/eedd.dir/fecha.cpp.o
+eedd: CMakeFiles/eedd.dir/Fecha.cpp.o
 eedd: CMakeFiles/eedd.dir/Dosis.cpp.o
+eedd: CMakeFiles/eedd.dir/Usuario.cpp.o
 eedd: CMakeFiles/eedd.dir/build.make
 eedd: CMakeFiles/eedd.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable eedd"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable eedd"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/eedd.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

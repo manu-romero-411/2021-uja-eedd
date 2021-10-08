@@ -14,7 +14,7 @@
 #ifndef DOSIS_H
 #define DOSIS_H
 #include <cstdlib>
-#include "fecha.h"
+#include "Fecha.h"
 //fabricante de la dosis
 enum nombreFabricante {
     Pfizer = 0,
