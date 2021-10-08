@@ -6,7 +6,7 @@
 
 /* 
  * File:   main.cpp
- * Author: manuel
+ * Author: Manuel Jesús Romero Mateos, José Ángel Ángeles Santiago
  *
  * Created on 22 de septiembre de 2021, 20:36
  */
