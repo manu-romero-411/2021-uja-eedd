@@ -1,0 +1,3 @@
+/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles/eedd.dir

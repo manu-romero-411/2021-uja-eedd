@@ -12,22 +12,59 @@
  */
 
 #include "Dosis.h"
-
+#include <iostream>
+    /* @brief constructor por defecto
+ * @param[in] -
+ * @param[out] -
+ * @return -
+ * 
+ * 
+ */
 Dosis::Dosis() {
 }
 
+    /* @brief Constructor parametrizado
+ * @param[in] -identificador de la dosis y fabricante, fecha
+ * @param[out] -
+ * @return -
+ * 
+ * 
+ */
 Dosis::Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno) {
     this->id = id;
     this->idLote = idLote;
-    this->idFabricante = idFabricante;
+    this->fabricante = nombreFabricante(idFabricante);
     this->fechaFabricacion.asignarDia(dia, mes, anno);
     this->fechaCaducidad = this->fechaFabricacion;
     this->fechaCaducidad.anadirMeses(2);
 }
 
-Dosis::Dosis(const Dosis& orig) {
+    /* @brief Constructor copia
+ * @param[in] -Referencia a objeto dosis
+ * @param[out] -
+ * @return -
+ * 
+ * 
+ */
+Dosis::Dosis(int _id){
+    this->id=_id;
 }
 
+Dosis::Dosis(const Dosis &orig):id(orig.id),
+                                idLote(orig.idLote),
+                                fabricante(orig.fabricante),
+                                fechaFabricacion(orig.fechaFabricacion),
+                                fechaCaducidad(orig.fechaCaducidad)
+{}
+
+
+    /* @brief Destructor
+ * @param[in] -
+ * @param[out] -
+ * @return -
+ * 
+ * 
+ */
 Dosis::~Dosis() {
 }
 
@@ -35,12 +72,14 @@ void Dosis::SetFechaFabricacion(Fecha fechaFabricacion) {
     this->fechaFabricacion = fechaFabricacion;
 }
 
+ 
 Fecha Dosis::GetFechaFabricacion() const {
     return fechaFabricacion;
 }
 
-int Dosis::GetFabricante() const{return idFabricante;}
+int Dosis::GetFabricante() const {return fabricante;}
 
+  
 void Dosis::SetIdLote(int idLote) {
     this->idLote = idLote;
 }
@@ -57,20 +96,66 @@ int Dosis::GetId() const {
     return id;
 }
 
-bool Dosis::operator==(Dosis &otra) {
-    //if(otra.GetFabricante() != this->idFabricante) return false;
-    //if(otra.GetFechaFabricacion() != this->fechaFabricacion ) return false;
-    if(otra.GetId() != this->id) return false;
-    //if(otra.GetIdLote() != this->idLote) return false;
-    return true;
+
+   /* @brief Operador de igualdad, compara las id
+ * @param[in] -Referencia a objeto a comparar
+ * @param[out] -
+ * @return -
+ * 
+ * 
+ */
+bool Dosis::operator==(const Dosis &otra) const {
+    return (this->id == otra.id);
+}
+/* @brief Operador de menor, compara las id
+ * @param[in] -Referencia a objeto a comparar
+ * @param[out] -
+ * @return -
+ * 
+ * 
+ */
+
+bool Dosis::operator<(const Dosis &otra) const{
+    return (this->id < otra.id); 
 }
 
-bool Dosis::operator<(Dosis &otra) {
-    if(otra.GetId() > this->id) return true;
-    else return false;
+
+/* @brief Operador de mayor, compara las id
+ * @param[in] -Referencia a objeto a comparar
+ * @param[out] -
+ * @return -
+ * 
+ * 
+ */
+
+
+bool Dosis::operator>(const Dosis &otra) const {
+    return (otra.id < this->id); 
 }
 
-bool Dosis::operator>(Dosis &otra) {
-    if(otra.GetId() < this->id) return true;
-    else return false;
+/* @brief Muestra por pantalla la información de la dosis
+ * @param[in] -
+ * @param[out] -
+ * @return -
+ * 
+ * 
+ */
+
+Dosis& Dosis::operator=(const Dosis &otro) {
+    if(this != &otro) {
+        fechaCaducidad = otro.fechaCaducidad;
+        fechaFabricacion = otro.fechaFabricacion;
+        fabricante = otro.fabricante;
+        id = otro.id;
+        idLote = otro.idLote;
+    }
+    return (*this);
+
+}
+
+void Dosis::imprimir(){
+    std::cout << "Dosis nº "<< id << ": "<<
+                                     "\n* ID lote: " << idLote <<
+                                     "\n* ID Fabricante: " << fabricante <<
+                                     "\n* Fecha de elaboración: " << fechaFabricacion.cadenaDia() << "\n";
 }
