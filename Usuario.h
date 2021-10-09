@@ -19,8 +19,8 @@ private:
     Fecha fechaNacimiento;
     //UTM domicilio;
 public:
-    Usuario(const string &nombre, const string &apellidos, const string &nss, const Fecha &fechaNacimiento);
-    Usuario(const string &nombre, const string &apellidos, const string &nss, const int &dia, const int &mes, const int &anno);
+    Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento);
+    Usuario(const string nombre, const string apellidos, const string nss, const int dia, const int mes, const int anno);
     Usuario(const Usuario &orig);
     const string &getApellidos() const;
     void setApellidos(const string &apellidos);
@@ -33,6 +33,7 @@ public:
     //const UTM getDomicilio() const;
     //void setDomicilio(const UTM &dom);
 
+    Usuario& operator=(const Usuario &elDeLaDerecha);
     bool operator==(const Usuario &elDeLaDerecha) const;
     bool operator!=(const Usuario &elDeLaDerecha) const;
     bool operator<(const Usuario &elDeLaDerecha) const;

@@ -44,22 +44,33 @@ void Usuario::setDomicilio(const UTM &dom) {
     Usuario::domicilio = dom;
 }*/
 
-Usuario::Usuario(const string &_nombre, const string &_apellidos, const string &_nss, const Fecha &_fechaNacimiento)
+Usuario::Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento)
         : nombre(_nombre), apellidos(_apellidos), nss(_nss), fechaNacimiento(_fechaNacimiento) {
 
 }
 
-Usuario::Usuario(const string &nombre, const string &apellidos, const string &nss, const int &dia, const int &mes, const int &anno){
+Usuario::Usuario(const string nombre, const string apellidos, const string nss, const int dia, const int mes, const int anno){
     this->nombre = nombre;
     this->apellidos = apellidos;
     this->nss = nss;
-    this->fechaNacimiento.anadirDias(dia);
-    this->fechaNacimiento.anadirMeses(mes);
-    this->fechaNacimiento.anadirAnios(anno);
+    this->fechaNacimiento.asignarDia(dia,mes,anno);
 }
 
 Usuario::Usuario(const Usuario &orig){
+    this->nombre = orig.nombre;
+    this->apellidos = orig.apellidos;
+    this->nss = orig.nss;
+    this->fechaNacimiento.asignarDia(orig.fechaNacimiento.verDia(),orig.fechaNacimiento.verMes(),orig.fechaNacimiento.verAnio());
+}
 
+Usuario& Usuario::operator=(const Usuario &elDeLaDerecha){
+    if(this != &elDeLaDerecha) {
+        nombre = elDeLaDerecha.nombre;
+        apellidos = elDeLaDerecha.apellidos;
+        nss = elDeLaDerecha.nss;
+        fechaNacimiento = elDeLaDerecha.fechaNacimiento;
+    }
+    return (*this);
 }
 
 Usuario::~Usuario() {
@@ -110,7 +121,7 @@ bool Usuario::operator>=(const Usuario &rhs) const {
 }
 
 ostream &operator<<(ostream &os, const Usuario &usuario) {
-    os << "nombre: " << usuario.nombre << " apellidos: " << usuario.apellidos << " NSS: " << usuario.nss
-       << " fechaNacimiento: " << usuario.fechaNacimiento;
+    os << "Nombre: " << usuario.nombre << " | Apellidos: " << usuario.apellidos << " | NSS: " << usuario.nss
+       << " | Fecha de Nacimiento: " << usuario.fechaNacimiento.cadenaDia();
     return os;
 }

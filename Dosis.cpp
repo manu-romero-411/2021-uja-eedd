@@ -150,12 +150,10 @@ Dosis& Dosis::operator=(const Dosis &otro) {
         idLote = otro.idLote;
     }
     return (*this);
-
 }
 
-void Dosis::imprimir(){
-    std::cout << "Dosis nº "<< id << ": "<<
-                                     "\n* ID lote: " << idLote <<
-                                     "\n* ID Fabricante: " << fabricante <<
-                                     "\n* Fecha de elaboración: " << fechaFabricacion.cadenaDia() << "\n";
+ostream &operator<<(ostream &os, const Dosis &dosis) {
+    os << "ID: " << dosis.id << " | ID Lote: " << dosis.idLote << " | Fabricante: " << dosis.fabricante
+       << " | Fecha fabricación: " << dosis.fechaFabricacion.cadenaDia() << " | Fecha caducidad: " << dosis.fechaCaducidad.cadenaDia() << "\n";
+    return os;
 }

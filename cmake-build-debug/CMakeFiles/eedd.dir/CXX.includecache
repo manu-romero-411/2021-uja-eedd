@@ -9,12 +9,16 @@
 /Users/manuel/Desarrollo/uja4-1/eedd/Dosis.h
 cstdlib
 -
+ostream
+-
 Fecha.h
 /Users/manuel/Desarrollo/uja4-1/eedd/Fecha.h
 
 /Users/manuel/Desarrollo/uja4-1/eedd/Fecha.h
 string
 -
+
+/Users/manuel/Desarrollo/uja4-1/eedd/ListaEnlazada.h
 
 /Users/manuel/Desarrollo/uja4-1/eedd/Usuario.h
 cstdlib
@@ -43,6 +47,8 @@ string
 -
 VDinamico.h
 /Users/manuel/Desarrollo/uja4-1/eedd/VDinamico.h
+ListaEnlazada.h
+/Users/manuel/Desarrollo/uja4-1/eedd/ListaEnlazada.h
 Dosis.h
 /Users/manuel/Desarrollo/uja4-1/eedd/Dosis.h
 Usuario.h

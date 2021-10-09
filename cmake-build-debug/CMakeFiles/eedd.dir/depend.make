@@ -15,6 +15,7 @@ CMakeFiles/eedd.dir/Usuario.cpp.o: \
 CMakeFiles/eedd.dir/main.cpp.o: \
  ../Dosis.h \
  ../Fecha.h \
+ ../ListaEnlazada.h \
  ../Usuario.h \
  ../VDinamico.h \
  ../main.cpp
