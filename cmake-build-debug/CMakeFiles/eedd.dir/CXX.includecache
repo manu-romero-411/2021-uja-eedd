@@ -6,29 +6,29 @@
 
 #IncludeRegexTransform: 
 
-/Users/manuel/Desarrollo/uja4-1/eedd/Dosis.h
+/pcgrande/Desarrollo/uja4-practicas/eedd/Dosis.h
 cstdlib
 -
 ostream
 -
 Fecha.h
-/Users/manuel/Desarrollo/uja4-1/eedd/Fecha.h
+/pcgrande/Desarrollo/uja4-practicas/eedd/Fecha.h
 
-/Users/manuel/Desarrollo/uja4-1/eedd/Fecha.h
+/pcgrande/Desarrollo/uja4-practicas/eedd/Fecha.h
 string
 -
 
-/Users/manuel/Desarrollo/uja4-1/eedd/ListaEnlazada.h
+/pcgrande/Desarrollo/uja4-practicas/eedd/ListaEnlazada.h
 
-/Users/manuel/Desarrollo/uja4-1/eedd/Usuario.h
+/pcgrande/Desarrollo/uja4-practicas/eedd/Usuario.h
 cstdlib
 -
 iostream
 -
 Fecha.h
-/Users/manuel/Desarrollo/uja4-1/eedd/Fecha.h
+/pcgrande/Desarrollo/uja4-practicas/eedd/Fecha.h
 
-/Users/manuel/Desarrollo/uja4-1/eedd/VDinamico.h
+/pcgrande/Desarrollo/uja4-practicas/eedd/VDinamico.h
 algorithm
 -
 math.h
@@ -36,9 +36,9 @@ math.h
 stdexcept
 -
 Dosis.h
-/Users/manuel/Desarrollo/uja4-1/eedd/Dosis.h
+/pcgrande/Desarrollo/uja4-practicas/eedd/Dosis.h
 
-/Users/manuel/Desarrollo/uja4-1/eedd/main.cpp
+/pcgrande/Desarrollo/uja4-practicas/eedd/main.cpp
 iostream
 -
 fstream
@@ -46,11 +46,11 @@ fstream
 string
 -
 VDinamico.h
-/Users/manuel/Desarrollo/uja4-1/eedd/VDinamico.h
+/pcgrande/Desarrollo/uja4-practicas/eedd/VDinamico.h
 ListaEnlazada.h
-/Users/manuel/Desarrollo/uja4-1/eedd/ListaEnlazada.h
+/pcgrande/Desarrollo/uja4-practicas/eedd/ListaEnlazada.h
 Dosis.h
-/Users/manuel/Desarrollo/uja4-1/eedd/Dosis.h
+/pcgrande/Desarrollo/uja4-practicas/eedd/Dosis.h
 Usuario.h
-/Users/manuel/Desarrollo/uja4-1/eedd/Usuario.h
+/pcgrande/Desarrollo/uja4-practicas/eedd/Usuario.h
 

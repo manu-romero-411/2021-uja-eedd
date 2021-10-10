@@ -8,12 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/manuel/Desarrollo/uja4-1/eedd/Dosis.cpp" "/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles/eedd.dir/Dosis.cpp.o"
-  "/Users/manuel/Desarrollo/uja4-1/eedd/Fecha.cpp" "/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles/eedd.dir/Fecha.cpp.o"
-  "/Users/manuel/Desarrollo/uja4-1/eedd/Usuario.cpp" "/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles/eedd.dir/Usuario.cpp.o"
-  "/Users/manuel/Desarrollo/uja4-1/eedd/main.cpp" "/Users/manuel/Desarrollo/uja4-1/eedd/cmake-build-debug/CMakeFiles/eedd.dir/main.cpp.o"
+  "/pcgrande/Desarrollo/uja4-practicas/eedd/Dosis.cpp" "/pcgrande/Desarrollo/uja4-practicas/eedd/cmake-build-debug/CMakeFiles/eedd.dir/Dosis.cpp.o"
+  "/pcgrande/Desarrollo/uja4-practicas/eedd/Fecha.cpp" "/pcgrande/Desarrollo/uja4-practicas/eedd/cmake-build-debug/CMakeFiles/eedd.dir/Fecha.cpp.o"
+  "/pcgrande/Desarrollo/uja4-practicas/eedd/Usuario.cpp" "/pcgrande/Desarrollo/uja4-practicas/eedd/cmake-build-debug/CMakeFiles/eedd.dir/Usuario.cpp.o"
+  "/pcgrande/Desarrollo/uja4-practicas/eedd/main.cpp" "/pcgrande/Desarrollo/uja4-practicas/eedd/cmake-build-debug/CMakeFiles/eedd.dir/main.cpp.o"
   )
-set(CMAKE_CXX_COMPILER_ID "AppleClang")
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
