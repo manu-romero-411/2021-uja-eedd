@@ -16,7 +16,7 @@ public:
     Nodo *sig;
     Nodo(T &aDato, Nodo *aSig = 0):
             dato(aDato), sig(aSig) {}
-            ~Nodo();
+    //~Nodo();
 };
 
 template<class T>
@@ -36,7 +36,8 @@ public:
 template<class T>
 class ListaEnlazada {
     private:
-        Nodo<T>* nodoCabecera, nodoCola;
+        Nodo<T>* nodoCabecera;
+        Nodo<T>* nodoCola;
         int tama;
     public:
         ListaEnlazada<T>();
@@ -77,20 +78,19 @@ ListaEnlazada<T>::ListaEnlazada(const ListaEnlazada<T> &orig){
 
 template <class T>
 ListaEnlazada<T>& ListaEnlazada<T>::operator=(const ListaEnlazada<T> &otro){
-    Nodo<T> *n = nodoCabecera;
-    while (n != 0) {
-        Nodo<T> *borrado;
-        borrado = n;
-        n = n->sig;
+    Nodo<T> *p = nodoCabecera;
+    while (p != 0) {
+        Nodo<T> *borrado = p;
+        p = p->sig;
         delete borrado;
     }
     nodoCabecera = 0;
     nodoCola = 0;
 
-    n = otro.nodoCabecera;
-    while (n != 0) {
-        this->insertaFin(n->dato);
-        n = n->sig;
+    p = otro.nodoCabecera;
+    while (p != 0) {
+        this->insertaFin(p->dato);
+        p = p->sig;
     }
     return (*this);
 }
@@ -143,7 +143,7 @@ void ListaEnlazada<T>::insertaFin(T& dato){
     if (nodoCabecera == 0)
         nodoCabecera = nuevo; // Esto solo ocurrirá si la lista está vacía
     else
-        nodoCola.sig = nuevo;
+        nodoCola->sig = nuevo;
 
     nodoCola = nuevo;
     tama++;
@@ -151,15 +151,15 @@ void ListaEnlazada<T>::insertaFin(T& dato){
 
 template <class T>
 void ListaEnlazada<T>::inserta(Iterador<T> &it, T& dato){
-    if (it.nodo == nodoCabecera) {
+    Nodo<T> *p = it.nodo;
+    if (p == nodoCabecera) {
         this->insertaInicio(dato);
-    } else if (it.nodo == nodoCola) {
+    } else if (p == nodoCola) {
         this->insertaFin(dato);
     } else {
-        Nodo<T>* nuevo;
-        nuevo = new Nodo<T> (dato, it.nodo);
-        nuevo->sig = it.siguiente();
-        it.nodo.sig = nuevo;
+        Nodo<T>* nuevo = new Nodo<T> (dato, p);
+        nuevo->sig = p->sig;
+        p->sig = nuevo;
         tama++;
     }
 }
@@ -205,26 +205,27 @@ void ListaEnlazada<T>::borraFinal(){
 
 template <class T>
 void ListaEnlazada<T>::borra(Iterador<T> &it){
-    if (it.nodo == 0)
+    Nodo<T> *p = it.nodo;
+    if (p == 0)
         throw std::out_of_range("[borra] La lista esta vacia ");
     else {
-        if (it.nodo == nodoCabecera) {
+        if (p == nodoCabecera) {
             this->borraInicio();
             this->iteradorInicio();
         } else {
-            if (it.nodo == nodoCola) {
+            if (p == nodoCola) {
                 this->borraFinal();
-                it.siguiente();
+                p->sig;
             } else {
-                Nodo<T>* borrado = it.nodo;
+                Nodo<T>* borrado = p;
                 Nodo<T>* anterior = 0;
                 if (nodoCabecera != nodoCola){
                     anterior = nodoCabecera;
-                    while (anterior->sig != it->dato){
+                    while (anterior->sig != p->dato){
                         anterior = anterior->sig;
                     }
                 }
-                anterior->sig = it->sig;
+                anterior->sig = p->sig;
                 delete borrado;
             }
         }
@@ -243,16 +244,13 @@ bool ListaEnlazada<T>::buscar(T &dato, Iterador<T> &it){
 
 template <class T>
 ListaEnlazada<T>::~ListaEnlazada(){
-    Nodo<T>* anterior = 0;
-    Nodo<T>* borrar = 0;
-    if (nodoCabecera->dato != nodoCola.dato){
-        anterior = nodoCabecera;
-        while (anterior->sig->dato != nodoCola.dato){
-            borrar = anterior;
-            anterior = anterior->sig;
-            delete borrar;
+
+        Nodo<T> *p = nodoCabecera;
+        while (p != 0) {
+            nodoCabecera=p->sig;
+            delete p;
+          p  =  nodoCabecera;
         }
-        delete nodoCola;
-    }
 }
+
 #endif //EEDD_LISTAENLAZADA_H

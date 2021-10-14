@@ -1,10 +1,12 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/eedd.dir/Dosis.cpp.o"
-  "CMakeFiles/eedd.dir/Fecha.cpp.o"
-  "CMakeFiles/eedd.dir/Usuario.cpp.o"
-  "CMakeFiles/eedd.dir/main.cpp.o"
-  "eedd"
+  "CMakeFiles/eedd.dir/Dosis.cpp.obj"
+  "CMakeFiles/eedd.dir/Fecha.cpp.obj"
+  "CMakeFiles/eedd.dir/Usuario.cpp.obj"
+  "CMakeFiles/eedd.dir/main.cpp.obj"
+  "eedd.exe"
+  "eedd.exe.manifest"
   "eedd.pdb"
+  "libeedd.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

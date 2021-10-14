@@ -6,29 +6,29 @@
 
 #IncludeRegexTransform: 
 
-/Users/manuel/Desarrollo/uja4-1/eedd/Dosis.h
+C:/Users/admin/Desktop/2021-eedd-practicas/Dosis.h
 cstdlib
 -
 ostream
 -
 Fecha.h
-/Users/manuel/Desarrollo/uja4-1/eedd/Fecha.h
+C:/Users/admin/Desktop/2021-eedd-practicas/Fecha.h
 
-/Users/manuel/Desarrollo/uja4-1/eedd/Fecha.h
+C:/Users/admin/Desktop/2021-eedd-practicas/Fecha.h
 string
 -
 
-/Users/manuel/Desarrollo/uja4-1/eedd/ListaEnlazada.h
+C:/Users/admin/Desktop/2021-eedd-practicas/ListaEnlazada.h
 
-/Users/manuel/Desarrollo/uja4-1/eedd/Usuario.h
+C:/Users/admin/Desktop/2021-eedd-practicas/Usuario.h
 cstdlib
 -
 iostream
 -
 Fecha.h
-/Users/manuel/Desarrollo/uja4-1/eedd/Fecha.h
+C:/Users/admin/Desktop/2021-eedd-practicas/Fecha.h
 
-/Users/manuel/Desarrollo/uja4-1/eedd/VDinamico.h
+C:/Users/admin/Desktop/2021-eedd-practicas/VDinamico.h
 algorithm
 -
 math.h
@@ -36,21 +36,23 @@ math.h
 stdexcept
 -
 Dosis.h
-/Users/manuel/Desarrollo/uja4-1/eedd/Dosis.h
+C:/Users/admin/Desktop/2021-eedd-practicas/Dosis.h
 
-/Users/manuel/Desarrollo/uja4-1/eedd/main.cpp
+C:/Users/admin/Desktop/2021-eedd-practicas/main.cpp
 iostream
 -
 fstream
 -
 string
 -
+ctime
+-
 VDinamico.h
-/Users/manuel/Desarrollo/uja4-1/eedd/VDinamico.h
+C:/Users/admin/Desktop/2021-eedd-practicas/VDinamico.h
 ListaEnlazada.h
-/Users/manuel/Desarrollo/uja4-1/eedd/ListaEnlazada.h
+C:/Users/admin/Desktop/2021-eedd-practicas/ListaEnlazada.h
 Dosis.h
-/Users/manuel/Desarrollo/uja4-1/eedd/Dosis.h
+C:/Users/admin/Desktop/2021-eedd-practicas/Dosis.h
 Usuario.h
-/Users/manuel/Desarrollo/uja4-1/eedd/Usuario.h
+C:/Users/admin/Desktop/2021-eedd-practicas/Usuario.h
 

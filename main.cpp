@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <ctime>
 #include "VDinamico.h"
 #include "ListaEnlazada.h"
 #include "Dosis.h"
@@ -72,8 +73,9 @@ int main() {
     string nombre, apellido, nss;
 
     ListaEnlazada<int> listaprueba;
-
-    return 0;
+    int dato=1;
+    listaprueba.insertaFin(dato);
+    /*
     //ListaEnlazada<Usuario> listaUsuarios;
     int iteradorB = 0;
     while (getline(archivoUsuarios, palabraB)) {
@@ -112,6 +114,8 @@ int main() {
         ++iteradorB;
     }
     archivoUsuarios.close();
+    */
+    return 0;
 }
   
 
