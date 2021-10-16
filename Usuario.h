@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <iostream>
 #include "Fecha.h"
+#include "Dosis.h"
 
 using namespace std;
 
@@ -17,6 +18,11 @@ private:
     string apellidos;
     string nss;
     Fecha fechaNacimiento;
+    Dosis& miDosis;
+public:
+    Dosis &getMiDosis() const;
+
+    void setMiDosis(Dosis &miDosis);
     //UTM domicilio;
 public:
     Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento);

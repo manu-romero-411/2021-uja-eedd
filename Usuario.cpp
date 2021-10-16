@@ -125,3 +125,11 @@ ostream &operator<<(ostream &os, const Usuario &usuario) {
        << " | Fecha de Nacimiento: " << usuario.fechaNacimiento.cadenaDia();
     return os;
 }
+
+Dosis &Usuario::getMiDosis() const {
+    return miDosis;
+}
+
+void Usuario::setMiDosis(Dosis &miDosis) {
+    Usuario::miDosis = miDosis;
+}

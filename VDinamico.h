@@ -13,6 +13,8 @@
 
 #ifndef VDINAMICO_H
 #define VDINAMICO_H
+#define UINT_MAX 4294967295
+#include <climits>
 
 #include <algorithm>
 #include <math.h>

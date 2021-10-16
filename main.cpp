@@ -72,11 +72,7 @@ int main() {
     float longitud, latitud;
     string nombre, apellido, nss;
 
-    ListaEnlazada<int> listaprueba;
-    int dato=1;
-    listaprueba.insertaFin(dato);
-    /*
-    //ListaEnlazada<Usuario> listaUsuarios;
+    ListaEnlazada<Usuario> listaUsuarios;
     int iteradorB = 0;
     while (getline(archivoUsuarios, palabraB)) {
         corte = palabraB.find(';');
@@ -110,11 +106,19 @@ int main() {
         latitud = stoi(palabraB);
 
         Usuario nuevoUsuario(nombre,apellido,nss,dia, mes, anno);
-        cout << nuevoUsuario << endl;
+        listaUsuarios.insertaFin(nuevoUsuario);
+
+        //cout << nuevoUsuario << endl;
         ++iteradorB;
     }
+    Iterador<Usuario> iteracao2 = listaUsuarios.iteradorInicio();
+    for(int i = 0; i < listaUsuarios.tam(); ++i){
+        iteracao2.dato().setMiDosis(*vectorDosis.leer(i));
+        cout << iteracao2.dato() << endl;
+        iteracao2.siguiente();
+    }
     archivoUsuarios.close();
-    */
+
     return 0;
 }
   
