@@ -1,3 +1,0 @@
-/pcgrande/Desarrollo/uja4-practicas/eedd/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/pcgrande/Desarrollo/uja4-practicas/eedd/cmake-build-debug/CMakeFiles/edit_cache.dir
-/pcgrande/Desarrollo/uja4-practicas/eedd/cmake-build-debug/CMakeFiles/eedd.dir
