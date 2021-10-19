@@ -16,7 +16,6 @@ public:
     Nodo *sig;
     Nodo(T &aDato, Nodo *aSig = nullptr):
             dato(aDato), sig(aSig) {}
-    //~Nodo();
 };
 
 template<class T>
@@ -231,6 +230,7 @@ void ListaEnlazada<T>::borra(Iterador<T> &it){
                 }
                 anterior->sig = p->sig;
                 delete borrado;
+                tama--;
             }
         }
     }

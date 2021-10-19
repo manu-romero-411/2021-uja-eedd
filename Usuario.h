@@ -18,15 +18,15 @@ private:
     string apellidos;
     string nss;
     Fecha fechaNacimiento;
-    Dosis& miDosis;
+    Dosis* miDosis;
 public:
     Dosis &getMiDosis() const;
 
     void setMiDosis(Dosis &miDosis);
     //UTM domicilio;
 public:
-    Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento);
-    Usuario(const string nombre, const string apellidos, const string nss, const int dia, const int mes, const int anno);
+    Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento,
+            Dosis &miDosis);
     Usuario(const Usuario &orig);
     const string &getApellidos() const;
     void setApellidos(const string &apellidos);
@@ -34,7 +34,7 @@ public:
     void setNss(const string &nss);
     const Fecha &getFechaNacimiento() const;
     void setFechaNacimiento(const Fecha &fechaNacimiento);
-    const string &getNombre() const;
+    std::string getNombre() const;
     void setNombre(const string &nombre);
     //const UTM getDomicilio() const;
     //void setDomicilio(const UTM &dom);
