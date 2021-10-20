@@ -192,6 +192,20 @@ int main() {
         cout << "Número de Joan borrados: " << numJoan << "\n";
         cout << "Número de usuarios tras borrar Joan: "<< listaUsuarios.tam() << "\n";
 
+        Iterador<Usuario> iteraBusca4 = listaUsuarios.iteradorInicio();
+        numJoan = 0;
+        for (int i = 0; i < listaUsuarios.tam(); ++i) {
+            if (iteraBusca4.dato().getNombre() == "Joan"){
+                numJoan++;
+                listaUsuarios.borra(iteraBusca2);
+                //cout << "Borrado Joan nº" << numJoan << "\n";
+            }
+            iteraBusca4.siguiente();
+        }
+        cout << "Número de Joan encontrados después: "<<  numJoan << "\n";
+
+        //cout << "Resultado de volver a buscar Joan: " <<
+
         archivoUsuarios.close();
         return 0;
     } catch (std::exception &e) {
