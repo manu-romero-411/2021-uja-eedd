@@ -147,34 +147,34 @@ int main() {
             iteraBusca1.siguiente();
         }
 
-        /*cout << "\n\n****** Viendo nombres repetidos ******"<< "\n";
+        cout << "\n\n****** Viendo nombres repetidos ******"<< "\n";
         VDinamico<std::string> vectorNombresRepes;
-        VDinamico<int> vectorVecesRepes;
         Iterador<Usuario> iteraBusca3 = listaUsuarios.iteradorInicio();
 
-        vectorNombresRepes.insertar(iteraBusca3.dato().getNombre(),0);
-        vectorVecesRepes.insertar(1,0);
-        iteraBusca3.siguiente();
-        bool esta = false;
-
-        for (int i = 1; i < listaUsuarios.tam(); ++i){
-            for (int j = 0; j < vectorNombresRepes.getTamLogico(); ++j){
-                //cout << iteraBusca3.dato().getNombre() << " " << *vectorNombresRepes.leer(j) << "\n";
-                if (iteraBusca3.dato().getNombre() == *vectorNombresRepes.leer(j)){
-                    esta = true;
-                    //cout << iteraBusca3.dato().getNombre() << " " << *vectorNombresRepes.leer(j) << "\n";
-                    vectorVecesRepes.insertar(*vectorVecesRepes.leer(j) + 1,j);
-                }
-                if (!(esta)){
-                    //cout << iteraBusca3.dato().getNombre() << " " << *vectorNombresRepes.leer(j) << "\n";
-                    vectorNombresRepes.insertar(iteraBusca3.dato().getNombre(),vectorNombresRepes.getTamLogico());
-                    vectorVecesRepes.insertar(1,vectorVecesRepes.getTamLogico());
-                }
-                esta = false;
-                //cout << iteraBusca3.dato().getNombre() << " " << *vectorNombresRepes.leer(j) << "\n";
-            }
+        for (int i = 0; i < listaUsuarios.tam(); ++i){
+            vectorNombresRepes.insertar(iteraBusca3.dato().getNombre(),i);
             iteraBusca3.siguiente();
-        }*/
+        }
+        
+        vectorNombresRepes.ordenar();
+
+        std::string nombreRepetido = *vectorNombresRepes.leer(0);
+        int vecesRepetido = 1;
+        int mayorVecesRepetido = 1;
+        for (int i = 1; i < vectorNombresRepes.getTamLogico(); i++){
+            std::string nombreActual = *vectorNombresRepes.leer(i);
+            std::string nombreAnterior = *vectorNombresRepes.leer(i-1);
+            if (nombreActual == nombreAnterior){
+                vecesRepetido++;
+                if (vecesRepetido > mayorVecesRepetido) {
+                    mayorVecesRepetido = vecesRepetido;
+                    nombreRepetido = *vectorNombresRepes.leer(i);
+                }
+            } else {
+                vecesRepetido = 1;
+            }
+        }
+        cout << "Nombre más repetido: " << nombreRepetido << " (" << mayorVecesRepetido << " veces) \n" ;
 
         cout << "\n\n****** Buscando y borrando usuarios Joan ******"<< "\n";
         cout << "\nNúmero de usuarios antes de borrar Joan: "<< listaUsuarios.tam() << "\n";
