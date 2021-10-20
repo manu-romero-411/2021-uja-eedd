@@ -84,8 +84,8 @@ ListaEnlazada<T>& ListaEnlazada<T>::operator=(const ListaEnlazada<T> &otro){
         n = n->sig;
         delete borrado;
     }
-    nodoCabecera = 0;
-    nodoCola = 0;
+    nodoCabecera = nullptr;
+    nodoCola = nullptr;
 
     n = otro.nodoCabecera;
     while (n != 0) {
