@@ -41,6 +41,7 @@ Usuario::Usuario(const Usuario &orig){
  */
 
 Usuario& Usuario::operator=(const Usuario &elDeLaDerecha){
+
     if(this != &elDeLaDerecha) {
         nombre = elDeLaDerecha.nombre;
         apellidos = elDeLaDerecha.apellidos;
@@ -48,6 +49,7 @@ Usuario& Usuario::operator=(const Usuario &elDeLaDerecha){
         fechaNacimiento = elDeLaDerecha.fechaNacimiento;
         miDosis = elDeLaDerecha.miDosis;
     }
+
     return (*this);
 }
 
@@ -95,8 +97,8 @@ Dosis &Usuario::getMiDosis() const {
     return *miDosis;
 }
 
-void Usuario::setMiDosis(Dosis &miDosis) {
-    this->miDosis = &miDosis;
+void Usuario::setMiDosis(Dosis *miDosis) {
+    this->miDosis = miDosis;
 }
 /**
  * @brief Operador de igualdad
