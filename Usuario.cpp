@@ -3,12 +3,27 @@
 //
 
 #include "Usuario.h"
-
+/**
+ * @brief Constructor parametrizado
+ * @param[in] -string de conmbre, apellidos, nss. Fecha de nacimiento tipo fecha
+ * @param[out] -
+ * @return -
+ *
+ *
+ */
 Usuario::Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento,
                  Dosis &_miDosis)
         : nombre(_nombre), apellidos(_apellidos), nss(_nss), fechaNacimiento(_fechaNacimiento), miDosis(&_miDosis) {
 }
 
+/**
+ * @brief Constructor copia
+ * @param[in] - Referencia a un objeto tipo Usuario
+ * @param[out] -
+ * @return -
+ *
+ *
+ */
 Usuario::Usuario(const Usuario &orig){
     this->nombre = orig.nombre;
     this->apellidos = orig.apellidos;
@@ -16,8 +31,17 @@ Usuario::Usuario(const Usuario &orig){
     this->fechaNacimiento.asignarDia(orig.fechaNacimiento.verDia(),orig.fechaNacimiento.verMes(),orig.fechaNacimiento.verAnio());
     this->miDosis = orig.miDosis;
 }
+/**
+ * @brief Operador de asignación
+ * @param[in] -  Referencia a un objeto de tipo usuario
+ * @param[out] -
+ * @return -
+ *
+ *
+ */
 
 Usuario& Usuario::operator=(const Usuario &elDeLaDerecha){
+
     if(this != &elDeLaDerecha) {
         nombre = elDeLaDerecha.nombre;
         apellidos = elDeLaDerecha.apellidos;
@@ -25,6 +49,7 @@ Usuario& Usuario::operator=(const Usuario &elDeLaDerecha){
         fechaNacimiento = elDeLaDerecha.fechaNacimiento;
         miDosis = elDeLaDerecha.miDosis;
     }
+
     return (*this);
 }
 
@@ -72,9 +97,17 @@ Dosis &Usuario::getMiDosis() const {
     return *miDosis;
 }
 
-void Usuario::setMiDosis(Dosis &miDosis) {
-    this->miDosis = &miDosis;
+void Usuario::setMiDosis(Dosis *miDosis) {
+    this->miDosis = miDosis;
 }
+/**
+ * @brief Operador de igualdad
+ * @param[in] -Referencia a objeto de tipo Usuario
+ * @param[out] -
+ * @return True si los objetos son iguales en nombre, apellidos, nss, y fecha de nacimiento
+ *
+ *
+ */
 
 bool Usuario::operator==(const Usuario &elDeLaDerecha) const {
     return nombre == elDeLaDerecha.nombre &&
@@ -84,10 +117,26 @@ bool Usuario::operator==(const Usuario &elDeLaDerecha) const {
            miDosis == elDeLaDerecha.miDosis;
 }
 
+/**
+ * @brief Operador de no igualdad
+ * @param[in] - Referencia a objeto de tipo Usuario
+ * @param[out] -
+ * @return True si no son iguales
+ *
+ *
+ */
 bool Usuario::operator!=(const Usuario &elDeLaDerecha) const {
     return !(elDeLaDerecha == *this);
 }
 
+/**
+ * @brief Ordena a los usuarios por su fecha de nacimiento
+ * @param[in] - Referencia a objeto de tipo Usuario
+ * @param[out] -
+ * @return -True si la fecha del primero es menor que la del segundo, false en caso contrario
+ *
+ *
+ */
 bool Usuario::operator<(const Usuario &elDeLaDerecha) const {
     /*if (nombre < elDeLaDerecha.nombre)
         return true;
@@ -120,12 +169,27 @@ bool Usuario::operator>=(const Usuario &rhs) const {
     return !(*this < rhs);
 }
 
+/**
+ * @brief Operador de impresión
+ * @param[in] - Referecnia a la clase de salida por pantalla, una referencia a un objeto de tipo usuario
+ * @param[out] -
+ * @return -
+ *
+ *
+ */
 ostream &operator<<(ostream &os, const Usuario &usuario) {
     os << "Nombre: " << usuario.nombre << " | Apellidos: " << usuario.apellidos << " | NSS: " << usuario.nss
        << " | Fecha de Nacimiento: " << usuario.fechaNacimiento.cadenaDia() << " | Dosis: " << usuario.miDosis->GetId();
     return os;
 }
-
+/**
+ * @brief Destructor por defecto
+ * @param[in] -
+ * @param[out] -
+ * @return -
+ *
+ *
+ */
 Usuario::~Usuario() {
 
 }

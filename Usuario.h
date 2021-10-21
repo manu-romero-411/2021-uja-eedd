@@ -18,16 +18,16 @@ private:
     string apellidos;
     string nss;
     Fecha fechaNacimiento;
-    Dosis* miDosis;
+    Dosis* miDosis; //Puntero a la dosis asignada al usuario
 public:
-    Dosis &getMiDosis() const;
+    Dosis &getMiDosis() const; 
 
-    void setMiDosis(Dosis &miDosis);
+    void setMiDosis(Dosis *miDosis);
     //UTM domicilio;
 public:
     Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento,
-            Dosis &miDosis);
-    Usuario(const Usuario &orig);
+            Dosis &miDosis); //Constructor por defecto
+    Usuario(const Usuario &orig); //Constructor copia
     const string &getApellidos() const;
     void setApellidos(const string &apellidos);
     const string &getNss() const;
@@ -39,16 +39,16 @@ public:
     //const UTM getDomicilio() const;
     //void setDomicilio(const UTM &dom);
 
-    Usuario& operator=(const Usuario &elDeLaDerecha);
-    bool operator==(const Usuario &elDeLaDerecha) const;
-    bool operator!=(const Usuario &elDeLaDerecha) const;
-    bool operator<(const Usuario &elDeLaDerecha) const;
-    bool operator>(const Usuario &elDeLaDerecha) const;
+    Usuario& operator=(const Usuario &elDeLaDerecha); //Operador de asignacion
+    bool operator==(const Usuario &elDeLaDerecha) const; //Operador de igualdad
+    bool operator!=(const Usuario &elDeLaDerecha) const;//Operador de no igualdad
+    bool operator<(const Usuario &elDeLaDerecha) const;//Operador de menor (por fecha de nacimiento)
+    bool operator>(const Usuario &elDeLaDerecha) const;//Operador de mayor 
     bool operator<=(const Usuario &elDeLaDerecha) const;
     bool operator>=(const Usuario &elDeLaDerecha) const;
     virtual ~Usuario();
 
-    friend ostream &operator<<(ostream &os, const Usuario &usuario);
+    friend ostream &operator<<(ostream &os, const Usuario &usuario); //Operador para imprimir por pantalla
 };
 
 
