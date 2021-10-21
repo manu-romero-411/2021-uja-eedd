@@ -17,7 +17,7 @@
 using namespace std;
 
 int main() {
-    try {
+    try { //Empezamos recuperando las dosis y los usuarios de los archivos de texto
         ifstream archivoDosis("dosis.txt");
         ifstream archivoUsuarios("usuarios.txt");
         string palabra;
@@ -31,7 +31,7 @@ int main() {
         int anno = 0;
 
         clock_t t_ini = clock();
-
+        //Tercer apartado de la práctica, iinstanciar el vector dinámico con las dosis
         cout << "\n\n****** Instanciando dosis ******"<< "\n";
         VDinamico<Dosis> vectorDosis;
         int iterador = 0;
@@ -74,6 +74,8 @@ int main() {
         float longitud, latitud;
         string nombre, apellido, nss;
 
+
+        //Segundo apartado de la práctica, instanciar la lista con los usuarios
         cout << "\n\n****** Instanciando usuarios ******"<< "\n";
         ListaEnlazada<Usuario> listaUsuarios;
         int iteradorB = 0;
@@ -111,21 +113,21 @@ int main() {
             fecha.asignarDia(dia,mes,anno);
             Usuario nuevoUsuario(nombre, apellido, nss, fecha, *vectorDosis.leer(iteradorB));
             listaUsuarios.insertaFin(nuevoUsuario);
-
-            //cout << nuevoUsuario << endl;
             ++iteradorB;
         }
-
+        //Cuarto apartado de la práctica, recorremos la lista asignando dosis a los ususarios y mostrandolos por pantalla con su operador
         cout << "\n\n****** Mostrando 50 primeros usuarios con el ID de sus dosis ******"<< "\n";
-        Iterador<Usuario> iteracao2 = listaUsuarios.iteradorInicio();
+        Iterador<Usuario> iteracao2 = listaUsuarios.iteradorInicio(); //Iterador para este apartado, iniciado al inicio
         for(int i = 0; i < 50; ++i){
             iteracao2.dato().setMiDosis(*vectorDosis.leer(i));
             cout << iteracao2.dato() << endl;
             iteracao2.siguiente();
         }
 
+
+        //Quinto apartado de la práctica, buscar usuarios por nss 
         cout << "\n\n****** Buscando NSS de usuarios ******"<< "\n";
-        Iterador<Usuario> iteraBusca1 = listaUsuarios.iteradorInicio();
+        Iterador<Usuario> iteraBusca1 = listaUsuarios.iteradorInicio(); //Iterador para este apartado, iniciado al inicio
         int anyoActual = 2021;
         int mesActual = 10;
         int diaActual = 19;
@@ -147,17 +149,21 @@ int main() {
             iteraBusca1.siguiente();
         }
 
+
+        // Apartado por parejas de la práctica
         cout << "\n\n****** Viendo nombres repetidos ******"<< "\n";
         VDinamico<std::string> vectorNombresRepes;
-        Iterador<Usuario> iteraBusca3 = listaUsuarios.iteradorInicio();
+        Iterador<Usuario> iteraBusca3 = listaUsuarios.iteradorInicio(); //Iterador para este apartado, iniciado al inicio
 
         for (int i = 0; i < listaUsuarios.tam(); ++i){
             vectorNombresRepes.insertar(iteraBusca3.dato().getNombre(),i);
             iteraBusca3.siguiente();
         }
+        //Construimos un vector dinámico con los nombres de los usuarios
         
-        vectorNombresRepes.ordenar();
+        vectorNombresRepes.ordenar(); //Ordenamos el vector Alfabéticamente
 
+        //Buscamos el nombre más repetido
         std::string nombreRepetido = *vectorNombresRepes.leer(0);
         int vecesRepetido = 1;
         int mayorVecesRepetido = 1;
@@ -176,9 +182,12 @@ int main() {
         }
         cout << "Nombre más repetido: " << nombreRepetido << " (" << mayorVecesRepetido << " veces) \n" ;
 
+
+        //Sexto apartado de la práctica, buscar y borrar a los usuarios con nombre "Joan"
         cout << "\n\n****** Buscando y borrando usuarios Joan ******"<< "\n";
         cout << "\nNúmero de usuarios antes de borrar Joan: "<< listaUsuarios.tam() << "\n";
 
+        
         Iterador<Usuario> iteraBusca2 = listaUsuarios.iteradorInicio();
         int numJoan = 0;
         for (int i = 0; i < listaUsuarios.tam(); ++i) {
@@ -190,6 +199,7 @@ int main() {
             iteraBusca2.siguiente();
         }
         cout << "Número de Joan borrados: " << numJoan << "\n";
+        //Séptimo apartado de la práctica, mostrar el tamaño despues del borrado
         cout << "Número de usuarios tras borrar Joan: "<< listaUsuarios.tam() << "\n";
 
         Iterador<Usuario> iteraBusca4 = listaUsuarios.iteradorInicio();

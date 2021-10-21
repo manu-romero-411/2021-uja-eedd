@@ -4,9 +4,14 @@
 
 #ifndef EEDD_LISTAENLAZADA_H
 #define EEDD_LISTAENLAZADA_H
+/*
+Clase nodo, elemento básico de la lista enlazada. Cuenta con dos punteros, uno al dato que
+contiene y otro al siguiente nodo en la lista
+*/
 
 template<class T>
 class Nodo {
+    //Constructor poro defecto de nodom necesita la dirección del dato
 public:
     Nodo(){
         dato = nullptr ;
@@ -21,44 +26,58 @@ public:
 template<class T>
 class ListaEnlazada;
 
+/*
+Clase iterador, herramienta del usuario para recorrer la lista enlazada
+*/
 template<class T>
 class Iterador {
-    Nodo<T> *nodo;
+    Nodo<T> *nodo; //el iterador se apunta a un nodo
     friend class ListaEnlazada<T>;
 public:
-    Iterador(Nodo<T> *aNodo) : nodo(aNodo) {}
-    bool fin() { return nodo == nullptr; }
-    void siguiente() { nodo = nodo->sig; }
-    T &dato() { return nodo->dato; }
+    Iterador(Nodo<T> *aNodo) : nodo(aNodo) {} //Constructor proporcionando un nodo
+    bool fin() { return nodo == nullptr; } //Devuelve true si el nodo está vacío
+    void siguiente() { nodo = nodo->sig; } //Pasa al siguiente nodo de la lista
+    T &dato() { return nodo->dato; } //Devuelve la referencia al dato del nodo al que apunta
 };
 
+/*
+Clase lista enlazada
+*/
 template<class T>
 class ListaEnlazada {
     private:
-        Nodo<T>* cabecera;
-        Nodo<T>* cola;
-        int tama;
+        Nodo<T>* cabecera; //Puntero al primer elemento de la lista
+        Nodo<T>* cola; //Puntero al ultimo elemento de la lista
+        int tama; //Numero de elementos en la lista
     public:
-        ListaEnlazada<T>();
-        ListaEnlazada<T>(const ListaEnlazada<T> &orig);
-        ListaEnlazada<T>& operator=(const ListaEnlazada<T> &otro);
-        T& inicio();
-        T& fin();
+        ListaEnlazada<T>(); //Constructor por defecto
+        ListaEnlazada<T>(const ListaEnlazada<T> &orig); //Constructor copia
+        ListaEnlazada<T>& operator=(const ListaEnlazada<T> &otro); //Operador de asignación
+        T& inicio(); //Devuelve el dato en la primera posición de la lista (cabecera)
+        T& fin();    //Devuelve el dato en la última posición de la lista (cola)
 
-        Iterador<T> iteradorInicio();
-        Iterador<T> iteradorFinal();
+        Iterador<T> iteradorInicio(); //Crea un iterador al inicio de la lista
+        Iterador<T> iteradorFinal(); //Crea un iterador al inicio de la lista
 
-        void insertaInicio(T& dato);
-        void insertaFin(T& dato);
-        void inserta(Iterador<T> &it, T& dato);
-        void borraInicio();
-        void borraFinal();
-        void borra(Iterador<T> &it);
-        int tam();
-        bool buscar(T &dato, Iterador<T> &it);
+        void insertaInicio(T& dato); //Inserta un dato al inicio de la lista
+        void insertaFin(T& dato); //Inserta un dato al final de la lista
+        void inserta(Iterador<T> &it, T& dato); //Inserta un dato en la posición donde apunta el iterador de la lista
+        void borraInicio(); //Borra el primer elemento
+        void borraFinal(); //Borra el ultimo elemento
+        void borra(Iterador<T> &it); //Borra el elemento indicado por el iterador
+        int tam(); //devuelve el numero de elementos
+        bool buscar(T &dato, Iterador<T> &it); //Indica si un elemento concreto está en la posición indicada por el iterador
         ~ListaEnlazada();
 };
 
+/**
+* @brief Constructor por defecto
+* @param[in]
+* @param[out] -
+* @return -
+*
+*
+*/
 template <class T>
 ListaEnlazada<T>::ListaEnlazada(){
     tama = 0;
@@ -66,6 +85,14 @@ ListaEnlazada<T>::ListaEnlazada(){
     cola = nullptr;
 }
 
+/**
+* @brief Constructor copia
+* @param[in] Referencia a un objeto ListaEnlazada
+* @param[out] -
+* @return -
+*
+*
+*/
 template <class T>
 ListaEnlazada<T>::ListaEnlazada(const ListaEnlazada<T> &orig){
     cabecera = nullptr;
@@ -77,9 +104,16 @@ ListaEnlazada<T>::ListaEnlazada(const ListaEnlazada<T> &orig){
         this->insertaFin(n->dato);
         n = n->sig;
     }
-    //this->tama = orig.tama;
 }
 
+/**
+* @brief Operador de asignación
+* @param[in] Referencia a un objeto ListaEnlazada
+* @param[out] -
+* @return - Devuelve un puntero a este objeto (Para asignaciones encadenadas)
+*
+*
+*/
 template <class T>
 ListaEnlazada<T>& ListaEnlazada<T>::operator=(const ListaEnlazada<T> &otro){
     Nodo<T> *p = cabecera;
@@ -100,6 +134,14 @@ ListaEnlazada<T>& ListaEnlazada<T>::operator=(const ListaEnlazada<T> &otro){
     return (*this);
 }
 
+/**
+* @brief Devuelve el dato al inicio de la lista
+* @param[in] -
+* @param[out] -
+* @return - Dato en la lista
+*
+*
+*/
 template <class T>
 T& ListaEnlazada<T>::inicio(){
     if (cabecera == nullptr)
@@ -107,6 +149,14 @@ T& ListaEnlazada<T>::inicio(){
     else
         return cabecera->dato;
 }
+/**
+* @brief Devuelve el dato al final de la lista
+* @param[in] -
+* @param[out] -
+* @return - Dato en la lista
+*
+*
+*/
 
 template <class T>
 T& ListaEnlazada<T>::fin(){
@@ -115,16 +165,42 @@ T& ListaEnlazada<T>::fin(){
     else
         return cola->dato;
 }
+/**
+* @brief Devuelve un iterador apuntando al inicio de la lista
+* @param[in] -
+* @param[out] -
+* @return - Objeto Iterador
+*
+*
+*/
 
 template <class T>
 Iterador<T> ListaEnlazada<T>::iteradorInicio() {
     return Iterador<T>(cabecera);
 }
 
+/**
+* @brief Devuelve un iterador apuntando al final de la lista
+* @param[in] -
+* @param[out] -
+* @return - Objeto Iterador
+*
+*
+*/
 template <class T>
 Iterador<T> ListaEnlazada<T>::iteradorFinal() {
     return Iterador<T>(cola);
 }
+
+
+/**
+* @brief Inserta un elemento al principio de la lista
+* @param[in] -Referencia al objeto a insertar
+* @param[out] -
+* @return - 
+*
+*
+*/
 
 template <class T>
 void ListaEnlazada<T>::insertaInicio(T& dato){
@@ -140,6 +216,15 @@ void ListaEnlazada<T>::insertaInicio(T& dato){
     tama++;
 }
 
+
+/**
+* @brief Inserta un elemento al final de la lista
+* @param[in] -Referencia al objeto a insertar
+* @param[out] -
+* @return -
+*
+*
+*/
 template <class T>
 void ListaEnlazada<T>::insertaFin(T& dato){
     Nodo<T> *nuevo = new Nodo<T>(dato, nullptr);
@@ -152,6 +237,15 @@ void ListaEnlazada<T>::insertaFin(T& dato){
     cola = nuevo;
     tama++;
 }
+
+/**
+* @brief Inserta un elemento en una posición de la lista
+* @param[in] -Referencia al objeto a insertar, iterador indicando a la posición
+* @param[out] -
+* @return -
+*
+*
+*/
 
 template <class T>
 void ListaEnlazada<T>::inserta(Iterador<T> &it, T& dato){
@@ -168,6 +262,15 @@ void ListaEnlazada<T>::inserta(Iterador<T> &it, T& dato){
     }
 }
 
+/**
+* @brief Borra el elemento al principio de la lista
+* @param[in] -
+* @param[out] -
+* @return -
+*
+*
+*/
+
 template <class T>
 void ListaEnlazada<T>::borraInicio(){
     if (cabecera == nullptr) {
@@ -182,6 +285,15 @@ void ListaEnlazada<T>::borraInicio(){
         tama--;
     }
 }
+
+/**
+* @brief Borra un elemento al final de la lista
+* @param[in] -Referencia al objeto a insertar, iterador indicando a la posición
+* @param[out] -
+* @return -
+*
+*
+*/
 
 template <class T>
 void ListaEnlazada<T>::borraFinal(){
@@ -207,6 +319,14 @@ void ListaEnlazada<T>::borraFinal(){
         tama--;
     }
 }
+/**
+* @brief Borra un elemento en una posición de la lista
+* @param[in]  Iterador indicando a la posición
+* @param[out] -
+* @return -
+*
+*
+*/
 
 template <class T>
 void ListaEnlazada<T>::borra(Iterador<T> &it){
@@ -240,6 +360,14 @@ template <class T>
 int ListaEnlazada<T>::tam(){
     return tama;
 }
+/**
+* @brief Busca si está un dato en una posición determinada
+* @param[in]  Iterador indicando a la posición, objeto a buscar
+* @param[out] - 
+* @return Booleano indicando si se ha encontrado el elemento
+*
+*
+*/
 
 template <class T>
 bool ListaEnlazada<T>::buscar(T &dato, Iterador<T> &it){
