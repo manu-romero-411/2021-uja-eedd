@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   main.cpp
  * Author: Manuel Jesús Romero Mateos, José Ángel Ángeles Santiago
  *
@@ -8,33 +8,34 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <ctime>
 #include "VDinamico.h"
+#include "ListaEnlazada.h"
 #include "Dosis.h"
+#include "Usuario.h"
 
 using namespace std;
 
 int main() {
+    try { //Empezamos recuperando las dosis y los usuarios de los archivos de texto
+        ifstream archivoDosis("dosis.txt");
+        ifstream archivoUsuarios("usuarios.txt");
+        string palabra;
+        int corte = 0;
 
-    ifstream is("dosis.txt");
-    string palabra;
-    int corte = 0;
+        int id = 0;
+        int idLote = 0;
+        int fabricante = 0;
+        int dia = 0;
+        int mes = 0;
+        int anno = 0;
 
-    int id = 0;
-    int idLote = 0;
-    int fabricante = 0;
-    int dia = 0;
-    int mes = 0;
-    int anno = 0;
-    std::cout << "hola" <<endl;
-            std::cout << "hola" <<endl;
-    std::cout << "hola" <<endl;
-    std::cout << "hola" <<endl;
-
-    clock_t t_ini = clock();
-    VDinamico<Dosis> vectorDosis;
-
-    int iterador = 0;
-    while (getline(is, palabra)) {
+        clock_t t_ini = clock();
+        //Tercer apartado de la práctica, iinstanciar el vector dinámico con las dosis
+        cout << "\n\n****** Instanciando dosis ******"<< "\n";
+        VDinamico<Dosis> vectorDosis;
+        int iterador = 0;
+        while (getline(archivoDosis, palabra)) {
 
             corte = palabra.find(';');
             id = stoi(palabra.substr(0, corte));
@@ -60,105 +61,167 @@ int main() {
             Dosis nuevaDosis(id, idLote, fabricante, dia, mes, anno);
             vectorDosis.insertar(nuevaDosis, iterador);
 
-            cout << "Dosis: (ID=" << vectorDosis.leer(iterador)->GetId() 
-            << "; Lote=" << vectorDosis.leer(iterador)->GetIdLote()
-            << "; Fabricante=\"" << vectorDosis.leer(iterador)->GetFabricante()
-            << "\"; Fecha="
-            << vectorDosis.leer(iterador)->GetFechaFabricacion().verDia()
-            << "/"
-            <<vectorDosis.leer(iterador)->GetFechaFabricacion().verMes()
-            << "/"
-            << vectorDosis.leer(iterador)->GetFechaFabricacion().verAnio()
-            << ")" << endl;
+            //cout << *vectorDosis.leer(iterador);
             ++iterador;
-    }
-    
-    // Ordenación de dosis
-    std::cout << "\n\n***Dosis sin ordenar:\n";
-    for (unsigned i = 0; i < 50; ++i){
-        std::cout << "Dosis " << i << ": ID " << vectorDosis.leer(i)->GetId() << endl;
-    }        
-    
-    std::cout << "\n\n***Dosis ordenadas al revés:\n";
-    vectorDosis.ordenarRev();
-    for (int i = 0; i < 50; ++i){
-        std::cout << "Dosis " << i << ": ID " << vectorDosis.leer(i)->GetId() << endl;
-    }
+        }
+        archivoDosis.close();
 
-    std::cout << "\n\n***Dosis ordenadas de menor a mayor:\n";
-    vectorDosis.ordenar();
-    for (int i = 0; i < 50; ++i){
-        std::cout << "Dosis " << i << ": ID " << vectorDosis.leer(i)->GetId() << endl;
-    }
-    
-    // Búsqueda de dosis
-    Dosis dosisbusq1(346335905);
-    Dosis dosisbusq2(999930245);
-    Dosis dosisbusq3(165837);
-    Dosis dosisbusq4(486415569);
-    Dosis dosisbusq5(61385551);
-    
-    int busq1=vectorDosis.busquedaBin(dosisbusq1,0,vectorDosis.getTamLogico());
-    if(busq1==-1)
-        cout<<"Dosis " << dosisbusq1.GetId() << " no encontrada \n";
-    else   
-        cout<<"Dosis " << dosisbusq1.GetId() << " encontrada en la posición " << busq1 << "\n";
-    
-    int busq2=vectorDosis.busquedaBin(dosisbusq2,0,vectorDosis.getTamLogico());
-    if(busq2==-1)
-        cout<<"Dosis " << dosisbusq2.GetId() << " no encontrada \n";
-    else   
-        cout<<"Dosis " << dosisbusq2.GetId() << " encontrada en la posición " << busq2 << "\n";
-    
-    int busq3=vectorDosis.busquedaBin(dosisbusq3,0,vectorDosis.getTamLogico());
-    if(busq3==-1)
-        cout<<"Dosis " << dosisbusq3.GetId() << " no encontrada \n";
-    else   
-        cout<<"Dosis " << dosisbusq3.GetId() << " encontrada en la posición " << busq3 << "\n";
-    
-    int busq4=vectorDosis.busquedaBin(dosisbusq4,0,vectorDosis.getTamLogico());
-    if(busq4==-1)
-        cout<<"Dosis " << dosisbusq4.GetId() << " no encontrada \n";
-    else   
-        cout<<"Dosis " << dosisbusq4.GetId() << " encontrada en la posición " << busq4 << "\n";
-    
-    int busq5=vectorDosis.busquedaBin(dosisbusq5,0,vectorDosis.getTamLogico());
-    if(busq5==-1)
-        cout<<"Dosis " << dosisbusq5.GetId() << " no encontrada \n";
-    else   
-        cout<<"Dosis " << dosisbusq5.GetId() << " encontrada en la posición " << busq5 << "\n";
-    
-    //Dosis defectuosas
-    VDinamico<Dosis> dosisDefectuosas;
-    cout << "Vector de dosis: Tamaño lógico " << vectorDosis.getTamLogico() << endl;
-    cout << "Vector de defectuosas: Tamaño lógico " << dosisDefectuosas.getTamLogico() << endl;
-    
-    int contadorDefect = 0;
-    for (int i = 0; i < vectorDosis.getTamLogico(); ++i){
-        if(vectorDosis.leer(i)->GetFechaFabricacion().verAnio() == 2020){
-            if((vectorDosis.leer(i)->GetIdLote() % 2 == 0) || (vectorDosis.leer(i)->GetIdLote() % 5 == 0)){
-                if((vectorDosis.leer(i)->GetId() >= 10000) && (vectorDosis.leer(i)->GetId() <= 2500000)){
-                    dosisDefectuosas.insertar(vectorDosis[i], contadorDefect);
-                    contadorDefect++;
-                    vectorDosis.borrar(i);
+        string palabraB;
+        corte = 0;
+        dia = 0;
+        mes = 0;
+        anno = 0;
+        float longitud, latitud;
+        string nombre, apellido, nss;
+
+
+        //Segundo apartado de la práctica, instanciar la lista con los usuarios
+        cout << "\n\n****** Instanciando usuarios ******"<< "\n";
+        ListaEnlazada<Usuario> listaUsuarios;
+        int iteradorB = 0;
+        while (getline(archivoUsuarios, palabraB)) {
+            corte = palabraB.find(';');
+            nombre = palabraB.substr(0, corte);
+            palabraB.erase(0, corte + 1);
+
+            corte = palabraB.find(';');
+            apellido = palabraB.substr(0, corte);
+            palabraB.erase(0, corte + 1);
+
+            corte = palabraB.find(';');
+            nss =palabraB.substr(0, corte);
+            palabraB.erase(0, corte + 1);
+
+            corte = palabraB.find('/');
+            dia = stoi(palabraB.substr(0, corte));
+            palabraB.erase(0, corte + 1);
+
+            corte = palabraB.find('/');
+            mes = stoi(palabraB.substr(0, corte));
+            palabraB.erase(0, corte + 1);
+
+            corte = palabraB.find(';');
+            anno = stoi(palabraB.substr(0, corte));
+            palabraB.erase(0, corte + 1);
+
+            corte = palabraB.find(';');
+            longitud = stoi(palabraB.substr(0, corte));
+            palabraB.erase(0, corte + 1);
+
+            latitud = stoi(palabraB);
+            Fecha fecha;
+            fecha.asignarDia(dia,mes,anno);
+            Usuario nuevoUsuario(nombre, apellido, nss, fecha, *vectorDosis.leer(iteradorB));
+            listaUsuarios.insertaFin(nuevoUsuario);
+            ++iteradorB;
+        }
+        //Cuarto apartado de la práctica, recorremos la lista asignando dosis a los ususarios y mostrandolos por pantalla con su operador
+        cout << "\n\n****** Mostrando 50 primeros usuarios con el ID de sus dosis ******"<< "\n";
+        Iterador<Usuario> iteracao2 = listaUsuarios.iteradorInicio(); //Iterador para este apartado, iniciado al inicio
+        for(int i = 0; i < 50; ++i){
+            iteracao2.dato().setMiDosis(*vectorDosis.leer(i));
+            cout << iteracao2.dato() << endl;
+            iteracao2.siguiente();
+        }
+
+
+        //Quinto apartado de la práctica, buscar usuarios por nss 
+        cout << "\n\n****** Buscando NSS de usuarios ******"<< "\n";
+        Iterador<Usuario> iteraBusca1 = listaUsuarios.iteradorInicio(); //Iterador para este apartado, iniciado al inicio
+        int anyoActual = 2021;
+        int mesActual = 10;
+        int diaActual = 19;
+        int numUsuario = 0;
+        for ( int i = 0; i < listaUsuarios.tam(); ++i){
+            if ((iteraBusca1.dato().getNss() == "1491983009") || (iteraBusca1.dato().getNss() == "1280280451") || (iteraBusca1.dato().getNss() == "1696453083")){
+
+                int edad = anyoActual - iteraBusca1.dato().getFechaNacimiento().verAnio();
+                if  (iteraBusca1.dato().getFechaNacimiento().verMes() > mesActual) {
+                    edad--;
+                } else {
+                    if ((iteraBusca1.dato().getFechaNacimiento().verDia() > diaActual) && ((iteraBusca1.dato().getFechaNacimiento().verMes() == mesActual))){
+                        edad--;
+                    }
                 }
+                cout << "USUARIO " << numUsuario+1 << " -- Nombre: " << iteraBusca1.dato().getNombre()  << " - Apellido: " << iteraBusca1.dato().getApellidos() << " - Edad: " << edad << " años - NSS:"  << iteraBusca1.dato().getNss() << " - ID Dosis:" << iteraBusca1.dato().getMiDosis().GetId() << "\n";
+                numUsuario++;
+            }
+            iteraBusca1.siguiente();
+        }
+
+
+        // Apartado por parejas de la práctica
+        cout << "\n\n****** Viendo nombres repetidos ******"<< "\n";
+        VDinamico<std::string> vectorNombresRepes;
+        Iterador<Usuario> iteraBusca3 = listaUsuarios.iteradorInicio(); //Iterador para este apartado, iniciado al inicio
+
+        for (int i = 0; i < listaUsuarios.tam(); ++i){
+            vectorNombresRepes.insertar(iteraBusca3.dato().getNombre(),i);
+            iteraBusca3.siguiente();
+        }
+        //Construimos un vector dinámico con los nombres de los usuarios
+        
+        vectorNombresRepes.ordenar(); //Ordenamos el vector Alfabéticamente
+
+        //Buscamos el nombre más repetido
+        std::string nombreRepetido = *vectorNombresRepes.leer(0);
+        int vecesRepetido = 1;
+        int mayorVecesRepetido = 1;
+        for (int i = 1; i < vectorNombresRepes.getTamLogico(); i++){
+            std::string nombreActual = *vectorNombresRepes.leer(i);
+            std::string nombreAnterior = *vectorNombresRepes.leer(i-1);
+            if (nombreActual == nombreAnterior){
+                vecesRepetido++;
+                if (vecesRepetido > mayorVecesRepetido) {
+                    mayorVecesRepetido = vecesRepetido;
+                    nombreRepetido = *vectorNombresRepes.leer(i);
+                }
+            } else {
+                vecesRepetido = 1;
             }
         }
+        cout << "Nombre más repetido: " << nombreRepetido << " (" << mayorVecesRepetido << " veces) \n" ;
+
+
+        //Sexto apartado de la práctica, buscar y borrar a los usuarios con nombre "Joan"
+        cout << "\n\n****** Buscando y borrando usuarios Joan ******"<< "\n";
+        cout << "\nNúmero de usuarios antes de borrar Joan: "<< listaUsuarios.tam() << "\n";
+
+        
+        Iterador<Usuario> iteraBusca2 = listaUsuarios.iteradorInicio();
+        int numJoan = 0;
+        for (int i = 0; i < listaUsuarios.tam(); ++i) {
+            if (iteraBusca2.dato().getNombre() == "Joan"){
+                numJoan++;
+                listaUsuarios.borra(iteraBusca2);
+                //cout << "Borrado Joan nº" << numJoan << "\n";
+            }
+            iteraBusca2.siguiente();
+        }
+        cout << "Número de Joan borrados: " << numJoan << "\n";
+        //Séptimo apartado de la práctica, mostrar el tamaño despues del borrado
+        cout << "Número de usuarios tras borrar Joan: "<< listaUsuarios.tam() << "\n";
+
+        Iterador<Usuario> iteraBusca4 = listaUsuarios.iteradorInicio();
+        numJoan = 0;
+        for (int i = 0; i < listaUsuarios.tam(); ++i) {
+            if (iteraBusca4.dato().getNombre() == "Joan"){
+                numJoan++;
+                listaUsuarios.borra(iteraBusca2);
+                //cout << "Borrado Joan nº" << numJoan << "\n";
+            }
+            iteraBusca4.siguiente();
+        }
+        cout << "Número de Joan encontrados después: "<<  numJoan << "\n";
+
+        //cout << "Resultado de volver a buscar Joan: " <<
+
+        archivoUsuarios.close();
+        return 0;
+    } catch (std::exception &e) {
+        cout << e.what();
+        return 1;
     }
-
-    cout << "Vector de dosis: Tamaño lógico " << vectorDosis.getTamLogico() << endl;
-    cout << "Vector de defectuosas: Tamaño lógico " << dosisDefectuosas.getTamLogico() << endl;
-
-    for(int i = 0; i < dosisDefectuosas.getTamLogico(); ++i) {
-        std::cout << "Dosis defectuosa nº " << i + 1 << ": " << "\n* ID:\t" << dosisDefectuosas.leer(i)->GetId()
-                  << "\n* ID Lote:\t";
-    }
-
-    cout << "Tiempo lectura: " << ((clock() - t_ini) / (float)CLOCKS_PER_SEC) << " segs." << endl;
-    is.close();
-    
-  return 0;
-
-    }
+}
   
 

@@ -14,7 +14,8 @@
 #ifndef DOSIS_H
 #define DOSIS_H
 #include <cstdlib>
-#include "fecha.h"
+#include <ostream>
+#include "Fecha.h"
 //fabricante de la dosis
 enum nombreFabricante {
     Pfizer = 0,
@@ -48,7 +49,10 @@ public:
     Dosis& operator=(const Dosis &otro);//Asigna dosis dependiendo de su identificador
     bool operator>(const Dosis &otra) const;//Compara dosis dependiendo de su identificador
     bool operator==(const Dosis &otra) const;//Compara dosis dependiendo de su identificador
-    void imprimir();//Muestra por pantalla información básica de la dosis
+    void imprimir();
+
+    friend ostream &operator<<(ostream &os, const Dosis &dosis);
+//Muestra por pantalla información básica de la dosis
 };
 #endif /* DOSIS_H */
 
