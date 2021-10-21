@@ -1,6 +1,6 @@
 /*
  * File:   main.cpp
- * Author: Manuel Jesús Romero Mateos, José Ángel Ángeles Santiago
+ * Author: Manuel Jesus Romero Mateos, Jose angel angeles Santiago
  *
  * Created on 22 de septiembre de 2021, 20:36
  */
@@ -31,7 +31,7 @@ int main() {
         int anno = 0;
 
         clock_t t_ini = clock();
-        //Tercer apartado de la práctica, iinstanciar el vector dinámico con las dosis
+        //Tercer apartado de la practica, iinstanciar el vector dinamico con las dosis
         cout << "\n\n****** Instanciando dosis ******"<< "\n";
         VDinamico<Dosis> vectorDosis;
         int iterador = 0;
@@ -75,7 +75,7 @@ int main() {
         string nombre, apellido, nss;
 
 
-        //Segundo apartado de la práctica, instanciar la lista con los usuarios
+        //Segundo apartado de la practica, instanciar la lista con los usuarios
         cout << "\n\n****** Instanciando usuarios ******"<< "\n";
         ListaEnlazada<Usuario> listaUsuarios;
         int iteradorB = 0;
@@ -115,17 +115,18 @@ int main() {
             listaUsuarios.insertaFin(nuevoUsuario);
             ++iteradorB;
         }
-        //Cuarto apartado de la práctica, recorremos la lista asignando dosis a los ususarios y mostrandolos por pantalla con su operador
+        //Cuarto apartado de la practica, recorremos la lista asignando dosis a los ususarios y mostrandolos por pantalla con su operador
         cout << "\n\n****** Mostrando 50 primeros usuarios con el ID de sus dosis ******"<< "\n";
         Iterador<Usuario> iteracao2 = listaUsuarios.iteradorInicio(); //Iterador para este apartado, iniciado al inicio
         for(int i = 0; i < 50; ++i){
-            iteracao2.dato().setMiDosis(*vectorDosis.leer(i));
+            Dosis *dosisd = &vectorDosis[i];
+            iteracao2.dato().setMiDosis(dosisd);
             cout << iteracao2.dato() << endl;
             iteracao2.siguiente();
         }
 
 
-        //Quinto apartado de la práctica, buscar usuarios por nss 
+        //Quinto apartado de la practica, buscar usuarios por nss 
         cout << "\n\n****** Buscando NSS de usuarios ******"<< "\n";
         Iterador<Usuario> iteraBusca1 = listaUsuarios.iteradorInicio(); //Iterador para este apartado, iniciado al inicio
         int anyoActual = 2021;
@@ -143,14 +144,14 @@ int main() {
                         edad--;
                     }
                 }
-                cout << "USUARIO " << numUsuario+1 << " -- Nombre: " << iteraBusca1.dato().getNombre()  << " - Apellido: " << iteraBusca1.dato().getApellidos() << " - Edad: " << edad << " años - NSS:"  << iteraBusca1.dato().getNss() << " - ID Dosis:" << iteraBusca1.dato().getMiDosis().GetId() << "\n";
+                cout << "USUARIO " << numUsuario+1 << " -- Nombre: " << iteraBusca1.dato().getNombre()  << " - Apellido: " << iteraBusca1.dato().getApellidos() << " - Edad: " << edad << " anyos - NSS:"  << iteraBusca1.dato().getNss() << " - ID Dosis:" << iteraBusca1.dato().getMiDosis().GetId() << "\n";
                 numUsuario++;
             }
             iteraBusca1.siguiente();
         }
 
 
-        // Apartado por parejas de la práctica
+        // Apartado por parejas de la practica
         cout << "\n\n****** Viendo nombres repetidos ******"<< "\n";
         VDinamico<std::string> vectorNombresRepes;
         Iterador<Usuario> iteraBusca3 = listaUsuarios.iteradorInicio(); //Iterador para este apartado, iniciado al inicio
@@ -159,11 +160,11 @@ int main() {
             vectorNombresRepes.insertar(iteraBusca3.dato().getNombre(),i);
             iteraBusca3.siguiente();
         }
-        //Construimos un vector dinámico con los nombres de los usuarios
+        //Construimos un vector dinamico con los nombres de los usuarios
         
-        vectorNombresRepes.ordenar(); //Ordenamos el vector Alfabéticamente
+        vectorNombresRepes.ordenar(); //Ordenamos el vector Alfabeticamente
 
-        //Buscamos el nombre más repetido
+        //Buscamos el nombre mas repetido
         std::string nombreRepetido = *vectorNombresRepes.leer(0);
         int vecesRepetido = 1;
         int mayorVecesRepetido = 1;
@@ -180,12 +181,12 @@ int main() {
                 vecesRepetido = 1;
             }
         }
-        cout << "Nombre más repetido: " << nombreRepetido << " (" << mayorVecesRepetido << " veces) \n" ;
+        cout << "Nombre mas repetido: " << nombreRepetido << " (" << mayorVecesRepetido << " veces) \n" ;
 
 
-        //Sexto apartado de la práctica, buscar y borrar a los usuarios con nombre "Joan"
+        //Sexto apartado de la practica, buscar y borrar a los usuarios con nombre "Joan"
         cout << "\n\n****** Buscando y borrando usuarios Joan ******"<< "\n";
-        cout << "\nNúmero de usuarios antes de borrar Joan: "<< listaUsuarios.tam() << "\n";
+        cout << "\nNumero de usuarios antes de borrar Joan: "<< listaUsuarios.tam() << "\n";
 
         
         Iterador<Usuario> iteraBusca2 = listaUsuarios.iteradorInicio();
@@ -198,9 +199,9 @@ int main() {
             }
             iteraBusca2.siguiente();
         }
-        cout << "Número de Joan borrados: " << numJoan << "\n";
-        //Séptimo apartado de la práctica, mostrar el tamaño despues del borrado
-        cout << "Número de usuarios tras borrar Joan: "<< listaUsuarios.tam() << "\n";
+        cout << "Numero de Joan borrados: " << numJoan << "\n";
+        //Septimo apartado de la practica, mostrar el tamaño despues del borrado
+        cout << "Numero de usuarios tras borrar Joan: "<< listaUsuarios.tam() << "\n";
 
         Iterador<Usuario> iteraBusca4 = listaUsuarios.iteradorInicio();
         numJoan = 0;
@@ -212,7 +213,7 @@ int main() {
             }
             iteraBusca4.siguiente();
         }
-        cout << "Número de Joan encontrados después: "<<  numJoan << "\n";
+        cout << "Numero de Joan encontrados despues: "<<  numJoan << "\n";
 
         //cout << "Resultado de volver a buscar Joan: " <<
 
