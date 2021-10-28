@@ -13,6 +13,7 @@
 #include "ListaEnlazada.h"
 #include "Dosis.h"
 #include "Usuario.h"
+#include "AVL.h"
 
 using namespace std;
 

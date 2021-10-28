@@ -17,7 +17,7 @@ public:
         dato = nullptr ;
         sig = nullptr;
     }
-    T dato = 0;
+    T dato = nullptr;
     Nodo *sig;
     Nodo(T &aDato, Nodo *aSig = nullptr):
             dato(aDato), sig(aSig) {}
