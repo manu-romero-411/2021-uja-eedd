@@ -9,8 +9,7 @@
 #include <iostream>
 #include "Fecha.h"
 #include "Dosis.h"
-
-using namespace std;
+#include "VDinamico.h"
 
 class Usuario {
 private:
@@ -18,15 +17,15 @@ private:
     string apellidos;
     string nss;
     Fecha fechaNacimiento;
-    Dosis* miDosis; //Puntero a la dosis asignada al usuario
+    VDinamico<Dosis> misDosis; //Puntero a la dosis asignada al usuario
 public:
-    Dosis &getMiDosis() const; 
+    VDinamico<Dosis> getMisDosis() const;
 
-    void setMiDosis(Dosis *miDosis);
+    void setMisDosis(VDinamico<Dosis> otrasDosis);
     //UTM domicilio;
-public:
+
     Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento,
-            Dosis &miDosis); //Constructor por defecto
+            VDinamico<Dosis> dosis); //Constructor por defecto
     Usuario(const Usuario &orig); //Constructor copia
     const string &getApellidos() const;
     void setApellidos(const string &apellidos);

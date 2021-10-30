@@ -18,7 +18,7 @@ using namespace std;
 
 int main() {
     try { //Empezamos recuperando las dosis y los usuarios de los archivos de texto
-        ifstream archivoDosis("dosis.txt");
+        /*ifstream archivoDosis("dosis.txt");
         ifstream archivoUsuarios("usuarios.txt");
         string palabra;
         int corte = 0;
@@ -111,8 +111,8 @@ int main() {
             latitud = stoi(palabraB);
             Fecha fecha;
             fecha.asignarDia(dia,mes,anno);
-            Usuario nuevoUsuario(nombre, apellido, nss, fecha, *vectorDosis.leer(iteradorB));
-            listaUsuarios.insertaFin(nuevoUsuario);
+            //Usuario nuevoUsuario(nombre, apellido, nss, fecha, *vectorDosis.leer(iteradorB));
+            //listaUsuarios.insertaFin(nuevoUsuario);
             ++iteradorB;
         }
         //Cuarto apartado de la practica, recorremos la lista asignando dosis a los ususarios y mostrandolos por pantalla con su operador
@@ -217,7 +217,8 @@ int main() {
 
         //cout << "Resultado de volver a buscar Joan: " <<
 
-        archivoUsuarios.close();
+        archivoUsuarios.close();*/
+        true;
         return 0;
     } catch (std::exception &e) {
         cout << e.what();

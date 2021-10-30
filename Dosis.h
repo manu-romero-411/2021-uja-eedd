@@ -24,6 +24,11 @@ enum nombreFabricante {
     Johnson = 3,
 };
 
+enum estado {
+    administrada = 0,
+    enAlmacen = 1,
+};
+
 class Dosis {
 private:
     int id; //identificador de la dosis concreta
@@ -31,11 +36,12 @@ private:
     nombreFabricante fabricante; //Fabricante de la dosis
     Fecha fechaFabricacion;
     Fecha fechaCaducidad;
+    estado status;
 
 public:
     Dosis();//Constructor por defecto
     Dosis(const Dosis &orig);//Constructor Copia
-    Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno);//Constructor parametrizado
+    Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno, int estado);
     Dosis(int _id);
     virtual ~Dosis();//Destructor
     void SetFechaFabricacion(Fecha fechaFabricacion);//Cambia la fecha de fabricación
@@ -45,6 +51,8 @@ public:
     int GetIdLote() const;//Devuelve el identificador del lote
     void SetId(int id);//Cambia el identificador de dosis
     int GetId() const;//Cambia el identificador de dosis
+    int getStatus() const;
+    void setStatus(estado status);
     bool operator<(const Dosis &otra) const;//Compara dosis dependiendo de su identificador
     Dosis& operator=(const Dosis &otro);//Asigna dosis dependiendo de su identificador
     bool operator>(const Dosis &otra) const;//Compara dosis dependiendo de su identificador

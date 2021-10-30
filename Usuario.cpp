@@ -12,8 +12,9 @@
  *
  */
 Usuario::Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento,
-                 Dosis &_miDosis)
-        : nombre(_nombre), apellidos(_apellidos), nss(_nss), fechaNacimiento(_fechaNacimiento), miDosis(&_miDosis) {
+                 VDinamico<Dosis> dosis)
+        : nombre(_nombre), apellidos(_apellidos), nss(_nss), fechaNacimiento(_fechaNacimiento), misDosis(dosis) {
+
 }
 
 /**
@@ -29,7 +30,7 @@ Usuario::Usuario(const Usuario &orig){
     this->apellidos = orig.apellidos;
     this->nss = orig.nss;
     this->fechaNacimiento.asignarDia(orig.fechaNacimiento.verDia(),orig.fechaNacimiento.verMes(),orig.fechaNacimiento.verAnio());
-    this->miDosis = orig.miDosis;
+    // hacer una llamada al contrusctor copia del vdinamico this->misDosis = orig.misDosis;
 }
 /**
  * @brief Operador de asignación
@@ -47,7 +48,7 @@ Usuario& Usuario::operator=(const Usuario &elDeLaDerecha){
         apellidos = elDeLaDerecha.apellidos;
         nss = elDeLaDerecha.nss;
         fechaNacimiento = elDeLaDerecha.fechaNacimiento;
-        miDosis = elDeLaDerecha.miDosis;
+       // misDosis = elDeLaDerecha.misDosis;
     }
 
     return (*this);
@@ -93,12 +94,12 @@ void Usuario::setDomicilio(const UTM &dom) {
     Usuario::domicilio = dom;
 }*/
 
-Dosis &Usuario::getMiDosis() const {
-    return *miDosis;
+VDinamico<Dosis> Usuario::getMisDosis() const {
+    return misDosis;
 }
 
-void Usuario::setMiDosis(Dosis *miDosis) {
-    this->miDosis = miDosis;
+void Usuario::setMisDosis(VDinamico<Dosis> otrasDosis) {
+    this->misDosis = otrasDosis;
 }
 /**
  * @brief Operador de igualdad
@@ -114,7 +115,7 @@ bool Usuario::operator==(const Usuario &elDeLaDerecha) const {
            apellidos == elDeLaDerecha.apellidos &&
            nss == elDeLaDerecha.nss &&
            fechaNacimiento.mismoDia(elDeLaDerecha.fechaNacimiento) &&
-           miDosis == elDeLaDerecha.miDosis;
+           misDosis == elDeLaDerecha.misDosis;
 }
 
 /**
@@ -179,7 +180,7 @@ bool Usuario::operator>=(const Usuario &rhs) const {
  */
 ostream &operator<<(ostream &os, const Usuario &usuario) {
     os << "Nombre: " << usuario.nombre << " | Apellidos: " << usuario.apellidos << " | NSS: " << usuario.nss
-       << " | Fecha de Nacimiento: " << usuario.fechaNacimiento.cadenaDia() << " | Dosis: " << usuario.miDosis->GetId();
+       << " | Fecha de Nacimiento: " << usuario.fechaNacimiento.cadenaDia();
     return os;
 }
 /**

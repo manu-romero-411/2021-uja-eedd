@@ -30,13 +30,14 @@ Dosis::Dosis() {
  * 
  * 
  */
-Dosis::Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno) {
+Dosis::Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno, int estado) {
     this->id = id;
     this->idLote = idLote;
     this->fabricante = nombreFabricante(idFabricante);
     this->fechaFabricacion.asignarDia(dia, mes, anno);
     this->fechaCaducidad = this->fechaFabricacion;
     this->fechaCaducidad.anadirMeses(2);
+    this->status  = estado;
 }
 
     /* @brief Constructor copia
@@ -156,4 +157,12 @@ ostream &operator<<(ostream &os, const Dosis &dosis) {
     os << "ID: " << dosis.id << " | ID Lote: " << dosis.idLote << " | Fabricante: " << dosis.fabricante
        << " | Fecha fabricación: " << dosis.fechaFabricacion.cadenaDia() << " | Fecha caducidad: " << dosis.fechaCaducidad.cadenaDia() << "\n";
     return os;
+}
+
+int Dosis::getStatus() const {
+    return status;
+}
+
+void Dosis::setStatus(estado status) {
+    Dosis::status = status;
 }
