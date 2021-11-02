@@ -41,7 +41,7 @@ private:
 public:
     Dosis();//Constructor por defecto
     Dosis(const Dosis &orig);//Constructor Copia
-    Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno, int estado);
+    Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno, int _estado);
     Dosis(int _id);
     virtual ~Dosis();//Destructor
     void SetFechaFabricacion(Fecha fechaFabricacion);//Cambia la fecha de fabricación
@@ -57,6 +57,8 @@ public:
     Dosis& operator=(const Dosis &otro);//Asigna dosis dependiendo de su identificador
     bool operator>(const Dosis &otra) const;//Compara dosis dependiendo de su identificador
     bool operator==(const Dosis &otra) const;//Compara dosis dependiendo de su identificador
+    bool operator!=(const Dosis &otra) const;//Compara dosis dependiendo de su identificador
+
     void imprimir();
 
     friend ostream &operator<<(ostream &os, const Dosis &dosis);

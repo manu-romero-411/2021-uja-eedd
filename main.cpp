@@ -219,7 +219,39 @@ int main() {
         //cout << "Resultado de volver a buscar Joan: " <<
 
         archivoUsuarios.close();*/
-        true;
+        VDinamico<int> hola;
+        VDinamico<int> adios;
+
+        for(int i = 0; i < 10; ++i){
+            hola.insertar(2*i, i);
+        }
+        adios=hola;
+        for(int i = 0; i < 10; ++i) {
+            std::cout << " | " << hola[i];
+        }
+        cout <<  std::endl;
+
+        for(int i = 0; i < 10; ++i) {
+            std::cout << " | " << adios[i];
+        }
+
+        cout <<  std::endl;
+
+        if (hola == adios){
+            std::cout << "Son iguales" << std::endl;
+        } else {
+            std::cout << "son desiguales" << std::endl;
+        }
+        VDinamico<Usuario> muchaGente;
+
+        Fecha hoy;
+        hoy.asignarDia(22,2,2222);
+        Dosis dosis1(1,1,1,1,1,2022,1);
+        Dosis dosis2(1,1,1,1,3,2022,1);
+
+        Usuario usuario("paco","paquez","1234",hoy);
+        usuario.nuevaDosis(dosis1);
+        usuario.nuevaDosis(dosis2);
         return 0;
     } catch (std::exception &e) {
         cout << e.what();

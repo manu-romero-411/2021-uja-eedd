@@ -35,7 +35,7 @@ public:
     VDinamico<T>(unsigned int tamNue);//Vector Parametrizado con un tamaño nueevo
     VDinamico<T>(const VDinamico<T> &orig); //Constructor copia total
     VDinamico<T>(const VDinamico<T> &orig, unsigned int desde, unsigned int num);//Constructor copia parcial
-    VDinamico<T> &operator=(VDinamico<T> &comp);//Operador de asignación
+    VDinamico<T> &operator=(const VDinamico<T> &comp);//Operador de asignación
     T &operator[](const int pos) const;//Operación de lectura en una posición determinada
     void insertar(const T &dato, unsigned int pos = UINT_MAX); //Insertar un dato en una posición determinada
     T borrar(unsigned int pos = UINT_MAX); //Borrar un dato en una posición determinada
@@ -49,7 +49,9 @@ public:
     void setOrdenado(bool ordenado);//Pone el booleano ordenado a un nuevo valor
     bool isOrdenado() const; //Comprueba si el vector está ordenado
     bool operator==(const VDinamico<T> &elDeLaDerecha) const;
-};
+    bool operator!=(const VDinamico<T> &elDeLaDerecha) const;
+
+    };
 /**
  * @brief Constructor por defecto, inicia el vector al mínimo
  * @param[in] -
@@ -139,7 +141,7 @@ VDinamico<T>::VDinamico(const VDinamico<T>& orig) {
  * 
  */
 template <class T>
-VDinamico<T>& VDinamico<T>::operator=(VDinamico<T>& comp) {
+VDinamico<T>& VDinamico<T>::operator=(const VDinamico<T>& comp) {
     tamFisico = comp.tamFisico;
     tamLogico = comp.tamLogico;
     delete [] v;
@@ -378,11 +380,15 @@ VDinamico<T>& VDinamico<T>::operator=(VDinamico<T>& comp) {
 
     template <class T>
     bool VDinamico<T>::operator==(const VDinamico<T> &elDeLaDerecha) const{
-        if (this->tamLogico != elDeLaDerecha.tamLogico){
+        int tamA = this->tamLogico;
+        int tamB = elDeLaDerecha.tamLogico;
+        if (tamA != tamB){
             return false;
         } else {
             for(int i = 0; i < this->tamLogico; ++i){
-                if(this->leer(i) != elDeLaDerecha.leer(i)){
+                T& elemento = v[i];
+                T& otro = elDeLaDerecha[i];
+                if(elemento != otro){
                     return false;
                 }
             }
@@ -390,5 +396,9 @@ VDinamico<T>& VDinamico<T>::operator=(VDinamico<T>& comp) {
         }
     }
 
+    template <class T>
+    bool VDinamico<T>::operator!=(const VDinamico<T> &elDeLaDerecha) const {
+        return !(this == elDeLaDerecha);
+    }
 #endif /* VDINAMICO_H */
 

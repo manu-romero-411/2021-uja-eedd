@@ -30,14 +30,14 @@ Dosis::Dosis() {
  * 
  * 
  */
-Dosis::Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno, int estado) {
+Dosis::Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno, int _estado) {
     this->id = id;
     this->idLote = idLote;
     this->fabricante = nombreFabricante(idFabricante);
     this->fechaFabricacion.asignarDia(dia, mes, anno);
     this->fechaCaducidad = this->fechaFabricacion;
     this->fechaCaducidad.anadirMeses(2);
-    this->status  = estado;
+    this->status = estado(_estado);
 }
 
     /* @brief Constructor copia
@@ -106,6 +106,16 @@ int Dosis::GetId() const {
  * 
  */
 bool Dosis::operator==(const Dosis &otra) const {
+    return (this->id == otra.id);
+}
+/* @brief Operador de desigualdad, compara las id
+* @param[in] -Referencia a objeto a comparar
+* @param[out] -
+* @return -
+*
+*
+*/
+bool Dosis::operator!=(const Dosis &otra) const {
     return (this->id == otra.id);
 }
 /* @brief Operador de menor, compara las id

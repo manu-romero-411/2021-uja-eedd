@@ -17,15 +17,11 @@ private:
     string apellidos;
     string nss;
     Fecha fechaNacimiento;
-    VDinamico<Dosis> misDosis; //Puntero a la dosis asignada al usuario
-public:
-    VDinamico<Dosis> getMisDosis() const;
-
-    void setMisDosis(VDinamico<Dosis> otrasDosis);
+    VDinamico<Dosis> misDosis;
     //UTM domicilio;
-
-    Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento,
-            VDinamico<Dosis> dosis); //Constructor por defecto
+public:
+    Usuario();
+    Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento); //Constructor por defecto
     Usuario(const Usuario &orig); //Constructor copia
     const string &getApellidos() const;
     void setApellidos(const string &apellidos);
@@ -35,10 +31,12 @@ public:
     void setFechaNacimiento(const Fecha &fechaNacimiento);
     std::string getNombre() const;
     void setNombre(const string &nombre);
-    //const UTM getDomicilio() const;
+    Dosis& getDosis(int cual);
+    void nuevaDosis(Dosis& nueva);
+        //const UTM getDomicilio() const;
     //void setDomicilio(const UTM &dom);
 
-    Usuario& operator=(const Usuario &elDeLaDerecha); //Operador de asignacion
+    Usuario& operator=(const Usuario* &elDeLaDerecha); //Operador de asignacion
     bool operator==(const Usuario &elDeLaDerecha) const; //Operador de igualdad
     bool operator!=(const Usuario &elDeLaDerecha) const;//Operador de no igualdad
     bool operator<(const Usuario &elDeLaDerecha) const;//Operador de menor (por fecha de nacimiento)

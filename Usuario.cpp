@@ -11,9 +11,15 @@
  *
  *
  */
-Usuario::Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento,
-                 VDinamico<Dosis> dosis)
-        : nombre(_nombre), apellidos(_apellidos), nss(_nss), fechaNacimiento(_fechaNacimiento), misDosis(dosis) {
+Usuario::Usuario(){
+
+}
+
+Usuario::Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento){
+    this->nombre = _nombre;
+    this->apellidos = _apellidos;
+    this->nss = _nss;
+    this->fechaNacimiento = _fechaNacimiento;
 
 }
 
@@ -41,14 +47,14 @@ Usuario::Usuario(const Usuario &orig){
  *
  */
 
-Usuario& Usuario::operator=(const Usuario &elDeLaDerecha){
+Usuario& Usuario::operator=(const Usuario* &elDeLaDerecha){
 
-    if(this != &elDeLaDerecha) {
-        nombre = elDeLaDerecha.nombre;
-        apellidos = elDeLaDerecha.apellidos;
-        nss = elDeLaDerecha.nss;
-        fechaNacimiento = elDeLaDerecha.fechaNacimiento;
-       // misDosis = elDeLaDerecha.misDosis;
+    if(this != elDeLaDerecha) {
+        nombre = elDeLaDerecha->nombre;
+        apellidos = elDeLaDerecha->apellidos;
+        nss = elDeLaDerecha->nss;
+        fechaNacimiento = elDeLaDerecha->fechaNacimiento;
+        misDosis = elDeLaDerecha->misDosis;
     }
 
     return (*this);
@@ -94,13 +100,17 @@ void Usuario::setDomicilio(const UTM &dom) {
     Usuario::domicilio = dom;
 }*/
 
-VDinamico<Dosis> Usuario::getMisDosis() const {
-    return misDosis;
+Dosis& Usuario::getDosis(int cual){
+    if(cual < misDosis.getTamLogico())
+        return misDosis[cual];
+    else
+        throw std::out_of_range("[Usuario] Posición no valida al llamar a VDinamico<Dosis>");
 }
 
-void Usuario::setMisDosis(VDinamico<Dosis> otrasDosis) {
-    this->misDosis = otrasDosis;
+void Usuario::nuevaDosis(Dosis& nueva){
+    misDosis.insertar(nueva,misDosis.getTamLogico());
 }
+
 /**
  * @brief Operador de igualdad
  * @param[in] -Referencia a objeto de tipo Usuario
