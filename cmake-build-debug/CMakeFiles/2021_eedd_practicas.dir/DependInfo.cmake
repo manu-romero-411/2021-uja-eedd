@@ -8,11 +8,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/admin/Desktop/practica 3/2021-eedd-practicas/Dosis.cpp" "C:/Users/admin/Desktop/practica 3/2021-eedd-practicas/cmake-build-debug/CMakeFiles/2021_eedd_practicas.dir/Dosis.cpp.obj"
-  "C:/Users/admin/Desktop/practica 3/2021-eedd-practicas/Fecha.cpp" "C:/Users/admin/Desktop/practica 3/2021-eedd-practicas/cmake-build-debug/CMakeFiles/2021_eedd_practicas.dir/Fecha.cpp.obj"
-  "C:/Users/admin/Desktop/practica 3/2021-eedd-practicas/GestionVacunas.cpp" "C:/Users/admin/Desktop/practica 3/2021-eedd-practicas/cmake-build-debug/CMakeFiles/2021_eedd_practicas.dir/GestionVacunas.cpp.obj"
-  "C:/Users/admin/Desktop/practica 3/2021-eedd-practicas/Usuario.cpp" "C:/Users/admin/Desktop/practica 3/2021-eedd-practicas/cmake-build-debug/CMakeFiles/2021_eedd_practicas.dir/Usuario.cpp.obj"
-  "C:/Users/admin/Desktop/practica 3/2021-eedd-practicas/main.cpp" "C:/Users/admin/Desktop/practica 3/2021-eedd-practicas/cmake-build-debug/CMakeFiles/2021_eedd_practicas.dir/main.cpp.obj"
+  "/home/manuel/Escritorio/2021-eedd-practicas/Dosis.cpp" "/home/manuel/Escritorio/2021-eedd-practicas/cmake-build-debug/CMakeFiles/2021_eedd_practicas.dir/Dosis.cpp.o"
+  "/home/manuel/Escritorio/2021-eedd-practicas/Fecha.cpp" "/home/manuel/Escritorio/2021-eedd-practicas/cmake-build-debug/CMakeFiles/2021_eedd_practicas.dir/Fecha.cpp.o"
+  "/home/manuel/Escritorio/2021-eedd-practicas/GestionVacunas.cpp" "/home/manuel/Escritorio/2021-eedd-practicas/cmake-build-debug/CMakeFiles/2021_eedd_practicas.dir/GestionVacunas.cpp.o"
+  "/home/manuel/Escritorio/2021-eedd-practicas/Usuario.cpp" "/home/manuel/Escritorio/2021-eedd-practicas/cmake-build-debug/CMakeFiles/2021_eedd_practicas.dir/Usuario.cpp.o"
+  "/home/manuel/Escritorio/2021-eedd-practicas/main.cpp" "/home/manuel/Escritorio/2021-eedd-practicas/cmake-build-debug/CMakeFiles/2021_eedd_practicas.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
