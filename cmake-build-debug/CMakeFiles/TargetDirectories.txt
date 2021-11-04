@@ -1,3 +1,0 @@
-/home/manuel/Escritorio/2021-eedd-practicas/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/manuel/Escritorio/2021-eedd-practicas/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/manuel/Escritorio/2021-eedd-practicas/cmake-build-debug/CMakeFiles/2021_eedd_practicas.dir

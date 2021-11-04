@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/2021_eedd_practicas.dir/main.cpp.o CMakeFiles/2021_eedd_practicas.dir/Fecha.cpp.o CMakeFiles/2021_eedd_practicas.dir/Dosis.cpp.o CMakeFiles/2021_eedd_practicas.dir/Usuario.cpp.o CMakeFiles/2021_eedd_practicas.dir/GestionVacunas.cpp.o -o 2021_eedd_practicas 
