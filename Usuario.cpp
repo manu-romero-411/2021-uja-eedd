@@ -201,6 +201,23 @@ ostream &operator<<(ostream &os, const Usuario &usuario) {
  *
  *
  */
+
+
+int Usuario::getedad() {
+    int anyoActual = 2021;
+    int mesActual = 10;
+    int diaActual = 19;
+    int edad = anyoActual- this->fechaNacimiento.verAnio();
+    if  (this->fechaNacimiento.verMes() > mesActual) {
+        edad--;
+    } else {
+        if ((fechaNacimiento.verDia() > diaActual) && ((this->fechaNacimiento.verMes() == mesActual))){
+            edad--;
+        }
+    }
+return edad;
+}
+
 Usuario::~Usuario() {
 
 }

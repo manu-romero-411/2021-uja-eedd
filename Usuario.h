@@ -35,7 +35,7 @@ public:
     void nuevaDosis(Dosis& nueva);
         //const UTM getDomicilio() const;
     //void setDomicilio(const UTM &dom);
-
+    int getedad();
     Usuario& operator=(const Usuario* &elDeLaDerecha); //Operador de asignacion
     bool operator==(const Usuario &elDeLaDerecha) const; //Operador de igualdad
     bool operator!=(const Usuario &elDeLaDerecha) const;//Operador de no igualdad
@@ -46,6 +46,7 @@ public:
     virtual ~Usuario();
 
     friend ostream &operator<<(ostream &os, const Usuario &usuario); //Operador para imprimir por pantalla
+
 };
 
 

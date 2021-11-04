@@ -2,7 +2,9 @@
 // Created by Manuel Jesús Romero Mateos on 22/10/21.
 //
 
-#ifndef EEDD_AVL_H
+/*
+ *
+ * #ifndef EEDD_AVL_H
 #define EEDD_AVL_H
 
 template<class T>
@@ -108,7 +110,7 @@ void AVL<T>::rotIzq(Nodo<T>* &nodo){
 }
 
 //template<class T>
-/*bool AVL<T>::inserta(T& dato){
+bool AVL<T>::inserta(T& dato){
     AVLNodo<T> *p = c;
     int deltaH = false;
     if (!p) {
@@ -136,7 +138,7 @@ void AVL<T>::rotIzq(Nodo<T>* &nodo){
         }
     }
     return deltaH;
-}*/
+}
 
 template <class T>
 AVLNodo<T>* AVL<T>::buscaClave(T &dato, AVLNodo<T> *p) {
@@ -228,3 +230,4 @@ AVL<T>::~AVL() {
 }
 
 #endif //EEDD_AVL_H
+    */
