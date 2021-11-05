@@ -4,6 +4,7 @@
 
 #ifndef EEDD_GESTIONVACUNAS_H
 #define EEDD_GESTIONVACUNAS_H
+
 #include "ListaEnlazada.h"
 #include "VDinamico.h"
 #include "Usuario.h"
@@ -17,18 +18,18 @@ private:
     ListaEnlazada<Usuario> listausuarios;
     VDinamico<Dosis> dosis;
     VDinamico<string> listaNSS;
-    VDinamico<Usuario> noRecomendados;
+    VDinamico<Usuario*> noRecomendados;
 public:
 GestionVacunas();
 GestionVacunas(ListaEnlazada<Usuario>, VDinamico<Dosis>);
 GestionVacunas(const ListaEnlazada<Usuario> &usuarios, const VDinamico<Dosis> &dosis);
 virtual ~GestionVacunas();
 Usuario* buscarUsuario (string nombre);
-void administrarDosis(Usuario* vacunando, nombreFabricante vacunada);
+bool administrarDosis(Usuario* vacunando, nombreFabricante vacunada);
 bool queAdministro(Usuario* vacunando);
 VDinamico<string> listadoNSS();
 float pautaCompleta();
-VDinamico<Usuario> listadoVacunacionNR();
+VDinamico<Usuario*> listadoVacunacionNR();
 
 
 

@@ -15,11 +15,23 @@ Usuario::Usuario(){
 
 }
 
-Usuario::Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento){
+Usuario::Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento) {
     this->nombre = _nombre;
     this->apellidos = _apellidos;
     this->nss = _nss;
     this->fechaNacimiento = _fechaNacimiento;
+    int anyoActual = 2021;
+    int mesActual = 10;
+    int diaActual = 19;
+    int edad = anyoActual - this->fechaNacimiento.verAnio();
+    if (this->fechaNacimiento.verMes() > mesActual) {
+        edad--;
+    } else {
+        if ((fechaNacimiento.verDia() > diaActual) && ((this->fechaNacimiento.verMes() == mesActual))) {
+            edad--;
+        }
+    }
+    this->edad = edad;
 
 }
 
@@ -36,6 +48,7 @@ Usuario::Usuario(const Usuario &orig){
     this->apellidos = orig.apellidos;
     this->nss = orig.nss;
     this->fechaNacimiento.asignarDia(orig.fechaNacimiento.verDia(),orig.fechaNacimiento.verMes(),orig.fechaNacimiento.verAnio());
+    this->edad=orig.edad;
     // hacer una llamada al contrusctor copia del vdinamico this->misDosis = orig.misDosis;
 }
 /**
@@ -55,6 +68,7 @@ Usuario& Usuario::operator=(const Usuario* &elDeLaDerecha){
         nss = elDeLaDerecha->nss;
         fechaNacimiento = elDeLaDerecha->fechaNacimiento;
         misDosis = elDeLaDerecha->misDosis;
+        edad=elDeLaDerecha->edad;
     }
 
     return (*this);
@@ -101,14 +115,21 @@ void Usuario::setDomicilio(const UTM &dom) {
 }*/
 
 Dosis& Usuario::getDosis(int cual){
-    if(cual < misDosis.getTamLogico())
-        return misDosis[cual];
+
+    if(cual < misDosis.tam()) {
+        Iterador <Dosis*> itera = this->misDosis.iteradorInicio();
+        for (int i = 0; i < cual; i++) {
+            itera.siguiente();
+        }
+        return *itera.dato();
+    }
     else
         throw std::out_of_range("[Usuario] Posición no valida al llamar a VDinamico<Dosis>");
 }
 
 void Usuario::nuevaDosis(Dosis& nueva){
-    misDosis.insertar(nueva,misDosis.getTamLogico());
+    Dosis* p= &nueva;
+    misDosis.insertaFin(p);
 }
 
 /**
@@ -125,7 +146,7 @@ bool Usuario::operator==(const Usuario &elDeLaDerecha) const {
            apellidos == elDeLaDerecha.apellidos &&
            nss == elDeLaDerecha.nss &&
            fechaNacimiento.mismoDia(elDeLaDerecha.fechaNacimiento) &&
-           misDosis == elDeLaDerecha.misDosis;
+           this->misDosis == elDeLaDerecha.misDosis;
 }
 
 /**
@@ -204,7 +225,7 @@ ostream &operator<<(ostream &os, const Usuario &usuario) {
 
 
 int Usuario::getedad() {
-    int anyoActual = 2021;
+   /* int anyoActual = 2021;
     int mesActual = 10;
     int diaActual = 19;
     int edad = anyoActual- this->fechaNacimiento.verAnio();
@@ -214,9 +235,38 @@ int Usuario::getedad() {
         if ((fechaNacimiento.verDia() > diaActual) && ((this->fechaNacimiento.verMes() == mesActual))){
             edad--;
         }
-    }
+    }*/
 return edad;
 }
+
+VDinamico<Dosis*> Usuario::getmisdosis(){
+    VDinamico<Dosis*> dosis;
+    Iterador <Dosis*> itera = this->misDosis.iteradorInicio();
+    for(int i=0; i<misDosis.tam(); i++){
+        Dosis* p= itera.dato();
+        dosis.insertar(p,dosis.getTamLogico());
+        itera.siguiente();
+    }
+
+
+return dosis;
+
+
+}
+
+nombreFabricante Usuario::getdosisRecomendable(){
+    if ( edad >= 12 && edad < 30)
+        return Johnson;
+    if (edad >= 30 && edad < 50)
+       return AstraZeneca;
+    if (edad >= 50 && edad < 65)
+        return Moderna;
+    if (edad >= 65)
+        return Pfizer;
+
+
+}
+
 
 Usuario::~Usuario() {
 

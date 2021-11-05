@@ -1,21 +1,23 @@
 //
 // Created by Manuel Jesús Romero Mateos on 22/10/21.
-//
 
-/*
- *
- * #ifndef EEDD_AVL_H
+#ifndef EEDD_AVL_H
 #define EEDD_AVL_H
+#include <stdexcept>
 
 template<class T>
 class AVLNodo {
 public:
     AVLNodo<T> *ramaIzquierda, *ramaDerecha;
     T dato = nullptr;
-    char balance; // -1, 0 , 1 para un árbol avl
+    char balance; // -1, 0 , 1 para un árbol AVL
 
     AVLNodo(T &elemento) : ramaIzquierda(nullptr), ramaDerecha(nullptr), balance(0), dato(elemento) {
     }
+    void copiar(AVLNodo<T>* nodoOrig){
+        this->dato = nodoOrig->dato;
+    }
+    //~AVLNodo();
 };
 
 template<class T>
@@ -24,16 +26,17 @@ private:
     unsigned int numElementos;
     unsigned int altura;
     AVLNodo<T> *nodoRaiz;
-    void copiaNodos(const AVLNodo<T>* &nodoOrig, const AVLNodo<T>* &nodoDestino);
-    void limpiaArbol(const AVLNodo<T>* &nodoOrig);
+    AVLNodo<T>*  copiaNodos(const AVLNodo<T>* nodoOrig, AVLNodo<T>* nodoDestino);
+    void limpiaArbol(AVLNodo<int> *nodoOrig);
 
 public:
     AVL<T>();
     AVL<T>(const AVL<T> &orig);
     AVL<T>& operator=(const AVL<T> &elDeLaDerecha);
-    void rotDer(Nodo<T>* &nodo);
-    void rotIzq(Nodo<T>* &nodo);
+    void rotDer(AVLNodo<T>* &nodo);
+    void rotIzq(AVLNodo<T>* &nodo);
     bool inserta(T& dato);
+    bool operacionInsercion(AVLNodo<T>* &c, T& dato);
     AVLNodo<T>* buscaClave(T &dato, AVLNodo<T> *p);
     bool buscaRec(T& dato, T& result);
     bool buscaIt(T& dato, T& result);
@@ -42,6 +45,7 @@ public:
     unsigned int getNumElementos();
     int auxAltura(AVLNodo<T> *nodo, int nivel);
     unsigned int getAltura();
+    AVLNodo<T>* getNodoRaiz();
     ~AVL<T>();
 };
 
@@ -54,85 +58,95 @@ AVL<T>::AVL(){
 }
 
 template<class T>
-void AVL<T>::copiaNodos(const AVLNodo<T>* &nodoOrig, const AVLNodo<T>* &nodoDestino){
+AVLNodo<T>* AVL<T>::copiaNodos(const AVLNodo<T>* nodoOrig, AVLNodo<T>* nodoDestino){
     if (nodoOrig) {
         nodoDestino = new AVLNodo<T>(*nodoOrig);
-        copiaNodos(nodoOrig->ramaIzquierda,nodoDestino->ramaIzquierda);
-        copiaNodos(nodoOrig->ramaDerecha,nodoDestino->ramaDerecha);
+        if(nodoOrig->ramaIzquierda){
+            nodoDestino->ramaIzquierda = copiaNodos(nodoOrig->ramaIzquierda,nodoDestino->ramaIzquierda);
+        } else nodoDestino->ramaIzquierda = nullptr;
+        if(nodoOrig->ramaDerecha) {
+            nodoDestino->ramaDerecha = copiaNodos(nodoOrig->ramaDerecha,nodoDestino->ramaDerecha);
+        } else nodoDestino->ramaDerecha = nullptr;
     } else
         nodoDestino = nullptr;
+    return nodoDestino;
 }
 
 template<class T>
-void AVL<T>::limpiaArbol(const AVLNodo<T>* &nodoOrig){
+void AVL<T>::limpiaArbol(AVLNodo<int> *nodoOrig){
     if (nodoOrig) {
-        limpiaArbol(nodoOrig->ramaIzquierda);
-        limpiaArbol(nodoOrig->ramaDerecha);
+        if(nodoOrig->ramaIzquierda) limpiaArbol(nodoOrig->ramaIzquierda);
+        if(nodoOrig->ramaDerecha) limpiaArbol(nodoOrig->ramaDerecha);
         delete nodoOrig;
+        nodoOrig->ramaIzquierda = nullptr;
+        nodoOrig->ramaDerecha = nullptr;
         nodoOrig = nullptr;
+        numElementos--;
     }
 }
 
 template<class T>
 AVL<T>::AVL(const AVL<T> &orig){
+    nodoRaiz = new AVLNodo<T>(orig.nodoRaiz.dato);
     copiaNodos(orig.nodoRaiz, nodoRaiz);
 }
 
 template<class T>
 AVL<T>& AVL<T>::operator=(const AVL<T> &elDeLaDerecha){
     limpiaArbol(nodoRaiz);
-    copiarNodos(elDeLaDerecha.nodoRaiz, this->nodoRaiz);
+    nodoRaiz = new AVLNodo<T>(elDeLaDerecha.nodoRaiz->dato);
+    nodoRaiz = copiaNodos(elDeLaDerecha.nodoRaiz, this->nodoRaiz);
+    return (*this);
 }
 
 template<class T>
-void AVL<T>::rotDer(Nodo<T>* &nodo){
+void AVL<T>::rotDer(AVLNodo<T>* &nodo){
     AVLNodo<T> *q = nodo, *l;
-    nodo = l = q->izq;
-    q->izq = l->der;
-    l->der = q;
-    q->bal--;
-    if (l->bal > 0) q->bal -= l->bal;
-    l->bal--;
-    if (q->bal < 0) l->bal -= -q->bal;
-
+    nodo = l = q->ramaIzquierda;
+    q->ramaIzquierda = l->ramaDerecha;
+    l->ramaDerecha = q;
+    q->balance--;
+    if (l->balance > 0) q->balance -= l->balance;
+    l->balance--;
+    if (q->balance < 0) l->balance -= -q->balance;
 }
 
 template<class T>
-void AVL<T>::rotIzq(Nodo<T>* &nodo){
+void AVL<T>::rotIzq(AVLNodo<T>* &nodo){
     AVLNodo<T> *q = nodo, *r;
-    nodo = r = q->der;
-    q->der = r->izq;
-    r->izq = q;
-    q->bal++;
-    if (r->bal < 0) q->bal += -r->bal;
-    r->bal++;
-    if (q->bal > 0) r->bal += q->bal;
+    nodo = r = q->ramaDerecha;
+    q->ramaDerecha = r->ramaIzquierda;
+    r->ramaIzquierda = q;
+    q->balance++;
+    if (r->balance < 0) q->balance += -r->balance;
+    r->balance++;
+    if (q->balance > 0) r->balance += q->balance;
 }
 
-//template<class T>
-bool AVL<T>::inserta(T& dato){
+template<class T>
+bool AVL<T>::operacionInsercion(AVLNodo<T>* &c, T& dato){
     AVLNodo<T> *p = c;
     int deltaH = false;
     if (!p) {
         p = new AVLNodo<T>(dato);
         c = p;
         deltaH = true;
-        _numElementos++;
+        numElementos++;
     } else if (p->dato < dato) {
-        if (inserta(p->der, dato)) {
-            p->bal--;
-            if (p->bal == -1) deltaH = true;
-            else if (p->bal == -2) {
-                if (p->der->bal == 1) rotDer(p->der);
+        if (operacionInsercion(p->ramaDerecha, dato)) {
+            p->balance--;
+            if (p->balance == -1) deltaH = true;
+            else if (p->balance == -2) {
+                if (p->ramaDerecha->balance == 1) rotDer(p->ramaDerecha);
                 rotIzq(c);
             }
         }
     } else if (dato < p->dato) {
-        if (inserta(p->izq, dato)) {
-            p->bal++;
-            if (p->bal == 1) deltaH = true;
-            else if (p->bal == 2) {
-                if (p->izq->bal == -1) rotIzq(p->izq);
+        if (operacionInsercion(p->ramaIzquierda, dato)) {
+            p->balance++;
+            if (p->balance == 1) deltaH = true;
+            else if (p->balance == 2) {
+                if (p->ramaIzquierda->balance == -1) rotIzq(p->ramaIzquierda);
                 rotDer(c);
             }
         }
@@ -140,19 +154,31 @@ bool AVL<T>::inserta(T& dato){
     return deltaH;
 }
 
+template<class T>
+bool AVL<T>::inserta(T &dato) {
+    if (numElementos == 0){
+        AVLNodo<T>* nuevaRaiz = new AVLNodo<T>(dato);
+        nodoRaiz = nuevaRaiz;
+        numElementos++;
+        return true;
+    } else {
+        operacionInsercion(nodoRaiz,dato);
+    }
+}
+
 template <class T>
 AVLNodo<T>* AVL<T>::buscaClave(T &dato, AVLNodo<T> *p) {
     if (!p)
         return 0;
     else if (dato < p->dato)
-        return buscaClave(dato, p->izq);
+        return buscaClave(dato, p->ramaIzquierda);
     else if (p->dato < dato)
-        return buscaClave(dato, p->der);
+        return buscaClave(dato, p->ramaDerecha);
     else return p;
 }
 
-template<class T>
-bool AVL<T>::buscaRec(T& dato, T& result){
+/*template<class T>
+bool AVL<T>::buscaRec(T& dato){
     AVLNodo<T> *p = buscaClave(dato, nodoRaiz);
     if (p) {
         result = p->dato;
@@ -162,34 +188,35 @@ bool AVL<T>::buscaRec(T& dato, T& result){
 }
 
 template<class T>
-bool AVL<T>::buscaIt(T& dato, T& result){
+bool AVL<T>::buscaIt(T& dato){
     AVLNodo<T> *p = buscaClave(dato, nodoRaiz);
     while (!vacio(p)) {
         if (dato == p->dato) {
             result = p->dato;
             return true;
-        } else if (dato < p->dato) p = p->izq;
-        else if (p->dato < dato) p = p->der;
+        } else if (dato < p->dato) p = p->ramaIzquierda;
+        else if (p->dato < dato) p = p->ramaDerecha;
     }
     return false;
-}
+}*/
 
 template<class T>
 VDinamico<T*> AVL<T>::inorden(AVLNodo<T> *p, int nivel) {
-    VDinamico<T*> datos;
+    VDinamico<T *> datos;
     if (p) {
-        VDinamico<T*> datosIzq = inorden(p->izq, nivel + 1);
-        T& datoRaiz = p->dato;
-        VDinamico<T*> datosDer = inorden(p->der, nivel + 1);
-        for (int i = 0; i < datosIzq.getTamLogico();++i){
-            datos.insertar(datos.getTamLogico(),datosIzq[i]);
+        VDinamico<T *> datosIzq = inorden(p->ramaIzquierda, nivel + 1);
+        T &datoRaiz = p->dato;
+        VDinamico<T *> datosDer = inorden(p->ramaDerecha, nivel + 1);
+        for (int i = 0; i < datosIzq.getTamLogico(); ++i) {
+            datos.insertar(datos.getTamLogico(), datosIzq[i]);
 
-        datos.insertar(datos.getTamLogico(),datoRaiz);
-        for (int i = 0; i < datosDer.getTamLogico();++i){
-            datos.insertar(datos.getTamLogico(),datosDer[i]);
+            datos.insertar(datos.getTamLogico(), datoRaiz);
+            for (int i = 0; i < datosDer.getTamLogico(); ++i) {
+                datos.insertar(datos.getTamLogico(), datosDer[i]);
+            }
         }
+        return datos;
     }
-    return datos;
 }
 
 template<class T>
@@ -204,23 +231,33 @@ unsigned int AVL<T>::getNumElementos(){
 
 template<class T>
 int AVL<T>::auxAltura(AVLNodo<T> *nodo, int nivel) {
-    int larosaliaIzq = 0;
-    int larosaliaDer = 0;
-    if (nodo->izq)
-        larosaliaIzq = auxAltura(nodo->izq, nivel + 1);
-    if (nodo->der)
-        larosaliaDer = auxAltura(nodo->der, nivel + 1);
-    if ((nodo->der == NULL)&&(nodo->izq == NULL))
-        return 0;
-    if (larosaliaDer >= larosaliaIzq)
-        return larosaliaDer;
-    else
-        return larosaliaIzq;
+    int nuevoNivel = nivel;
+    if(nodo != NULL) {
+        int nivelIzq = nivel, nivelDer = nivel;
+        if (nodo->ramaIzquierda != NULL) {
+            nivelIzq = auxAltura(nodo->ramaIzquierda, nivel + 1);
+        }
+
+        if (nodo->ramaDerecha != NULL) {
+            nivelDer = auxAltura(nodo->ramaDerecha, nivel + 1);
+        }
+
+        if (nivelIzq > nivelDer) nuevoNivel = nivelIzq;
+        else if (nivelIzq < nivelDer) nuevoNivel = nivelDer;
+        else nuevoNivel = nivelIzq;
+    }
+    return nuevoNivel;
 }
 
 template<class T>
 unsigned int AVL<T>::getAltura(){
-    return auxAltura(nodoRaiz,0);
+    int altura = auxAltura(nodoRaiz,0);
+    return altura;
+}
+
+template<class T>
+AVLNodo<T>* AVL<T>::getNodoRaiz(){
+    return nodoRaiz;
 }
 
 template<class T>
@@ -230,4 +267,4 @@ AVL<T>::~AVL() {
 }
 
 #endif //EEDD_AVL_H
-    */
+
