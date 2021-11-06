@@ -65,8 +65,7 @@ void GestionVacunas::administrarDosis(Usuario* vacunando, nombreFabricante vacun
             }
 
         }
-    } else
-
+    }
 }
 
 GestionVacunas::~GestionVacunas() {

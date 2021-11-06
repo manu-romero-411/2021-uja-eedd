@@ -4,6 +4,8 @@
 
 #ifndef EEDD_LISTAENLAZADA_H
 #define EEDD_LISTAENLAZADA_H
+#include <stdexcept>
+
 /*
 Clase nodo, elemento básico de la lista enlazada. Cuenta con dos punteros, uno al dato que
 contiene y otro al siguiente nodo en la lista
