@@ -9,6 +9,7 @@
 #include <iostream>
 #include "Fecha.h"
 #include "Dosis.h"
+#include "ListaEnlazada.h"
 #include "VDinamico.h"
 
 class Usuario {
@@ -17,7 +18,8 @@ private:
     string apellidos;
     string nss;
     Fecha fechaNacimiento;
-    VDinamico<Dosis> misDosis;
+    ListaEnlazada<Dosis*> misDosis;
+    int edad;
     //UTM domicilio;
 public:
     Usuario();
@@ -44,6 +46,9 @@ public:
     bool operator<=(const Usuario &elDeLaDerecha) const;
     bool operator>=(const Usuario &elDeLaDerecha) const;
     virtual ~Usuario();
+    VDinamico<Dosis*> getmisdosis();
+    nombreFabricante getdosisRecomendable();
+
 
     friend ostream &operator<<(ostream &os, const Usuario &usuario); //Operador para imprimir por pantalla
 

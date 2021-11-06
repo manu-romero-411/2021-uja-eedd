@@ -26,7 +26,11 @@ private:
     unsigned int numElementos;
     unsigned int altura;
     AVLNodo<T> *nodoRaiz;
+<<<<<<< HEAD
     void copiaNodos(const AVLNodo<T>* &nodoOrig, AVLNodo<T>* nodoDestino);
+=======
+    AVLNodo<T>*  copiaNodos(const AVLNodo<T>* nodoOrig, AVLNodo<T>* nodoDestino);
+>>>>>>> 732887e1771163c2d90996a4ac2bfff143b1f57f
     void limpiaArbol(AVLNodo<int> *nodoOrig);
 
 public:
@@ -58,6 +62,7 @@ AVL<T>::AVL(){
 }
 
 template<class T>
+<<<<<<< HEAD
 void AVL<T>::copiaNodos(const AVLNodo<T>* &nodoOrig, AVLNodo<T>* nodoDestino){
     if (nodoOrig) {
         nodoDestino = new Nodo<T> (*nodoOrig);
@@ -66,6 +71,20 @@ void AVL<T>::copiaNodos(const AVLNodo<T>* &nodoOrig, AVLNodo<T>* nodoDestino){
     } else {
         nodoDestino = nullptr;
     };
+=======
+AVLNodo<T>* AVL<T>::copiaNodos(const AVLNodo<T>* nodoOrig, AVLNodo<T>* nodoDestino){
+    if (nodoOrig) {
+        nodoDestino = new AVLNodo<T>(*nodoOrig);
+        if(nodoOrig->ramaIzquierda){
+            nodoDestino->ramaIzquierda = copiaNodos(nodoOrig->ramaIzquierda,nodoDestino->ramaIzquierda);
+        } else nodoDestino->ramaIzquierda = nullptr;
+        if(nodoOrig->ramaDerecha) {
+            nodoDestino->ramaDerecha = copiaNodos(nodoOrig->ramaDerecha,nodoDestino->ramaDerecha);
+        } else nodoDestino->ramaDerecha = nullptr;
+    } else
+        nodoDestino = nullptr;
+    return nodoDestino;
+>>>>>>> 732887e1771163c2d90996a4ac2bfff143b1f57f
 }
 
 template<class T>

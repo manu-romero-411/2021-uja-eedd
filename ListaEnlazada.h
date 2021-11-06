@@ -4,6 +4,7 @@
 
 #ifndef EEDD_LISTAENLAZADA_H
 #define EEDD_LISTAENLAZADA_H
+#include <cstdlib>
 #include <stdexcept>
 
 /*
@@ -54,7 +55,8 @@ class ListaEnlazada {
     public:
         ListaEnlazada<T>(); //Constructor por defecto
         ListaEnlazada<T>(const ListaEnlazada<T> &orig); //Constructor copia
-        ListaEnlazada<T>& operator=(const ListaEnlazada<T> &otro); //Operador de asignación
+        ListaEnlazada<T>& operator=(const ListaEnlazada<T> &otro);
+        bool operator==(const ListaEnlazada<T> &otro) const;//Operador igualdad
         T& inicio(); //Devuelve el dato en la primera posición de la lista (cabecera)
         T& fin();    //Devuelve el dato en la última posición de la lista (cola)
 
@@ -134,6 +136,33 @@ ListaEnlazada<T>& ListaEnlazada<T>::operator=(const ListaEnlazada<T> &otro){
         p = p->sig;
     }
     return (*this);
+}
+/**
+* @brief Operador de igualdad
+* @param[in] - Lista enlazada a comparar
+* @param[out] -
+* @return - Si las listas son iguales o no
+*
+*
+*/
+
+
+template <class T>
+bool ListaEnlazada<T>::operator==(const ListaEnlazada<T> &otro)const{
+    Nodo<T> *p = cabecera;
+    Nodo<T> *q = otro.cabecera;
+
+    if(this->tama!=otro.tama)
+        return false;
+
+    while (p != nullptr) {
+        if(p!=q)
+        return false;
+        p = p->sig;
+        q = q->sig;
+    }
+
+    return true;
 }
 
 /**
