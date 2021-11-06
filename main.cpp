@@ -38,10 +38,15 @@ int main() {
         arbolPrueba.inserta(h);
         arbolPrueba.inserta(iii);
         arbolPrueba.inserta(menosiv);
+        arbolPrueba.inserta(viii);
+        arbolPrueba.inserta(vi);
+        arbolPrueba.inserta(vii);
+        arbolPrueba.inserta(x);
+        arbolPrueba.inserta(ix);
         int altura =  arbolPrueba.getAltura();
-        AVL<int> prueba;
-        prueba = arbolPrueba;
         int num = arbolPrueba.getNumElementos();
+        int* encontrado = arbolPrueba.buscaRec(iii);
+        VDinamico<int*> jaja = arbolPrueba.recorreInorden();
         //AVLNodo<int> busca = arbolPrueba.getNodoRaiz();
         return 0;
     } catch (std::exception &e) {

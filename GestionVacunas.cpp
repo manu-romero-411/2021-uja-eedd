@@ -4,25 +4,108 @@
 
 #include "GestionVacunas.h"
 
+GestionVacunas::GestionVacunas(ifstream archivoDosis, ifstream archivoUsuarios) {
+    int id = 0;
+    string palabra;
+    int corte = 0;
+
+    int idLote = 0;
+    int fabricante = 0;
+    int dia = 0;
+    int mes = 0;
+    int anno = 0;
+
+    clock_t t_ini = clock();
+    while (getline(archivoDosis, palabra)) {
+
+        corte = palabra.find(';');
+        id = stoi(palabra.substr(0, corte));
+        palabra.erase(0, corte + 1);
+
+        corte = palabra.find(';');
+        idLote = stoi(palabra.substr(0, corte));
+        palabra.erase(0, corte + 1);
+
+        corte = palabra.find(';');
+        fabricante = stoi(palabra.substr(0, corte));
+        palabra.erase(0, corte + 1);
+
+        corte = palabra.find('/');
+        dia = stoi(palabra.substr(0, corte));
+        palabra.erase(0, corte + 1);
+
+        corte = palabra.find('/');
+        mes = stoi(palabra.substr(0, corte));
+        palabra.erase(0, corte + 1);
+
+        anno = stoi(palabra);
+        Dosis nuevaDosis(id, idLote, fabricante, anno, mes, dia, enAlmacen);
+        dosis.insertar(nuevaDosis, dosis.getTamLogico());
+    }
+    archivoDosis.close();
 
 
+    string palabraB;
+    corte = 0;
+    dia = 0;
+    mes = 0;
+    anno = 0;
+    float longitud, latitud;
+    string nombre, apellido, nss;
+    AVL<Usuario> listaUsuarios;
+    while (getline(archivoUsuarios, palabraB)) {
+        corte = palabraB.find(';');
+        nombre = palabraB.substr(0, corte);
+        palabraB.erase(0, corte + 1);
 
-GestionVacunas::GestionVacunas(const ListaEnlazada<Usuario> &usuarios, const VDinamico<Dosis> &dosis) : listausuarios(
-        usuarios), dosis(dosis)
-        {}
+        corte = palabraB.find(';');
+        apellido = palabraB.substr(0, corte);
+        palabraB.erase(0, corte + 1);
+
+        corte = palabraB.find(';');
+        nss = palabraB.substr(0, corte);
+        palabraB.erase(0, corte + 1);
+
+        corte = palabraB.find('/');
+        dia = stoi(palabraB.substr(0, corte));
+        palabraB.erase(0, corte + 1);
+
+        corte = palabraB.find('/');
+        mes = stoi(palabraB.substr(0, corte));
+        palabraB.erase(0, corte + 1);
+
+        corte = palabraB.find(';');
+        anno = stoi(palabraB.substr(0, corte));
+        palabraB.erase(0, corte + 1);
+
+        corte = palabraB.find(';');
+        longitud = stoi(palabraB.substr(0, corte));
+        palabraB.erase(0, corte + 1);
+
+        latitud = stoi(palabraB);
+        Fecha fecha;
+        fecha.asignarDia(dia, mes, anno);
+        Usuario nuevoUsuario(nombre, apellido, nss, fecha);
+        listausuarios.inserta(nuevoUsuario);
+
+
+    }
+
+}
+
 
 
 Usuario* GestionVacunas::buscarUsuario (string nss){
-    Iterador<Usuario> itera = this->listausuarios.iteradorInicio();
+    Fecha *nueva= new Fecha(1,1,1,1,1);
+Usuario *buscando= new Usuario("Dondesta", "eltioeste", nss, *nueva);
+Usuario *encontrado= listausuarios.buscaRec(buscando);
+}
 
-    for(int i=0; i<listausuarios.tam(); i++){
-        if(itera.dato().getNss()==nss)
-        return &itera.dato();
-    itera.siguiente();
-    }
-return nullptr;
+return encontrado;
 
 }
+
+
 bool GestionVacunas::queAdministro(Usuario *vacunando) {
     bool labuena;
     int edad= vacunando->getedad();
@@ -70,22 +153,22 @@ bool GestionVacunas::administrarDosis(Usuario* vacunando, nombreFabricante vacun
 }
 
 float GestionVacunas::pautaCompleta() {
-float  numusuarios=this->listausuarios.tam();
+float  numusuarios=this->listausuarios.getNumElementos();
 float numpautascompletas;
-    Iterador<Usuario> itera = this->listausuarios.iteradorInicio();
+VDinamico<Usuario*> tosellos= listausuarios.recorreInorden();
 
-    for(int i=0; i<listausuarios.tam(); i++){
-        if(itera.dato().getmisdosis().getTamLogico()==2){
+    for(int i=0; i<tosellos.getTamLogico(); i++){
+
+        if(tosellos[i]->getedad()>=75 && tosellos[i]->getmisdosis().getTamLogico()==3)
+            numpautascompletas;
+        if(tosellos[i]->getedad()<75 && tosellos[i]->getmisdosis().getTamLogico()==2){
             numpautascompletas++;
         }
-
-        itera.siguiente();
-
-
     }
     numpautascompletas= (numpautascompletas/numusuarios)*100;
     return numpautascompletas;
 }
+
 
 VDinamico<Usuario*> GestionVacunas::listadoVacunacionNR(){
     return noRecomendados;

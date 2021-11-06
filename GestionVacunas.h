@@ -9,20 +9,21 @@
 #include "VDinamico.h"
 #include "Usuario.h"
 #include "Dosis.h"
+#include "AVL.h"
+#include <fstream>
 
 using namespace std;
 class GestionVacunas {
 
 private:
 
-    ListaEnlazada<Usuario> listausuarios;
+    AVL<Usuario> listausuarios;
     VDinamico<Dosis> dosis;
     VDinamico<string> listaNSS;
     VDinamico<Usuario*> noRecomendados;
 public:
 GestionVacunas();
-GestionVacunas(ListaEnlazada<Usuario>, VDinamico<Dosis>);
-GestionVacunas(const ListaEnlazada<Usuario> &usuarios, const VDinamico<Dosis> &dosis);
+GestionVacunas(ifstream archivoDosis, ifstream archivoUsuarios);
 virtual ~GestionVacunas();
 Usuario* buscarUsuario (string nombre);
 bool administrarDosis(Usuario* vacunando, nombreFabricante vacunada);

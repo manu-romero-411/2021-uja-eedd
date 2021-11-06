@@ -182,7 +182,7 @@ bool Usuario::operator<(const Usuario &elDeLaDerecha) const {
         return true;
     if (elDeLaDerecha.nss < nss)
         return false;*/
-    if ((fechaNacimiento.verAnio() < elDeLaDerecha.fechaNacimiento.verAnio()) && (fechaNacimiento.verMes() < elDeLaDerecha.fechaNacimiento.verMes()) && (fechaNacimiento.verDia() < elDeLaDerecha.fechaNacimiento.verDia()))
+    if (this->nss < elDeLaDerecha.nss)
         return true;
     else
         return false;
@@ -190,7 +190,9 @@ bool Usuario::operator<(const Usuario &elDeLaDerecha) const {
 }
 
 bool Usuario::operator>(const Usuario &rhs) const {
-    return rhs < *this;
+    if(this->nss > rhs.nss)
+        return true;
+    else return false;
 }
 
 bool Usuario::operator<=(const Usuario &rhs) const {
