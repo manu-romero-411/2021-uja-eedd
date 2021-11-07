@@ -19,7 +19,9 @@
 #include <algorithm>
 #include <math.h>
 #include <stdexcept>
+#include <ostream>
 #include "Dosis.h"
+#include <iostream>
 
 
 template <class T>
@@ -28,7 +30,8 @@ private:
     int tamFisico; //tamaño que el vector ocupa en memoria
     int tamLogico; //tamaño ocupado del vector, número de elementos que tiene
     T *v;// Puntero al tipo de dato
-    bool ordenado; //Booleano si el vector está ordenado a la hora de hacer búsquedas
+    void ampliar();
+    void reducir();
 public:
     VDinamico(); // Constructor por defecto
     virtual ~VDinamico(); //Destructor
@@ -38,20 +41,18 @@ public:
     VDinamico<T> &operator=(const VDinamico<T> &comp);//Operador de asignación
     T &operator[](const int pos) const;//Operación de lectura en una posición determinada
     void insertar(const T &dato, unsigned int pos = UINT_MAX); //Insertar un dato en una posición determinada
+    void insertaFinal(const T& dato); //Insertar un dato al final del vector
     T borrar(unsigned int pos = UINT_MAX); //Borrar un dato en una posición determinada
     void ordenar(); //Ordenar el vector de menor a mayor
     void ordenarRev();//Ordenar el vector de menor a mayor
     T * leer(unsigned pos) const;//Devuelve el dato en una posición dada
     int getTamLogico();//Devuelve el número de elementos en el vector
     int busquedaBin(T &dato, int inferior, int superior);//Búsqueda binaria en vector ordenado
-    void ampliar();//Amplia el tamaño físico del vector
-    void reducir(); //Reduce el tamaño físico de vector
-    void setOrdenado(bool ordenado);//Pone el booleano ordenado a un nuevo valor
-    bool isOrdenado() const; //Comprueba si el vector está ordenado
     bool operator==(const VDinamico<T> &elDeLaDerecha) const;
     bool operator!=(const VDinamico<T> &elDeLaDerecha) const;
-
-    };
+    void print();
+    friend ostream &operator<<(ostream &os, const VDinamico &dinamico);
+ };
 /**
  * @brief Constructor por defecto, inicia el vector al mínimo
  * @param[in] -
@@ -66,7 +67,6 @@ VDinamico<T>::VDinamico() {
     tamFisico = 1;
     tamLogico = 0;
     v = new T[tamFisico];
-    ordenado = false;
 }
 
 
@@ -85,7 +85,6 @@ VDinamico<T>::VDinamico(unsigned int tamNue) {
     int tam_potencia_entera = (int)tam_potencia; // El tamaño que hemos pasado es 2^tam_potencia, pero es un valor no entero. Lo casteamos para trabajar con enteros.
     tamNue = powf(2,(tam_potencia_entera+1)); // potencia de 2 inmediatamente superior a tamNue
     v = new T[tamFisico = tamNue];
-    ordenado = false;
 }
     
     /**
@@ -106,7 +105,6 @@ VDinamico<T>::VDinamico(const VDinamico<T>& orig) {
     for(int i = 0; i < tamLogico; ++i){
         v[i] = orig.v[i];
     }
-    ordenado = false;
 }
 
         /**
@@ -130,7 +128,6 @@ VDinamico<T>::VDinamico(const VDinamico<T>& orig) {
             v[i] = orig.v[desde];
             desde++;
         }
-        ordenado = false;
     }
     
  /* @brief Operador de asignación
@@ -171,14 +168,12 @@ VDinamico<T>& VDinamico<T>::operator=(const VDinamico<T>& comp) {
  * @param[in] El dato, y la posición deseada
  * @param[out] -
  * @return -
- * 
- * 
  */
     template<class T>
     void VDinamico<T>::insertar(const T& dato, unsigned int pos) {
         if (pos > tamLogico) throw std::out_of_range("[insertar] Posicion no valida");
 
-        ampliar();
+        this->ampliar();
 
         // INSERTAR AL FINAL (O(1))
         if ((pos == tamLogico) || (pos == UINT_MAX)){
@@ -192,7 +187,19 @@ VDinamico<T>& VDinamico<T>::operator=(const VDinamico<T>& comp) {
             v[pos] = dato;
         }
         tamLogico++;
-        ordenado = false;
+    }
+
+/* @brief Inserta el elemento al final del vector
+* @param[in] Dato que queremos insertar, de tipo T
+* @param[out] -
+* @return -
+*/
+
+    template<class T>
+    void VDinamico<T>::insertaFinal(const T& dato){
+        if (tamLogico + 1 > tamFisico) this->ampliar();
+        v[tamLogico] = dato;
+        tamLogico++;
     }
 /* @brief Borra el elemento en una posición, reordena los demás
  * @param[in] Devuelve el elemento en la posición
@@ -216,7 +223,7 @@ VDinamico<T>& VDinamico<T>::operator=(const VDinamico<T>& comp) {
             return v[tamLogico];
         }
 
-        reducir();
+        this->reducir();
     }
     /* @brief TODO ordena el vector de menor a mayor
  * @param[in] -
@@ -295,7 +302,7 @@ VDinamico<T>& VDinamico<T>::operator=(const VDinamico<T>& comp) {
  */
     template <class T>
     int VDinamico<T>::busquedaBin(T& dato, int inferior, int superior) {
-        if (!ordenado) ordenar();
+        ordenar();
         if (superior >= inferior) {
             int mid = inferior + (superior - inferior) / 2;
 
@@ -354,29 +361,6 @@ VDinamico<T>& VDinamico<T>::operator=(const VDinamico<T>& comp) {
             v=vaux;
         }
     }
-        /* @brief Cambia el booleano ordenado
- * @param[in] - nuevo valor para ordenado
- * @param[out] -
- * @return -
- * 
- * 
- */
-    template <class T>
-    void VDinamico<T>::setOrdenado(bool ordenado) {
-        this->ordenado = ordenado;
-    }
-
-        /* @brief Devuelve si el vector está ordenado
- * @param[in] -
- * @param[out] -
- * @return -
- * 
- * 
- */
-    template <class T>
-    bool VDinamico<T>::isOrdenado() const {
-        return ordenado;
-    }
 
     template <class T>
     bool VDinamico<T>::operator==(const VDinamico<T> &elDeLaDerecha) const{
@@ -400,5 +384,15 @@ VDinamico<T>& VDinamico<T>::operator=(const VDinamico<T>& comp) {
     bool VDinamico<T>::operator!=(const VDinamico<T> &elDeLaDerecha) const {
         return !(this == elDeLaDerecha);
     }
+
+template <class T>
+void VDinamico<T>::print(){
+    for(int i = 0; i < tamLogico; ++i){
+        std::cout << v[i] << " | ";
+    }
+    std::cout << std::endl;
+}
+
+
 #endif /* VDINAMICO_H */
 

@@ -42,6 +42,7 @@ public:
     Dosis();//Constructor por defecto
     Dosis(const Dosis &orig);//Constructor Copia
     Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno, int _estado);
+    Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno);
     Dosis(int _id);
     virtual ~Dosis();//Destructor
     void SetFechaFabricacion(Fecha fechaFabricacion);//Cambia la fecha de fabricación

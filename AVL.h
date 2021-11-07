@@ -30,7 +30,7 @@ private:
     void limpiaArbol(AVLNodo<T> *nodoOrig);
     AVLNodo<T>* buscaClave(T &dato, AVLNodo<T> *p);
     bool operacionInsercion(AVLNodo<T>* &c, T& dato);
-
+    void inorden(AVLNodo<T> *p, int nivel, VDinamico<T*> &datos);
 public:
     AVL<T>();
     AVL<T>(const AVL<T> &orig);
@@ -40,7 +40,6 @@ public:
     bool inserta(T& dato);
     T* buscaRec(T& dato);
     T* buscaIt(T& dato);
-    void inorden(AVLNodo<T> *p, int nivel, VDinamico<T*> datos);
     VDinamico<T*> recorreInorden();
     unsigned int getNumElementos();
     int auxAltura(AVLNodo<T> *nodo, int nivel);
@@ -88,7 +87,7 @@ void AVL<T>::limpiaArbol(AVLNodo<T> *nodoOrig){
 
 template<class T>
 AVL<T>::AVL(const AVL<T> &orig){
-    nodoRaiz = new AVLNodo<T>(orig.nodoRaiz.dato);
+    nodoRaiz = new AVLNodo<T>(orig.nodoRaiz->dato);
     copiaNodos(orig.nodoRaiz);
 }
 
@@ -209,10 +208,10 @@ T* AVL<T>::buscaIt(T& dato){
 }
 
 template<class T>
-void AVL<T>::inorden(AVLNodo<T> *p, int nivel, VDinamico<T*> datos) {
+void AVL<T>::inorden(AVLNodo<T> *p, int nivel, VDinamico<T*> &datos) {
     if (p) {
         inorden(p->ramaIzquierda, nivel + 1, datos);
-        datos.insertar(datos.getTamLogico(),&p->dato);
+        datos.insertar(&p->dato,datos.getTamLogico());
         inorden(p->ramaDerecha, nivel + 1, datos);
     }
 }

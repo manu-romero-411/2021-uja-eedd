@@ -244,16 +244,12 @@ return edad;
 VDinamico<Dosis*> Usuario::getmisdosis(){
     VDinamico<Dosis*> dosis;
     Iterador <Dosis*> itera = this->misDosis.iteradorInicio();
-    for(int i=0; i<misDosis.tam(); i++){
+    for(int i=0; i < misDosis.tam(); i++){
         Dosis* p= itera.dato();
         dosis.insertar(p,dosis.getTamLogico());
         itera.siguiente();
     }
-
-
-return dosis;
-
-
+    return dosis;
 }
 
 nombreFabricante Usuario::getdosisRecomendable(){

@@ -40,6 +40,16 @@ Dosis::Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno, i
     this->status = estado(_estado);
 }
 
+Dosis::Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno) {
+    this->id = id;
+    this->idLote = idLote;
+    this->fabricante = nombreFabricante(idFabricante);
+    this->fechaFabricacion.asignarDia(dia, mes, anno);
+    this->fechaCaducidad = this->fechaFabricacion;
+    this->fechaCaducidad.anadirMeses(2);
+    this->status = enAlmacen;
+}
+
     /* @brief Constructor copia
  * @param[in] -Referencia a objeto dosis
  * @param[out] -
