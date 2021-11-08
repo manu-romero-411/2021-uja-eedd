@@ -19,7 +19,6 @@
 using namespace std;
 
 int main() {
-    clock_t t_ini = clock();
     try {
         std::srand(static_cast<unsigned int>(std::time(nullptr)));
         std::cout << "\n\n**** Instanciación de árbol de enteros ****" << endl;
@@ -35,8 +34,8 @@ int main() {
                 if (count == 535) aEncontrar = ale;
             }
         }
-        //AVL<int> otroArbol;
-        //otroArbol = arbolPrueba;
+        AVL<int> *otroArbol = new AVL<int>(arbolPrueba);
+        AVL<int> *otrootroarbol = otroArbol;
 
         std::cout << "\n\n**** Búsqueda exitosa ****" << endl;
         if (!(arbolPrueba.buscaRec(aEncontrar))){
@@ -74,12 +73,14 @@ int main() {
 
         std::cout << "\n\n**** Primera dosis ****" << endl;
         int dosisAdministradas = 0;
+        int adminTot = 0;
         for(int i=0; i<vecAuxilia.getTamLogico();++i){
             if ((stoi(vecAuxilia[i]) % 10) != 0){
                 Usuario* encontrado = gestionVacunas.buscarUsuario(vecAuxilia[i]);
                 if (encontrado != NULL){
                     bool unaDosis = gestionVacunas.queAdministro(encontrado);
                     dosisAdministradas++;
+                    adminTot++;
                 }
             }
         }
@@ -95,6 +96,7 @@ int main() {
                 if (encontrado != NULL){
                     bool dosDosis = gestionVacunas.queAdministro(encontrado);
                     dosisAdministradas2++;
+                    adminTot++;
                 }
             }
         }
@@ -109,41 +111,65 @@ int main() {
                     if(encontrado->getmisdosis().getTamLogico() == 2) {
                         bool tresDosis = gestionVacunas.queAdministro(encontrado);
                         dosisAdministradas3++;
+                        adminTot++;
                     }
                 }
             }
         }
-        Fecha fecha;
-        Usuario prueba("","","1",fecha);
-        Dosis dosis(1,1,1,1,1,2001,0);
-        Dosis dosis2(1,1,1,1,1,2001,0);
 
-        prueba.nuevaDosis(dosis);
-        prueba.nuevaDosis(dosis2);
         std::cout << "Dosis administradas: " << dosisAdministradas3 << endl;
-        //AVL<int> *copia = new AVL<int>(arbolPrueba);
+        std::cout << "\n\n**** Dosis no administradas: " << gestionVacunas.getVacAlmacen() << endl;
+
         std::cout << "\n\n**** Porcentaje de personas con pauta completa: " << gestionVacunas.pautaCompleta() << " %" << endl;
 
         std::cout << "\n\n**** Listado de no recomendados ****" << endl;
+        //gestionVacunas.listadoVacunacionNR().print();
 
+        std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
         std::cout << "\n\n**** Forzar primera dosis de Moderna ****" << endl;
         Usuario* primero = gestionVacunas.buscarUsuario("1622650940");
-        gestionVacunas.administrarDosis(primero, Moderna);
+        if (primero != NULL) gestionVacunas.administrarDosis(primero, Moderna);
 
         Usuario* segundo = gestionVacunas.buscarUsuario("1941046560");
-        gestionVacunas.administrarDosis(segundo, Moderna);
+        if (segundo != NULL) gestionVacunas.administrarDosis(segundo, Moderna);
 
         Usuario* tercero = gestionVacunas.buscarUsuario("1756824615");
-        gestionVacunas.administrarDosis(tercero, Moderna);
+        if (tercero != NULL) gestionVacunas.administrarDosis(tercero, Moderna);
 
         Usuario* cuarto = gestionVacunas.buscarUsuario("1625692780");
-        gestionVacunas.administrarDosis(cuarto, Moderna);
+        if (cuarto != NULL) gestionVacunas.administrarDosis(cuarto, Moderna);
 
         Usuario* quinto = gestionVacunas.buscarUsuario("1855345010");
-        gestionVacunas.administrarDosis(quinto, Moderna);
+        if (quinto != NULL) gestionVacunas.administrarDosis(quinto, Moderna);
+        std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
-        std::cout << std::endl;
-        std::cout << "\n\n**** Dosis no administradas: " << gestionVacunas.getVacAlmacen() << endl;
+        std::cout << "Diferencia de tiempo 1 = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
+
+        std::chrono::steady_clock::time_point begin2 = std::chrono::steady_clock::now();
+        VDinamico<Usuario> forzados;
+        Fecha fecha;
+        Usuario nuevoPrimero("","","1622650940",fecha);
+        Usuario nuevoSegundo("","","1941046560",fecha);
+        Usuario nuevoTercero("","","1756824615",fecha);
+        Usuario nuevoCuarto("","","1625692780",fecha);
+        Usuario nuevoQuinto("","","1855345010",fecha);
+
+        forzados.insertaFinal(nuevoPrimero);
+        forzados.insertaFinal(nuevoSegundo);
+        forzados.insertaFinal(nuevoTercero);
+        forzados.insertaFinal(nuevoCuarto);
+        forzados.insertaFinal(nuevoQuinto);
+
+        for (int i = 0; i < forzados.getTamLogico(); ++i){
+            if (gestionVacunas.buscarUsuario(forzados[i].getNss())){
+                std::cout << "Usuario forzado " << i+1 << " encontrado " << endl;
+            } else {
+                std::cout << "Usuario forzado " << i+1 << " no encontrado " << endl;
+            }
+        }
+        std::chrono::steady_clock::time_point end2 = std::chrono::steady_clock::now();
+        std::cout << "Diferencia de tiempo 2 = " << std::chrono::duration_cast<std::chrono::microseconds>(end2 - begin2).count() << "[µs]" << std::endl;
+
 
         return 0;
     } catch (std::exception &e) {

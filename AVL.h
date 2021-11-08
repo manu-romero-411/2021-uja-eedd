@@ -85,16 +85,16 @@ void AVL<T>::limpiaArbol(AVLNodo<T> *nodoOrig){
     }
 }
 
+
 template<class T>
 AVL<T>::AVL(const AVL<T> &orig){
-    nodoRaiz = new AVLNodo<T>(orig.nodoRaiz->dato);
+    nodoRaiz = new AVLNodo<T>(*orig.nodoRaiz);
     copiaNodos(orig.nodoRaiz);
 }
 
 template<class T>
 AVL<T>& AVL<T>::operator=(const AVL<T> &elDeLaDerecha){
     limpiaArbol(nodoRaiz);
-    //nodoRaiz = new AVLNodo<T>(elDeLaDerecha.nodoRaiz->dato);
     copiaNodos(elDeLaDerecha.nodoRaiz);
     return (*this);
 }
@@ -262,7 +262,7 @@ AVLNodo<T>* AVL<T>::getNodoRaiz(){
 template<class T>
 AVL<T>::~AVL() {
     limpiaArbol(nodoRaiz);
-    delete nodoRaiz;
+    numElementos = 0;
 }
 
 #endif //EEDD_AVL_H
