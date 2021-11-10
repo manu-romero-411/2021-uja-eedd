@@ -130,6 +130,7 @@ Dosis& Usuario::getDosis(int cual){
 void Usuario::nuevaDosis(Dosis& nueva){
     Dosis* p= &nueva;
     misDosis.insertaFin(p);
+    p->setStatus(administrada);
 }
 
 /**
@@ -238,7 +239,7 @@ int Usuario::getedad() {
             edad--;
         }
     }*/
-return edad;
+    return edad;
 }
 
 VDinamico<Dosis*> Usuario::getmisdosis(){
@@ -265,6 +266,13 @@ nombreFabricante Usuario::getdosisRecomendable(){
 
 }
 
+bool Usuario::isDosisRec(){
+    return dosisRecomendada;
+}
+
+void Usuario::tieneDosisRec(bool rec){
+    dosisRecomendada = rec;
+}
 
 Usuario::~Usuario() {
 

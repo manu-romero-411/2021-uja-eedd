@@ -21,6 +21,8 @@ private:
     ListaEnlazada<Dosis*> misDosis;
     int edad;
     //UTM domicilio;
+    bool dosisRecomendada;
+
 public:
     Usuario();
     Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento); //Constructor Parametrizado
@@ -48,10 +50,9 @@ public:
     virtual ~Usuario();
     VDinamico<Dosis*> getmisdosis();
     nombreFabricante getdosisRecomendable();
-
-
+    bool isDosisRec();
+    void tieneDosisRec(bool rec);
     friend ostream &operator<<(ostream &os, const Usuario &usuario); //Operador para imprimir por pantalla
-
 };
 
 

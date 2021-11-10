@@ -21,14 +21,14 @@ using namespace std;
 int main() {
     try {
         std::srand(static_cast<unsigned int>(std::time(nullptr)));
-        std::cout << "\n\n**** Instanciación de árbol de enteros ****" << endl;
+        std::cout << "\n**** Instanciación de árbol de enteros ****" << endl;
         AVL<int> arbolPrueba;
         int count = 0;
         int aEncontrar = 0;
 
-        while(count < 1000){
+        while (count < 1000) {
             int ale = (std::rand() % 200000) + 1000;
-            if (!(arbolPrueba.buscaIt(ale))){
+            if (!(arbolPrueba.buscaIt(ale))) {
                 arbolPrueba.inserta(ale);
                 count++;
                 if (count == 535) aEncontrar = ale;
@@ -37,94 +37,93 @@ int main() {
         AVL<int> *otroArbol = new AVL<int>(arbolPrueba);
         AVL<int> *otrootroarbol = otroArbol;
 
-        std::cout << "\n\n**** Búsqueda exitosa ****" << endl;
-        if (!(arbolPrueba.buscaRec(aEncontrar))){
+        std::cout << "\n**** Búsqueda exitosa ****" << endl;
+        if (!(arbolPrueba.buscaRec(aEncontrar))) {
             std::cout << "* No se ha encontrado " << aEncontrar << std::endl;
         } else {
             std::cout << "* Se ha encontrado " << aEncontrar << std::endl;
         }
 
-        std::cout << "\n\n**** Búsqueda fallida ****" << endl;
+        std::cout << "\n**** Búsqueda fallida ****" << endl;
         int noTeVoyAencontrarNunca = 14;
-        if (!(arbolPrueba.buscaRec(noTeVoyAencontrarNunca))){
+        if (!(arbolPrueba.buscaRec(noTeVoyAencontrarNunca))) {
             std::cout << "* No se ha encontrado " << noTeVoyAencontrarNunca << std::endl;
         } else {
             std::cout << "* Se ha encontrado " << aEncontrar << std::endl;
         }
 
-        std::cout << "\n\n**** Recorrer en inorden ****" << endl;
-        VDinamico<int*> inordenRec = arbolPrueba.recorreInorden();
-        for(int i = 0; i < inordenRec.getTamLogico(); ++i){
+        std::cout << "\n**** Recorrer en inorden ****" << endl;
+        VDinamico<int *> inordenRec = arbolPrueba.recorreInorden();
+        for (int i = 0; i < inordenRec.getTamLogico(); ++i) {
             int *j = inordenRec[i];
             std::cout << *j << " | ";
         }
 
-        std::cout << "\n\n**** Número de elementos: " << arbolPrueba.getNumElementos() << endl;
+        std::cout << "\n**** Número de elementos: " << arbolPrueba.getNumElementos() << endl;
         std::cout << "**** Altura: " << arbolPrueba.getAltura() << endl;
 
         std::cout << std::endl;
 
-        std::cout << "\n\n**** Instanciar usuarios y dosis ****" << endl;
+        std::cout << "\n**** Instanciar usuarios y dosis ****" << endl;
         GestionVacunas gestionVacunas("dosis2.txt", "usuarios2.txt");
 
-        std::cout << "\n\n**** Listado completo de NSS ****" << endl;
+        std::cout << "\n**** Listado completo de NSS ****" << endl;
         VDinamico<string> vecAuxilia = gestionVacunas.listadoNSS();
         vecAuxilia.print();
 
-        std::cout << "\n\n**** Primera dosis ****" << endl;
+        std::cout << "\n**** Primera dosis ****" << endl;
         int dosisAdministradas = 0;
         int adminTot = 0;
-        for(int i=0; i<vecAuxilia.getTamLogico();++i){
-            if ((stoi(vecAuxilia[i]) % 10) != 0){
-                Usuario* encontrado = gestionVacunas.buscarUsuario(vecAuxilia[i]);
-                if (encontrado != NULL){
-                    bool unaDosis = gestionVacunas.queAdministro(encontrado);
-                    dosisAdministradas++;
-                    adminTot++;
+        for (int i = 0; i < vecAuxilia.getTamLogico(); ++i) {
+            if ((stoi(vecAuxilia[i]) % 10) != 0) {
+                Usuario *encontrado = gestionVacunas.buscarUsuario(vecAuxilia[i]);
+                if ((encontrado != NULL) && (gestionVacunas.noMenor(encontrado))) {
+                    encontrado->tieneDosisRec(gestionVacunas.queAdministro(encontrado));
+                    gestionVacunas.setPrimeraDosis();
                 }
             }
         }
 
-        std::cout << "Dosis administradas: " << dosisAdministradas << endl;
-        std::cout << "\n\n**** Segunda dosis ****" << endl;
+        std::cout << "Dosis administradas: " << gestionVacunas.getPrimeraDosis() << endl;
+        std::cout << "Quedan sin administrar: " << gestionVacunas.getVacAlmacen() << endl;
+
+        std::cout << "\n**** Segunda dosis ****" << endl;
 
         int dosisAdministradas2 = 0;
 
-        for(int i=0; i<vecAuxilia.getTamLogico();++i){
-            if (((stoi(vecAuxilia[i]) % 10) != 0) && (((stoi(vecAuxilia[i]) - 3) % 10) != 0)){
-                Usuario* encontrado = gestionVacunas.buscarUsuario(vecAuxilia[i]);
-                if (encontrado != NULL){
-                    bool dosDosis = gestionVacunas.queAdministro(encontrado);
-                    dosisAdministradas2++;
-                    adminTot++;
+        for (int i = 0; i < vecAuxilia.getTamLogico(); ++i) {
+            if (((stoi(vecAuxilia[i]) % 10) != 0) && (((stoi(vecAuxilia[i]) - 3) % 10) != 0)) {
+                Usuario *encontrado = gestionVacunas.buscarUsuario(vecAuxilia[i]);
+                if ((encontrado != NULL) && (gestionVacunas.noMenor(encontrado))) {
+                    encontrado->tieneDosisRec(gestionVacunas.queAdministro(encontrado));
+                    gestionVacunas.setSegundaDosis();
                 }
             }
         }
-        std::cout << "Dosis administradas: " << dosisAdministradas2 << endl;
-        std::cout << "\n\n**** Tercera dosis ****" << endl;
+        std::cout << "Dosis administradas: " << gestionVacunas.getSegundaDosis() << endl;
+        std::cout << "Quedan sin administrar: " << gestionVacunas.getVacAlmacen() << endl;
+        std::cout << "\n**** Tercera dosis ****" << endl;
 
-        int dosisAdministradas3 = 0;
-        for(int i=0; i<vecAuxilia.getTamLogico();++i){
-            Usuario* encontrado = gestionVacunas.buscarUsuario(vecAuxilia[i]);
-            if (encontrado != NULL) {
+        for (int i = 0; i < vecAuxilia.getTamLogico(); ++i) {
+            Usuario *encontrado = gestionVacunas.buscarUsuario(vecAuxilia[i]);
+            if ((encontrado != NULL) && (gestionVacunas.noMenor(encontrado))) {
                 if (encontrado->getedad() >= 75) {
-                    if(encontrado->getmisdosis().getTamLogico() == 2) {
-                        bool tresDosis = gestionVacunas.queAdministro(encontrado);
-                        dosisAdministradas3++;
-                        adminTot++;
+                    if (encontrado->getmisdosis().getTamLogico() == 2) {
+                        encontrado->tieneDosisRec(gestionVacunas.queAdministro(encontrado));
+                        gestionVacunas.setTerceraDosis();
                     }
                 }
             }
         }
 
-        std::cout << "Dosis administradas: " << dosisAdministradas3 << endl;
-        std::cout << "\n\n**** Dosis no administradas: " << gestionVacunas.getVacAlmacen() << endl;
-
-        std::cout << "\n\n**** Porcentaje de personas con pauta completa: " << gestionVacunas.pautaCompleta() << " %" << endl;
-
-        std::cout << "\n\n**** Listado de no recomendados ****" << endl;
-        //gestionVacunas.listadoVacunacionNR().print();
-
+        std::cout << "Dosis administradas: " << gestionVacunas.getTerceraDosis() << endl;
+        std::cout << "Quedan sin administrar: " << gestionVacunas.getVacAlmacen() << endl;
+        std::cout << "\n**** Porcentaje de personas con pauta completa: " << gestionVacunas.pautaCompleta() << " %" << endl;
+        std::cout << "\n**** Personas con vacuna no recomendada: " << gestionVacunas.listadoVacunacionNR().getTamLogico() << endl;
+        if (gestionVacunas.listadoVacunacionNR().getTamLogico() > 0){
+            std::cout << "**** Listado de no recomendados ****" << endl;
+            gestionVacunas.listadoVacunacionNR().print();
+        }
         std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
         std::cout << "\n\n**** Forzar primera dosis de Moderna ****" << endl;
         Usuario* primero = gestionVacunas.buscarUsuario("1622650940");
@@ -169,7 +168,6 @@ int main() {
         }
         std::chrono::steady_clock::time_point end2 = std::chrono::steady_clock::now();
         std::cout << "Diferencia de tiempo 2 = " << std::chrono::duration_cast<std::chrono::microseconds>(end2 - begin2).count() << "[µs]" << std::endl;
-
 
         return 0;
     } catch (std::exception &e) {

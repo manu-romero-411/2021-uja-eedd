@@ -18,15 +18,16 @@ class GestionVacunas {
 private:
     AVL<Usuario> listausuarios;
     VDinamico<Dosis> dosis;
-public:
-    const VDinamico<Dosis> &getDosis() const;
-
-private:
     VDinamico<string> listaNSS;
     VDinamico<Usuario *> noRecomendados;
     int vacAlmacen;
-    int cuantas;
-    VDinamico<bool> dosisAdministradasBin;
+    VDinamico<Dosis> dosisAdministradas;
+    int cuantasDosis;
+    int cuantosUsuarios;
+    int primeraDosis;
+    int segundaDosis;
+    int terceraDosis;
+    int contNR;
 public:
     GestionVacunas();
     GestionVacunas(std::string fileDosis, std::string fileUsuarios);
@@ -42,7 +43,14 @@ public:
     void setVacAlmacen(int vacAlmacen);
     void printStatus();
     void comprobarCorreccionDosis();
+    const VDinamico<Dosis> &getDosis() const;
+    int getPrimeraDosis() const;
+    void setPrimeraDosis();
+    int getSegundaDosis() const;
+    void setSegundaDosis();
+    int getTerceraDosis() const;
+    void setTerceraDosis();
+    bool noMenor(Usuario* vacunando);
 };
-
 
 #endif //EEDD_GESTIONVACUNAS_H
