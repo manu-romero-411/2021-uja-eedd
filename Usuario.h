@@ -6,11 +6,10 @@
 #define EEDD_USUARIO_H
 
 #include <cstdlib>
+#include <vector>
 #include <iostream>
 #include "Fecha.h"
 #include "Dosis.h"
-#include "ListaEnlazada.h"
-#include "VDinamico.h"
 
 class Usuario {
 private:
@@ -18,7 +17,7 @@ private:
     string apellidos;
     string nss;
     Fecha fechaNacimiento;
-    ListaEnlazada<Dosis*> misDosis;
+    vector<Dosis*> misDosis;
     int edad;
     //UTM domicilio;
     bool dosisRecomendada;

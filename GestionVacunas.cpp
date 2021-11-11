@@ -52,11 +52,11 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios) 
 
         anno = stoi(palabra);
         Dosis nuevaDosis(id, idLote, fabricante, dia, mes, anno);
-        dosis.insertar(nuevaDosis, dosis.getTamLogico());
+        dosis.insert(dosis.begin(),nuevaDosis);
     }
     archivoDosis.close();
     vacAlmacen=0;
-    for (int i = 0; i < dosis.getTamLogico(); ++i){
+    for (int i = 0; i < dosis.size(); ++i){
         dosis[i].setStatus(enAlmacen);
         vacAlmacen++;
         cuantasDosis++;
@@ -70,7 +70,6 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios) 
     anno = 0;
     float longitud, latitud;
     string nombre, apellido, nss;
-    AVL<Usuario> listaUsuarios;
     while (getline(archivoUsuarios, palabraB)) {
         corte = palabraB.find(';');
         nombre = palabraB.substr(0, corte);
@@ -104,7 +103,7 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios) 
         Fecha fecha;
         fecha.asignarDia(dia, mes, anno);
         Usuario nuevoUsuario(nombre, apellido, nss, fecha);
-        listausuarios.inserta(nuevoUsuario);
+        listausuarios.insert(pair<string,Usuario>(nss,nuevoUsuario));
         cuantosUsuarios++;
     }
     archivoUsuarios.close();
@@ -118,9 +117,7 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios) 
 *
 */
 Usuario* GestionVacunas::buscarUsuario (string nss){
-    Fecha nueva(1,1,1,1,1);
-    Usuario buscando("Dondesta", "eltioeste", nss, nueva);
-    Usuario *encontrado= listausuarios.buscaRec(buscando);
+    Usuario *encontrado= &(listausuarios.find(nss)->second);
     return encontrado;
 }
 /**
@@ -153,9 +150,8 @@ bool GestionVacunas::queAdministro(Usuario *vacunando) {
 */
 bool GestionVacunas::administrarDosis(Usuario* vacunando, nombreFabricante vacunada) {
     int h = 0;
-    for (int i = 0; i < dosisAdministradasBin.getTamLogico(); ++i){
+    for (int i = 0; i < dosisAdministradasBin.size(); ++i){
         Dosis *esta = &dosis[i];
-        if (esta->GetFabricante() == vacunada && (!(dosisAdministradasBin[i]))){
             vacunando->nuevaDosis(esta);
             esta->setStatus(administrada);
             vacAlmacen--;
@@ -163,14 +159,14 @@ bool GestionVacunas::administrarDosis(Usuario* vacunando, nombreFabricante vacun
             dosisAdministradasBin[i] = true;
             return true;
         }
-    }
+
 
     comprobarCorreccionDosis();
     int j = 0;
     while (dosis[j].getStatus() != enAlmacen){
         j++;
     }
-    if (j < dosis.getTamLogico()){
+    if (j < dosis.siz()){
         Dosis* esta = &dosis[j];
         vacunando->nuevaDosis(esta);
         dosis[j].setStatus(administrada);
@@ -310,3 +306,4 @@ bool GestionVacunas::noMenor(Usuario* vacunando){
     if(vacunando->getedad() > 0 && vacunando->getedad() < 12) return false;
     else return true;
 }
+
