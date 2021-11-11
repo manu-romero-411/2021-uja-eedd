@@ -225,7 +225,7 @@ VDinamico<T>& VDinamico<T>::operator=(const VDinamico<T>& comp) {
 
         this->reducir();
     }
-    /* @brief TODO ordena el vector de menor a mayor
+    /* @brief
  * @param[in] -
  * @param[out] -
  * @return -
