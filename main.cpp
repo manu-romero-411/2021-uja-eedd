@@ -1,6 +1,6 @@
 /*
  * File:   main.cpp
- * Author: Manuel Jesus Romero Mateos, Jose angel angeles Santiago
+ * Author: Manuel Jesus Romero Mateos, Jose Ángel Ángeles Santiago
  *
  * Created on 22 de septiembre de 2021, 20:36
  */
@@ -120,10 +120,10 @@ int main() {
         std::cout << "Quedan sin administrar: " << gestionVacunas.getVacAlmacen() << endl;
         std::cout << "\n**** Porcentaje de personas con pauta completa: " << gestionVacunas.pautaCompleta() << " %" << endl;
         std::cout << "\n**** Personas con vacuna no recomendada: " << gestionVacunas.listadoVacunacionNR().getTamLogico() << endl;
-        if (gestionVacunas.listadoVacunacionNR().getTamLogico() > 0){
+        /*if (gestionVacunas.listadoVacunacionNR().getTamLogico() > 0){
             std::cout << "**** Listado de no recomendados ****" << endl;
             gestionVacunas.listadoVacunacionNR().print();
-        }
+        }*/
         std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
         std::cout << "\n\n**** Forzar primera dosis de Moderna ****" << endl;
         Usuario* primero = gestionVacunas.buscarUsuario("1622650940");
@@ -168,7 +168,7 @@ int main() {
         }
         std::chrono::steady_clock::time_point end2 = std::chrono::steady_clock::now();
         std::cout << "Diferencia de tiempo 2 = " << std::chrono::duration_cast<std::chrono::microseconds>(end2 - begin2).count() << "[µs]" << std::endl;
-
+        Usuario *hola = gestionVacunas.buscarUsuario("1492015196");
         return 0;
     } catch (std::exception &e) {
         cout << e.what();

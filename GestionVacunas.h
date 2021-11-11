@@ -22,12 +22,12 @@ private:
     VDinamico<Usuario *> noRecomendados;
     int vacAlmacen;
     VDinamico<Dosis> dosisAdministradas;
+    VDinamico<bool> dosisAdministradasBin;
     int cuantasDosis;
     int cuantosUsuarios;
     int primeraDosis;
     int segundaDosis;
     int terceraDosis;
-    int contNR;
 public:
     GestionVacunas();
     GestionVacunas(std::string fileDosis, std::string fileUsuarios);

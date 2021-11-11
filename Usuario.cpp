@@ -127,8 +127,8 @@ Dosis& Usuario::getDosis(int cual){
         throw std::out_of_range("[Usuario] Posición no valida al llamar a VDinamico<Dosis>");
 }
 
-void Usuario::nuevaDosis(Dosis& nueva){
-    Dosis* p= &nueva;
+void Usuario::nuevaDosis(Dosis* nueva){
+    Dosis* p= nueva;
     misDosis.insertaFin(p);
     p->setStatus(administrada);
 }

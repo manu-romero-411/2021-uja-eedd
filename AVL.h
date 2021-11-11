@@ -169,7 +169,7 @@ bool AVL<T>::inserta(T &dato) {
 template <class T>
 AVLNodo<T>* AVL<T>::buscaClave(T &dato, AVLNodo<T> *p) {
     if (!p)
-        return 0;
+        return NULL;
     else if (dato < p->dato)
         return buscaClave(dato, p->ramaIzquierda);
     else if (p->dato < dato)
@@ -189,7 +189,7 @@ T* AVL<T>::buscaRec(T& dato){
 template<class T>
 T* AVL<T>::buscaIt(T& dato){
     AVLNodo<T> *p = nodoRaiz;
-    if(!p) return 0;
+    if(!p) return NULL;
     while (p) {
         if (dato < p->dato){
             if (p->ramaIzquierda) p = p->ramaIzquierda;

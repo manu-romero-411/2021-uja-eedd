@@ -36,7 +36,7 @@ public:
     std::string getNombre() const;
     void setNombre(const string &nombre);
     Dosis& getDosis(int cual);
-    void nuevaDosis(Dosis& nueva);
+    void nuevaDosis(Dosis* nueva);
         //const UTM getDomicilio() const;
     //void setDomicilio(const UTM &dom);
     int getedad();
