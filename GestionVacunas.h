@@ -27,23 +27,22 @@ private:
     int primeraDosis;
     int segundaDosis;
     int terceraDosis;
-    int contNR;
 public:
-    GestionVacunas();
-    GestionVacunas(std::string fileDosis, std::string fileUsuarios);
-    virtual ~GestionVacunas();
-    Usuario *buscarUsuario(string nombre);
-    bool administrarDosis(Usuario *vacunando, nombreFabricante vacunada);
-    bool queAdministro(Usuario *vacunando);
-    VDinamico<string> listadoNSS();
-    float pautaCompleta();
-    VDinamico<Usuario *> listadoVacunacionNR();
-    const AVL<Usuario> &getListausuarios() const;
+    GestionVacunas(); //Constructor por defecto
+    GestionVacunas(std::string fileDosis, std::string fileUsuarios); //Constructor parametrizado
+    virtual ~GestionVacunas(); //Destructor
+    Usuario *buscarUsuario(string nss); //Busca un usuario en el arbol con el nss
+    bool administrarDosis(Usuario *vacunando, nombreFabricante vacunada); //Administra una dosis de un fabricante a un usuario
+    bool queAdministro(Usuario *vacunando);//Encuentra la dosis recomendada que administrar a un usuario
+    VDinamico<string> listadoNSS(); //Listado de los nss de todos los usuarios
+    float pautaCompleta(); //Duevuelve el porcentaje de los usuarios con la pauta completa
+    VDinamico<Usuario *> listadoVacunacionNR(); //Devuelve los usuarios con la pauta no recomendada
+    const AVL<Usuario> &getListausuarios() const; //devuelve el arbol de usuarios
     int getVacAlmacen() const;
     void setVacAlmacen(int vacAlmacen);
-    void printStatus();
-    void comprobarCorreccionDosis();
-    const VDinamico<Dosis> &getDosis() const;
+    void printStatus();//devuelve el estado de las vacunas
+    void comprobarCorreccionDosis(); // No sale
+    const VDinamico<Dosis> &getDosis() const; //Devuelve el Vdinamico de las dosis
     int getPrimeraDosis() const;
     void setPrimeraDosis();
     int getSegundaDosis() const;

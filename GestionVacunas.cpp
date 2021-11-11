@@ -4,13 +4,21 @@
 
 #include "GestionVacunas.h"
 
+
+/**
+* @brief Constructor parametrizado
+* @param[in] String con los nombres de los ficheros de las dosis y ususarios
+* @param[out] -
+* @return -
+*
+*
+*/
 GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios) {
     cuantasDosis = 0;
     cuantosUsuarios = 0;
     primeraDosis = 0;
     segundaDosis = 0;
     terceraDosis = 0;
-    contNR = 0;
     ifstream archivoDosis(fileDosis);
     int id = 0;
     string palabra;
@@ -101,14 +109,28 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios) 
     }
     archivoUsuarios.close();
 }
-
+/**
+* @brief Busca un usuario dependiendo de su nss
+* @param[in] string con el nss del usuario
+* @param[out] -
+* @return Puntero al ususario encontrado dentro del arbol
+*
+*
+*/
 Usuario* GestionVacunas::buscarUsuario (string nss){
     Fecha *nueva= new Fecha(1,1,1,1,1);
     Usuario *buscando= new Usuario("Dondesta", "eltioeste", nss, *nueva);
     Usuario *encontrado= listausuarios.buscaRec(*buscando);
     return encontrado;
 }
-
+/**
+* @brief Funcion que consigue la dosis recomendable y llama a adiministrarDosis
+* @param[in] Un usuario
+* @param[out] -
+* @return - Bool dependiendo si la vacunación es la recomendada
+*
+*
+*/
 bool GestionVacunas::queAdministro(Usuario *vacunando) {
     bool labuena;
     int edad = vacunando->getedad();
@@ -121,6 +143,14 @@ bool GestionVacunas::queAdministro(Usuario *vacunando) {
     }
 }
 
+/**
+* @brief Funcion que administra una dosis a un usuario específico
+* @param[in] Usuario a vacunar, y fabricante de la vacuna
+* @param[out] -
+* @return -Bool dependiendo si la vacunación es la recomendada
+*
+*
+*/
 bool GestionVacunas::administrarDosis(Usuario* vacunando, nombreFabricante vacunada) {
     if(!this->dosis.getTamLogico() || (this->vacAlmacen == 0))
         throw std::underflow_error("[ERROR] No hay dosis disponibles");
@@ -144,6 +174,8 @@ bool GestionVacunas::administrarDosis(Usuario* vacunando, nombreFabricante vacun
             if((this->dosis[i].getStatus() == administrada) && !noRecomendadaEncontrada){
                 noRecomendadaEncontrada = true;
                 dosisNR = &this->dosis[i];
+                dosis[i].setStatus(administrada);
+
                 break;
             }
         }
@@ -152,7 +184,14 @@ bool GestionVacunas::administrarDosis(Usuario* vacunando, nombreFabricante vacun
     vacAlmacen--;
     return false;
 }
-
+/**
+* @brief Funcion que calcula el porcentaje de personas con pauta completa
+* @param[in]
+* @param[out] -
+* @return Porcentaje de las personas con la pauta completa
+*
+*
+*/
 float GestionVacunas::pautaCompleta() {
     float numusuarios=this->listausuarios.getNumElementos();
     float numpautascompletas;
@@ -168,16 +207,40 @@ float GestionVacunas::pautaCompleta() {
     return porcentaje;
 }
 
+/**
+* @brief Devuelve el estado de las dosis
+* @param[in]
+* @param[out] -
+* @return -
+*
+*
+*/
 void GestionVacunas::printStatus(){
     for (int i = 0; i < dosis.getTamLogico(); ++i){
         std::cout << dosis[i].getStatus() << " | ";
     }
 }
 
+/**
+* @brief Devuelve la lista de los usuarios con la pauta no recomenda
+* @param[in]
+* @param[out] -
+* @return -
+*
+*
+*/
 VDinamico<Usuario*> GestionVacunas::listadoVacunacionNR(){
     return noRecomendados;
 }
 
+/**
+* @brief Devuelve un vector con los nss de los usuarios del arbol
+* @param[in]
+* @param[out] -
+* @return -
+*
+*
+*/
 VDinamico<string> GestionVacunas::listadoNSS(){
     VDinamico<string> resultado;
     VDinamico<Usuario*> listUsu = listausuarios.recorreInorden();
@@ -187,7 +250,14 @@ VDinamico<string> GestionVacunas::listadoNSS(){
     resultado.ordenar();
     return resultado;
 }
-
+/**
+* @brief Destructor por defecto
+* @param[in]
+* @param[out] -
+* @return -
+*
+*
+*/
 GestionVacunas::~GestionVacunas() {
 
 }

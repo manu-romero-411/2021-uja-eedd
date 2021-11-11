@@ -8,46 +8,53 @@
 template<class T>
 class AVLNodo {
 public:
-    AVLNodo<T> *ramaIzquierda, *ramaDerecha;
-    T dato = nullptr;
+    AVLNodo<T> *ramaIzquierda, *ramaDerecha; //Puntero a los hijos por la derecha e izquierda
+    T dato = nullptr; //Dato contenido
     char balance; // -1, 0 , 1 para un árbol AVL
 
     AVLNodo(T &elemento) : ramaIzquierda(nullptr), ramaDerecha(nullptr), balance(0), dato(elemento) {
-    }
+    } //Constructor parametrizado
     void copiar(AVLNodo<T>* nodoOrig){
         this->dato = nodoOrig->dato;
-    }
+    } //Constructor copia
     //~AVLNodo();
 };
 
 template<class T>
 class AVL {
 private:
-    unsigned int numElementos;
-    unsigned int altura;
-    AVLNodo<T> *nodoRaiz;
-    AVLNodo<T>* copiaNodos(AVLNodo<T>* nodoOrig);
-    void limpiaArbol(AVLNodo<T> *nodoOrig);
-    AVLNodo<T>* buscaClave(T &dato, AVLNodo<T> *p);
-    bool operacionInsercion(AVLNodo<T>* &c, T& dato);
-    void inorden(AVLNodo<T> *p, int nivel, VDinamico<T*> &datos);
+    unsigned int numElementos; //elementos totales en el arbol
+    unsigned int altura; //Profundidad del arbol
+    AVLNodo<T> *nodoRaiz; //Puntero al primer nodo
+    AVLNodo<T>* copiaNodos(AVLNodo<T>* nodoOrig); //Funcion para copiar subarboles dandole un nodo
+    void limpiaArbol(AVLNodo<T> *nodoOrig); //Funcion para eliminar arboles dandole un nodo
+    AVLNodo<T>* buscaClave(T &dato, AVLNodo<T> *p); //Busca un dato concreto y devuelve el nodo en el que está
+    bool operacionInsercion(AVLNodo<T>* &c, T& dato); //Inserta un nodo en el árbol ordenadamente
+    void inorden(AVLNodo<T> *p, int nivel, VDinamico<T*> &datos); //Recorre el arbol en inorden y pasa los datos a un Vdinamico
 public:
-    AVL<T>();
-    AVL<T>(const AVL<T> &orig);
-    AVL<T>& operator=(const AVL<T> &elDeLaDerecha);
-    void rotDer(AVLNodo<T>* &nodo);
-    void rotIzq(AVLNodo<T>* &nodo);
-    bool inserta(T& dato);
-    T* buscaRec(T& dato);
-    T* buscaIt(T& dato);
-    VDinamico<T*> recorreInorden();
-    unsigned int getNumElementos();
-    int auxAltura(AVLNodo<T> *nodo, int nivel);
-    unsigned int getAltura();
-    AVLNodo<T>* getNodoRaiz();
+    AVL<T>(); //Constructor por defecto
+    AVL<T>(const AVL<T> &orig);//Constructor copia
+    AVL<T>& operator=(const AVL<T> &elDeLaDerecha); //Operador de asignación
+    void rotDer(AVLNodo<T>* &nodo); //Función para hacer rotaciones a la derecha
+    void rotIzq(AVLNodo<T>* &nodo);//Funcion para hacer rotaciones a la izquierda
+    bool inserta(T& dato); //Inserta un dato
+    T* buscaRec(T& dato);  //Busqueda recursiva de un dato
+    T* buscaIt(T& dato); //Busqueda iterativa de un dato
+    VDinamico<T*> recorreInorden(); //Recorre en inorden el árbol, y mete los elementos en un Vdinamico
+    unsigned int getNumElementos(); //Devuelve el numero de elementos totales del arbol
+    int auxAltura(AVLNodo<T> *nodo, int nivel); //Funcion auxiliar para calcular la altura del arbol
+    unsigned int getAltura(); //Devuelve la altura del arbol
+    AVLNodo<T>* getNodoRaiz(); //Devuelve un puntero al primer elemento
     ~AVL<T>();
 };
-
+/**
+* @brief Constructor por defecto
+* @param[in]
+* @param[out] -
+* @return -
+*
+*
+*/
 
 template<class T>
 AVL<T>::AVL(){
@@ -55,7 +62,14 @@ AVL<T>::AVL(){
     altura = 0;
     nodoRaiz = nullptr;
 }
-
+/**
+* @brief   Copia los nodos en inorden de un subarbol a partir de un nodo (funciona de forma recursiva)
+* @param[in] Nodo sobre el que empezar
+* @param[out] -
+* @return Nodo creado
+*
+*
+*/
 template<class T>
 AVLNodo<T>* AVL<T>::copiaNodos(AVLNodo<T>* nodoOrig){
     if ( nodoOrig != nullptr ){
@@ -71,7 +85,14 @@ AVLNodo<T>* AVL<T>::copiaNodos(AVLNodo<T>* nodoOrig){
         return nullptr;
     }
 }
-
+/**
+* @brief Va eliminando los datos del arbol y deshaciendo las relaciones
+* @param[in] Un nodo en el que empezar
+* @param[out] -
+* @return -
+*
+*
+*/
 template<class T>
 void AVL<T>::limpiaArbol(AVLNodo<T> *nodoOrig){
     if (nodoOrig) {
@@ -85,13 +106,27 @@ void AVL<T>::limpiaArbol(AVLNodo<T> *nodoOrig){
     }
 }
 
-
+/**
+* @brief Constructor copia, necesita copiaNodos
+* @param[in] Árbol AVL que copiar
+* @param[out] -
+* @return -
+*
+*
+*/
 template<class T>
 AVL<T>::AVL(const AVL<T> &orig){
     nodoRaiz = new AVLNodo<T>(*orig.nodoRaiz);
     copiaNodos(orig.nodoRaiz);
 }
-
+/**
+* @brief Operador de asignacion (Necesita copiaNodos)
+* @param[in] AVL que copiar
+* @param[out] -
+* @return -
+*
+*
+*/
 template<class T>
 AVL<T>& AVL<T>::operator=(const AVL<T> &elDeLaDerecha){
     limpiaArbol(nodoRaiz);
@@ -99,6 +134,14 @@ AVL<T>& AVL<T>::operator=(const AVL<T> &elDeLaDerecha){
     return (*this);
 }
 
+/**
+* @brief Rota los nodos hacia la derecha
+* @param[in] Nodo desbalanceado en el que empezar la rotación
+* @param[out] -
+* @return -
+*
+*
+*/
 template<class T>
 void AVL<T>::rotDer(AVLNodo<T>* &nodo){
     AVLNodo<T> *q = nodo, *l;
@@ -110,7 +153,14 @@ void AVL<T>::rotDer(AVLNodo<T>* &nodo){
     l->balance--;
     if (q->balance < 0) l->balance -= -q->balance;
 }
-
+/**
+* @brief Rota los nodos hacia la izquierda
+* @param[in] Nodo desbalanceado en el que empezar la rotación
+* @param[out] -
+* @return -
+*
+*
+*/
 template<class T>
 void AVL<T>::rotIzq(AVLNodo<T>* &nodo){
     AVLNodo<T> *q = nodo, *r;
@@ -122,7 +172,14 @@ void AVL<T>::rotIzq(AVLNodo<T>* &nodo){
     r->balance++;
     if (q->balance > 0) r->balance += q->balance;
 }
-
+/**
+* @brief Inserción del árbol
+* @param[in] Nodo en el que insertar y dato a insertar
+* @param[out]-
+* @return  Booleano si se ha podido insertar el dato
+*
+*
+*/
 template<class T>
 bool AVL<T>::operacionInsercion(AVLNodo<T>* &c, T& dato){
     AVLNodo<T> *p = c;
@@ -153,7 +210,14 @@ bool AVL<T>::operacionInsercion(AVLNodo<T>* &c, T& dato){
     }
     return deltaH;
 }
-
+/**
+* @brief Inserta un dato en el arbol (Necesita operacionInsercion)
+* @param[in] Dato a insertar
+* @param[out] -
+* @return Booleano si se ha podido insertar el dato
+*
+*
+*/
 template<class T>
 bool AVL<T>::inserta(T &dato) {
     if (numElementos == 0){
@@ -166,6 +230,14 @@ bool AVL<T>::inserta(T &dato) {
     }
 }
 
+/**
+* @brief Busca un dato en un subarbol
+* @param[in]
+* @param[out] -
+* @return Puntero al Nodo en el que está el dato
+*
+*
+*/
 template <class T>
 AVLNodo<T>* AVL<T>::buscaClave(T &dato, AVLNodo<T> *p) {
     if (!p)
@@ -177,6 +249,14 @@ AVLNodo<T>* AVL<T>::buscaClave(T &dato, AVLNodo<T> *p) {
     else return p;
 }
 
+/**
+* @brief Busca Recursiva (Necesita BuscaClave)
+* @param[in]
+* @param[out] -
+* @return Dato encontrado
+*
+*
+*/
 template<class T>
 T* AVL<T>::buscaRec(T& dato){
     AVLNodo<T> *p = buscaClave(dato, nodoRaiz);
@@ -185,7 +265,14 @@ T* AVL<T>::buscaRec(T& dato){
     }
     return NULL;
 }
-
+/**
+* @brief Búsqueda interativa de un dato, empezando dese del nodo raiz
+* @param[in] Dato a buscar
+* @param[out] -
+* @return Puntero al dato encontrado
+*
+*
+*/
 template<class T>
 T* AVL<T>::buscaIt(T& dato){
     AVLNodo<T> *p = nodoRaiz;
@@ -207,6 +294,14 @@ T* AVL<T>::buscaIt(T& dato){
     return nullptr;
 }
 
+/**
+* @brief De forma recursiva, inserta los elementos del árbol en un vector
+* @param[in] Nodo en el que empezar, nivel actual, vector en el que insertar los datos
+* @param[out] -
+* @return -
+*
+*
+*/
 template<class T>
 void AVL<T>::inorden(AVLNodo<T> *p, int nivel, VDinamico<T*> &datos) {
     if (p) {
@@ -215,19 +310,40 @@ void AVL<T>::inorden(AVLNodo<T> *p, int nivel, VDinamico<T*> &datos) {
         inorden(p->ramaDerecha, nivel + 1, datos);
     }
 }
-
+/**
+* @brief Crea un vector con los datos del arbol insertados inorden (necesita inorden)
+* @param[in]
+* @param[out]
+* @return Vdinamico con los datos
+*
+*
+*/
 template<class T>
 VDinamico<T*> AVL<T>::recorreInorden() {
     VDinamico<T*> datos;
     inorden(nodoRaiz, 0,datos);
     return datos;
 }
-
+/**
+* @brief Retorna el numero de elementos totales
+* @param[in]
+* @param[out]
+* @return Entero con los elementos totales
+*
+*
+*/
 template<class T>
 unsigned int AVL<T>::getNumElementos(){
     return numElementos;
 }
-
+/**
+* @brief Funcion que calcula y compara la altura los subarboles (De forma recursiva)
+* @param[in] Nodo en el que empezar, nivel actual
+* @param[out]
+* @return Nivel actualizado
+*
+*
+*/
 template<class T>
 int AVL<T>::auxAltura(AVLNodo<T> *nodo, int nivel) {
     int nuevoNivel = nivel;
@@ -247,18 +363,39 @@ int AVL<T>::auxAltura(AVLNodo<T> *nodo, int nivel) {
     }
     return nuevoNivel;
 }
-
+/**
+* @brief Devuelve la altura del arbol (Necesita auxAltura)
+* @param[in]
+* @param[out] -
+* @return entero indicando la altura del arbol
+*
+*
+*/
 template<class T>
 unsigned int AVL<T>::getAltura(){
     int altura = auxAltura(nodoRaiz,0);
     return altura;
 }
-
+/**
+* @brief Devuelve el primer nodo
+* @param[in]
+* @param[out] -
+* @return Puntero al primer nodo
+*
+*
+*/
 template<class T>
 AVLNodo<T>* AVL<T>::getNodoRaiz(){
     return nodoRaiz;
 }
-
+/**
+* @brief Destructor (Necesita limpiaArbol)
+* @param[in]
+* @param[out]
+* @return 
+*
+*
+*/
 template<class T>
 AVL<T>::~AVL() {
     limpiaArbol(nodoRaiz);
