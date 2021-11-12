@@ -120,62 +120,8 @@ Usuario* GestionVacunas::buscarUsuario (string nss){
     Usuario *encontrado= &(listausuarios.find(nss)->second);
     return encontrado;
 }
-/**
-* @brief Funcion que consigue la dosis recomendable y llama a adiministrarDosis
-* @param[in] Un usuario
-* @param[out] -
-* @return - Bool dependiendo si la vacunación es la recomendada
-*
-*
-*/
-bool GestionVacunas::queAdministro(Usuario *vacunando) {
-    bool labuena;
-    int edad = vacunando->getedad();
-
-    if(!noMenor(vacunando)) return false;
-    else {
-        nombreFabricante laquetoca = vacunando->getdosisRecomendable();
-        labuena = administrarDosis(vacunando,laquetoca);
-        return labuena;
-    }
-}
-
-/**
-* @brief Funcion que administra una dosis a un usuario específico
-* @param[in] Usuario a vacunar, y fabricante de la vacuna
-* @param[out] -
-* @return -Bool dependiendo si la vacunación es la recomendada
-*
-*
-*/
-bool GestionVacunas::administrarDosis(Usuario* vacunando, nombreFabricante vacunada) {
-    int h = 0;
-    for (int i = 0; i < dosisAdministradasBin.size(); ++i){
-        Dosis *esta = &dosis[i];
-            vacunando->nuevaDosis(esta);
-            esta->setStatus(administrada);
-            vacAlmacen--;
-            h = i;
-            dosisAdministradasBin[i] = true;
-            return true;
-        }
 
 
-    comprobarCorreccionDosis();
-    int j = 0;
-    while (dosis[j].getStatus() != enAlmacen){
-        j++;
-    }
-    if (j < dosis.siz()){
-        Dosis* esta = &dosis[j];
-        vacunando->nuevaDosis(esta);
-        dosis[j].setStatus(administrada);
-        noRecomendados.insertaFinal(vacunando);
-        vacAlmacen--;
-    }
-    return false;
-
-}
 
 void GestionVacunas::comprobarCorreccionDosis() {
     for (int i = 0; i < dosisAdministradasBin.getTamLogico(); ++i) {
@@ -193,14 +139,15 @@ void GestionVacunas::comprobarCorreccionDosis() {
 *
 */
 float GestionVacunas::pautaCompleta() {
-    float numusuarios=this->listausuarios.getNumElementos();
+    float numusuarios=this->listausuarios.size();
     float numpautascompletas;
-    VDinamico<Usuario*> tosellos= listausuarios.recorreInorden();
-    for(int i=0; i<tosellos.getTamLogico(); i++){
-        if(tosellos[i]->getedad()>=75 && tosellos[i]->getmisdosis().getTamLogico()==3)
+    for(std::map<string,Usuario>::iterator it = listausuarios.begin(); it != listausuarios.end(); ++it)  {
+        if(it->second.getmisdosis().size()==2)
             numpautascompletas++;
-        if(tosellos[i]->getedad()<75 && tosellos[i]->getmisdosis().getTamLogico()==2){
+        else{
+            if(it->second.getedad()>=75 && it->second.getmisdosis().size()==3)
             numpautascompletas++;
+
         }
     }
     float porcentaje = (numpautascompletas/numusuarios)*100;
@@ -216,7 +163,7 @@ float GestionVacunas::pautaCompleta() {
 *
 */
 void GestionVacunas::printStatus(){
-    for (int i = 0; i < dosis.getTamLogico(); ++i){
+    for (int i = 0; i < dosis.size(); ++i){
         std::cout << dosis[i].getStatus() << " | ";
     }
 }
@@ -229,7 +176,7 @@ void GestionVacunas::printStatus(){
 *
 *
 */
-VDinamico<Usuario*> GestionVacunas::listadoVacunacionNR(){
+vector<Usuario*> GestionVacunas::listadoVacunacionNR(){
     return noRecomendados;
 }
 
@@ -241,13 +188,13 @@ VDinamico<Usuario*> GestionVacunas::listadoVacunacionNR(){
 *
 *
 */
-VDinamico<string> GestionVacunas::listadoNSS(){
-    VDinamico<string> resultado;
-    VDinamico<Usuario*> listUsu = listausuarios.recorreInorden();
-    for(int i = 0; i < listUsu.getTamLogico(); ++i){
-        resultado.insertar(listUsu[i]->getNss(),resultado.getTamLogico());
+vector<string> GestionVacunas::listadoNSS(){
+    vector<string> resultado;
+    for(std::map<string,Usuario>::iterator it = listausuarios.begin(); it != listausuarios.end(); ++it) {
+
+        resultado.push_back(it->second.getNss());
     }
-    resultado.ordenar();
+    sort(resultado.begin(),resultado.end());
     return resultado;
 }
 /**
@@ -270,11 +217,11 @@ void GestionVacunas::setVacAlmacen(int vacAlmacen) {
     GestionVacunas::vacAlmacen = vacAlmacen;
 }
 
-const AVL<Usuario> &GestionVacunas::getListausuarios() const {
+const map<string,Usuario> GestionVacunas::getListausuarios() const {
     return listausuarios;
 }
 
-const VDinamico<Dosis> &GestionVacunas::getDosis() const {
+const vector<Dosis> &GestionVacunas::getDosis() const {
     return dosis;
 }
 
@@ -302,8 +249,4 @@ void GestionVacunas::setTerceraDosis() {
     terceraDosis++;
 }
 
-bool GestionVacunas::noMenor(Usuario* vacunando){
-    if(vacunando->getedad() > 0 && vacunando->getedad() < 12) return false;
-    else return true;
-}
 

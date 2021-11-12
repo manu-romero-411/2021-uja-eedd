@@ -10,6 +10,7 @@
 #include <iostream>
 #include "Fecha.h"
 #include "Dosis.h"
+#include "UTM.h"
 
 class Usuario {
 private:
@@ -19,7 +20,7 @@ private:
     Fecha fechaNacimiento;
     vector<Dosis*> misDosis;
     int edad;
-    //UTM domicilio;
+    UTM domicilio;
     bool dosisRecomendada;
 
 public:
@@ -36,8 +37,8 @@ public:
     void setNombre(const string &nombre);
     Dosis& getDosis(int cual);
     void nuevaDosis(Dosis* nueva);
-        //const UTM getDomicilio() const;
-    //void setDomicilio(const UTM &dom);
+    const UTM getDomicilio() ;
+    void setDomicilio(const UTM &dom);
     int getedad();
     Usuario& operator=(const Usuario* &elDeLaDerecha); //Operador de asignacion
     bool operator==(const Usuario &elDeLaDerecha) const; //Operador de igualdad

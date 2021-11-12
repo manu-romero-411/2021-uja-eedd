@@ -34,12 +34,11 @@ public:
     GestionVacunas(std::string fileDosis, std::string fileUsuarios); //Constructor parametrizado //arreglao
     virtual ~GestionVacunas(); //Destructor //arreglao //TODO Composicion de centros
     Usuario *buscarUsuario(string nss); //Busca un usuario en el arbol con el nss //arreglao
-    bool administrarDosis(Usuario *vacunando, nombreFabricante vacunada); //Administra una dosis de un fabricante a un usuario
-    bool queAdministro(Usuario *vacunando);//Encuentra la dosis recomendada que administrar a un usuario
-    vector<string> listadoNSS(); //Listado de los nss de todos los usuarios
-    float pautaCompleta(); //Duevuelve el porcentaje de los usuarios con la pauta completa
+
+    vector<string> listadoNSS(); //Listado de los nss de todos los usuarios //arreglao
+    float pautaCompleta(); //Duevuelve el porcentaje de los usuarios con la pauta completa //arreglao
     vector<Usuario *> listadoVacunacionNR(); //Devuelve los usuarios con la pauta no recomendada
-    const vector<Usuario> &getListausuarios() const; //devuelve el arbol de usuarios
+    const map<string,Usuario> getListausuarios() const; //devuelve el arbol de usuarios
     int getVacAlmacen() const;
     void setVacAlmacen(int vacAlmacen);
     void printStatus();//devuelve el estado de las vacunas
@@ -51,7 +50,7 @@ public:
     void setSegundaDosis();
     int getTerceraDosis() const;
     void setTerceraDosis();
-    bool noMenor(Usuario* vacunando);
+
 };
 
 #endif //EEDD_GESTIONVACUNAS_H

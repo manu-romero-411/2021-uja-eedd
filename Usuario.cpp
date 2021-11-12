@@ -49,7 +49,7 @@ Usuario::Usuario(const Usuario &orig){
     this->nss = orig.nss;
     this->fechaNacimiento.asignarDia(orig.fechaNacimiento.verDia(),orig.fechaNacimiento.verMes(),orig.fechaNacimiento.verAnio());
     this->edad=orig.edad;
-    // hacer una llamada al contrusctor copia del vdinamico this->misDosis = orig.misDosis;
+    this->misDosis = orig.misDosis;
 }
 /**
  * @brief Operador de asignación
@@ -69,6 +69,8 @@ Usuario& Usuario::operator=(const Usuario* &elDeLaDerecha){
         fechaNacimiento = elDeLaDerecha->fechaNacimiento;
         misDosis = elDeLaDerecha->misDosis;
         edad=elDeLaDerecha->edad;
+        this->misDosis = elDeLaDerecha->misDosis;
+
     }
 
     return (*this);
@@ -106,22 +108,18 @@ void Usuario::setFechaNacimiento(const Fecha &fechaNacimiento) {
     Usuario::fechaNacimiento = fechaNacimiento;
 }
 
-/*const UTM &Usuario::getDomicilio() const {
+const UTM Usuario::getDomicilio()  {
     return domicilio;
 }
 
 void Usuario::setDomicilio(const UTM &dom) {
     Usuario::domicilio = dom;
-}*/
+}
 
 Dosis& Usuario::getDosis(int cual){
 
-    if(cual < misDosis.tam()) {
-        Iterador <Dosis*> itera = this->misDosis.iteradorInicio();
-        for (int i = 0; i < cual; i++) {
-            itera.siguiente();
-        }
-        return *itera.dato();
+    if(cual < misDosis.size()) {
+      return *misDosis[cual];
     }
     else
         throw std::out_of_range("[Usuario] Posición no valida al llamar a VDinamico<Dosis>");
@@ -129,7 +127,7 @@ Dosis& Usuario::getDosis(int cual){
 
 void Usuario::nuevaDosis(Dosis* nueva){
     Dosis* p= nueva;
-    misDosis.insertaFin(p);
+    misDosis.push_back(p);
     p->setStatus(administrada);
 }
 
@@ -242,15 +240,8 @@ int Usuario::getedad() {
     return edad;
 }
 
-VDinamico<Dosis*> Usuario::getmisdosis(){
-    VDinamico<Dosis*> dosis;
-    Iterador <Dosis*> itera = this->misDosis.iteradorInicio();
-    for(int i=0; i < misDosis.tam(); i++){
-        Dosis* p= itera.dato();
-        dosis.insertar(p,dosis.getTamLogico());
-        itera.siguiente();
-    }
-    return dosis;
+vector<Dosis*> Usuario::getmisdosis(){
+    return misDosis;
 }
 
 nombreFabricante Usuario::getdosisRecomendable(){

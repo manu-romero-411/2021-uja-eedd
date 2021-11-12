@@ -18,14 +18,16 @@ private:
     int id;
     UTM direccion;
     list <Usuario*> listaUsuarios;
-    multimap<string, Dosis>
+    multimap<string, Dosis> listaDosis;
 public:
     CentroVacunacion();
     void alarmaFaltaDosis(nombreFabricante fab);
     void anadirUsuarioLista(Usuario* nuevo);
     bool administrarDosis(Usuario* vacunando, nombreFabricante tipo);
+    bool queAdministro(Usuario *vacunando);//Encuentra la dosis recomendada que administrar a un usuario
     void anadirNDosisAlmacen(vector<Dosis> packDosis);
     int numVacunasTipo(nombreFabricante tipo);
+    bool noMenor(Usuario* vacunando);
 };
 
 
