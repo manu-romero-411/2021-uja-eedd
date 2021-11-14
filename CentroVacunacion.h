@@ -19,8 +19,10 @@ private:
     UTM direccion;
     list <Usuario*> listaUsuarios;
     multimap<string, Dosis> listaDosis;
+    vector<int> numDosisPorFabricante;
 public:
     CentroVacunacion();
+    CentroVacunacion(int _id, UTM _direccion);
     void alarmaFaltaDosis(nombreFabricante fab);
     void anadirUsuarioLista(Usuario* nuevo);
     bool administrarDosis(Usuario* vacunando, nombreFabricante tipo);

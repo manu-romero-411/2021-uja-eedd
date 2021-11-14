@@ -45,13 +45,13 @@ public:
     Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno);
     Dosis(int _id);
     virtual ~Dosis();//Destructor
-    void SetFechaFabricacion(Fecha fechaFabricacion);//Cambia la fecha de fabricación
-    Fecha GetFechaFabricacion() const;//Devuelve la fecha de fabricación
-    int GetFabricante() const;//Devuelve el fabricante
-    void SetIdLote(int idLote);//Cambia el identificador del lote
-    int GetIdLote() const;//Devuelve el identificador del lote
-    void SetId(int id);//Cambia el identificador de dosis
-    int GetId() const;//Cambia el identificador de dosis
+    void setFechaFabricacion(Fecha fechaFabricacion);//Cambia la fecha de fabricación
+    Fecha getFechaFabricacion() const;//Devuelve la fecha de fabricación
+    int getFabricante() const;//Devuelve el fabricante
+    void setIdLote(int idLote);//Cambia el identificador del lote
+    int getIdLote() const;//Devuelve el identificador del lote
+    void setId(int id);//Cambia el identificador de dosis
+    int getId() const;//Cambia el identificador de dosis
     int getStatus() const;
     void setStatus(estado status);
     bool operator<(const Dosis &otra) const;//Compara dosis dependiendo de su identificador

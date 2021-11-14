@@ -31,7 +31,7 @@ private:
     int terceraDosis;
 public:
     GestionVacunas(); //Constructor por defecto // arreglao
-    GestionVacunas(std::string fileDosis, std::string fileUsuarios); //Constructor parametrizado //arreglao
+    GestionVacunas(std::string fileDosis, std::string fileUsuarios, std::string fileCentros);//Constructor parametrizado //arreglao
     virtual ~GestionVacunas(); //Destructor //arreglao //TODO Composicion de centros
     Usuario *buscarUsuario(string nss); //Busca un usuario en el arbol con el nss //arreglao
 

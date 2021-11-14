@@ -79,31 +79,31 @@ Dosis::Dosis(const Dosis &orig):id(orig.id),
 Dosis::~Dosis() {
 }
 
-void Dosis::SetFechaFabricacion(Fecha fechaFabricacion) {
+void Dosis::setFechaFabricacion(Fecha fechaFabricacion) {
     this->fechaFabricacion = fechaFabricacion;
 }
 
  
-Fecha Dosis::GetFechaFabricacion() const {
+Fecha Dosis::getFechaFabricacion() const {
     return fechaFabricacion;
 }
 
-int Dosis::GetFabricante() const {return fabricante;}
+int Dosis::getFabricante() const {return fabricante;}
 
   
-void Dosis::SetIdLote(int idLote) {
+void Dosis::setIdLote(int idLote) {
     this->idLote = idLote;
 }
 
-int Dosis::GetIdLote() const {
+int Dosis::getIdLote() const {
     return idLote;
 }
 
-void Dosis::SetId(int id) {
+void Dosis::setId(int id) {
     this->id = id;
 }
 
-int Dosis::GetId() const {
+int Dosis::getId() const {
     return id;
 }
 

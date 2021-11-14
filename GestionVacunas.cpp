@@ -13,7 +13,7 @@
 *
 *
 */
-GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios) {
+GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, std::string fileCentros) {
     cuantasDosis = 0;
     cuantosUsuarios = 0;
     primeraDosis = 0;
@@ -107,7 +107,30 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios) 
         cuantosUsuarios++;
     }
     archivoUsuarios.close();
-}
+
+    int nuevaId = 0;
+    float nuevalatitud = 0.0;
+    float nuevalongitud = 0.0;
+    ifstream archivoCentros(fileCentros);
+    std::string palabraC;
+    int contcentro = 0;
+    while (getline(archivoUsuarios, palabraC)) {
+        corte = palabraC.find(';');
+        nuevaId = stoi(palabraC.substr(0, corte));
+        palabraC.erase(0, corte + 1);
+
+        corte = palabraC.find(';');
+        nuevalatitud = stof(palabraC.substr(0, corte));
+        palabraC.erase(0, corte + 1);
+
+        nuevalongitud = stof(palabraC);
+
+        UTM ubicacionCentro(nuevalatitud,nuevalongitud);
+        CentroVacunacion nuevoCentro(contcentro,ubicacionCentro);
+        listacentros.push_back(nuevoCentro);
+
+        contcentro++;
+    }
 /**
 * @brief Busca un usuario dependiendo de su nss
 * @param[in] string con el nss del usuario

@@ -48,7 +48,7 @@ public:
     bool operator<=(const Usuario &elDeLaDerecha) const;
     bool operator>=(const Usuario &elDeLaDerecha) const;
     virtual ~Usuario();
-    VDinamico<Dosis*> getmisdosis();
+    vector<Dosis*> getmisdosis();
     nombreFabricante getdosisRecomendable();
     bool isDosisRec();
     void tieneDosisRec(bool rec);
