@@ -178,6 +178,18 @@ ostream &operator<<(ostream &os, const Dosis &dosis) {
        << " | Fecha fabricación: " << dosis.fechaFabricacion.cadenaDia() << " | Fecha caducidad: " << dosis.fechaCaducidad.cadenaDia() << "\n";
     return os;
 }
+string Dosis::getnombrefabricante(){
+    if(this->getFabricante()==0)
+        return "Pfizer";
+    if(this->getFabricante()==1)
+        return "Moderna";
+    if(this->getFabricante()==2)
+        return "Astrazeneca";
+    if(this->getFabricante()==3)
+        return "Johnson";
+
+}
+
 
 int Dosis::getStatus() const {
     return status;

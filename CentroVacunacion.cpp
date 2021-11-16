@@ -14,10 +14,10 @@ CentroVacunacion::CentroVacunacion(int _id, UTM _direccion) {
     this->direccion = _direccion;
 }
 
-void CentroVacunacion::alarmaFaltaDosis(nombreFabricante fab){
-    if(numDosisPorFabricante[fab] == 0){
-        throw exception(std::underflow_error("No hay vacunas de un fabricante"));
-    }
+void CentroVacunacion::alarmaFaltaDosis(){
+    GestionVacunas::suminitrarNdosis
+
+
 }
 
 void CentroVacunacion::anadirUsuarioLista(Usuario* nuevo){
@@ -25,39 +25,51 @@ void CentroVacunacion::anadirUsuarioLista(Usuario* nuevo){
 }
 
 bool CentroVacunacion::administrarDosis(Usuario* vacunando, nombreFabricante vacunada) {
-    int h = 0;
-    for(std::map<string,Dosis>::iterator it = listaDosis.begin(); it != listaDosis.end(); ++it) {
-        if(it->first==)//TODO
-        vacunando->nuevaDosis(esta);
-        esta->setStatus(administrada);
-        vacAlmacen--;
-        h = i;
-        dosisAdministradasBin[i] = true;
-        return true;
+    if(listaDosis.size()<=0)
+        alarmaFaltaDosis();
+    bool encontrado = false;
+    for (std::list<Usuario *>::iterator it1 = listaUsuarios.begin(); it1 != listaUsuarios.end(); ++it1) {
+        if (*it1 == vacunando) {
+            encontrado = true;
+        }
     }
+        if (encontrado) {
+            bool vacunado = false;
+
+            for (std::map<string, Dosis>::iterator it2 = listaDosis.begin(); it2 != listaDosis.end(); ++it2) {
+                std::string nombrevacunada = std::to_string(nombreFabricante(vacunada));
+                if (it2->first == nombrevacunada && it2->second.getStatus() == enAlmacen) {//TODO
+                    vacunando->nuevaDosis(&it2->second);
+                    it2->second.setStatus(administrada);
+                    listaUsuarios.remove(vacunando);
+                    vacunado = true;
+                    return true;
+                }
+            }
+                if (vacunado == false) {
+                    for (std::map<string, Dosis>::iterator it2 = listaDosis.begin(); it2 != listaDosis.end(); ++it2) {
+                        if (it2->second.getStatus() == enAlmacen) {
+                            vacunando->nuevaDosis(&it2->second);
+                            it2->second.setStatus(administrada);
+                            listaUsuarios.remove(vacunando);
+                            vacunado = true;
+                            return true;
+                        }
+                    }
+                }
+
+            return true;
+        }
 
 
-    comprobarCorreccionDosis();
-    int j = 0;
-    while (dosis[j].getStatus() != enAlmacen){
-        j++;
-    }
-    if (j < dosis.size()){
-        Dosis* esta = &dosis[j];
-        vacunando->nuevaDosis(esta);
-        dosis[j].setStatus(administrada);
-        noRecomendados.insertaFinal(vacunando);
-        vacAlmacen--;
-    }
-    return false;
-
-
-
+        else return false;
 }
 
 void CentroVacunacion::anadirNDosisAlmacen(vector<Dosis> packDosis){
     for(int i = 0; i < packDosis.size(); ++i){
-        listaDosis.insert(pair<string,Dosis>(to_string(packDosis[i].getId()), packDosis[i]));
+        Dosis* nueva = &packDosis[i];
+        listaDosis.insert(pair<string,Dosis>(nueva->getnombrefabricante(), *nueva));
+
     }
 }
 

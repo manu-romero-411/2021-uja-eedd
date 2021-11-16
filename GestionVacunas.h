@@ -11,7 +11,8 @@
 #include "CentroVacunacion.h"
 #include <map>
 #include <vector>
-
+#include <cstdlib>
+#include <string>
 using namespace std;
 class GestionVacunas {
 
@@ -22,6 +23,7 @@ private:
     vector<string> listaNSS;
     vector<Usuario *> noRecomendados;
     int vacAlmacen;
+    int lecturaVacunas=0;
     vector<Dosis> dosisAdministradas;
     vector<bool> dosisAdministradasBin;
     int cuantasDosis;
@@ -34,6 +36,7 @@ public:
     GestionVacunas(std::string fileDosis, std::string fileUsuarios, std::string fileCentros);//Constructor parametrizado //arreglao
     virtual ~GestionVacunas(); //Destructor //arreglao //TODO Composicion de centros
     Usuario *buscarUsuario(string nss); //Busca un usuario en el arbol con el nss //arreglao
+    void suministrarNdosisCentro(CentroVacunacion centro, int numerovacunas);
 
     vector<string> listadoNSS(); //Listado de los nss de todos los usuarios //arreglao
     float pautaCompleta(); //Duevuelve el porcentaje de los usuarios con la pauta completa //arreglao
@@ -50,6 +53,7 @@ public:
     void setSegundaDosis();
     int getTerceraDosis() const;
     void setTerceraDosis();
+
 
 };
 

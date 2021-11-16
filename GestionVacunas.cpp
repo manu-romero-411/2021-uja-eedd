@@ -2,6 +2,7 @@
 // Created by manuel on 28/10/21.
 //
 
+#include <algorithm>
 #include "GestionVacunas.h"
 
 
@@ -52,11 +53,11 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
 
         anno = stoi(palabra);
         Dosis nuevaDosis(id, idLote, fabricante, dia, mes, anno);
-        dosis.insert(dosis.begin(),nuevaDosis);
+        dosis.insert(dosis.begin(), nuevaDosis);
     }
     archivoDosis.close();
-    vacAlmacen=0;
-    for (int i = 0; i < dosis.size(); ++i){
+    vacAlmacen = 0;
+    for (int i = 0; i < dosis.size(); ++i) {
         dosis[i].setStatus(enAlmacen);
         vacAlmacen++;
         cuantasDosis++;
@@ -103,7 +104,7 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
         Fecha fecha;
         fecha.asignarDia(dia, mes, anno);
         Usuario nuevoUsuario(nombre, apellido, nss, fecha);
-        listausuarios.insert(pair<string,Usuario>(nss,nuevoUsuario));
+        listausuarios.insert(pair<string, Usuario>(nss, nuevoUsuario));
         cuantosUsuarios++;
     }
     archivoUsuarios.close();
@@ -125,12 +126,13 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
 
         nuevalongitud = stof(palabraC);
 
-        UTM ubicacionCentro(nuevalatitud,nuevalongitud);
-        CentroVacunacion nuevoCentro(contcentro,ubicacionCentro);
+        UTM ubicacionCentro(nuevalatitud, nuevalongitud);
+        CentroVacunacion nuevoCentro(contcentro, ubicacionCentro);
         listacentros.push_back(nuevoCentro);
 
         contcentro++;
     }
+}
 /**
 * @brief Busca un usuario dependiendo de su nss
 * @param[in] string con el nss del usuario
@@ -146,13 +148,14 @@ Usuario* GestionVacunas::buscarUsuario (string nss){
 
 
 
-void GestionVacunas::comprobarCorreccionDosis() {
+/*void GestionVacunas::comprobarCorreccionDosis() {
     for (int i = 0; i < dosisAdministradasBin.getTamLogico(); ++i) {
         if (dosisAdministradasBin[i]) {
             dosis[i].setStatus(administrada);
         }
     }
 }
+ */
 /**
 * @brief Funcion que calcula el porcentaje de personas con pauta completa
 * @param[in]
@@ -217,9 +220,11 @@ vector<string> GestionVacunas::listadoNSS(){
 
         resultado.push_back(it->second.getNss());
     }
-    sort(resultado.begin(),resultado.end());
+    std::sort(resultado.begin(),resultado.end());
     return resultado;
 }
+
+
 /**
 * @brief Destructor por defecto
 * @param[in]
@@ -229,6 +234,16 @@ vector<string> GestionVacunas::listadoNSS(){
 *
 */
 GestionVacunas::~GestionVacunas() {
+
+}
+
+void GestionVacunas::suministrarNdosisCentro(CentroVacunacion centro, int numerovacunas) {
+    vector<Dosis> auxiliar;
+    for(int i=0; i<numerovacunas; i++){
+        Dosis* p = &dosis[lecturaVacunas];
+        auxiliar.push_back(*p);
+        lecturaVacunas++;
+}
 
 }
 

@@ -18,7 +18,7 @@ using namespace std;
 
 int main() {
     try {
-        GestionVacunas gestionVacunas;
+//        GestionVacunas gestionVacunas;
 
         return 0;
     } catch (std::exception &e) {

@@ -53,6 +53,7 @@ public:
     void setId(int id);//Cambia el identificador de dosis
     int getId() const;//Cambia el identificador de dosis
     int getStatus() const;
+    string getnombrefabricante();
     void setStatus(estado status);
     bool operator<(const Dosis &otra) const;//Compara dosis dependiendo de su identificador
     Dosis& operator=(const Dosis &otro);//Asigna dosis dependiendo de su identificador

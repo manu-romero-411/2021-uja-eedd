@@ -23,7 +23,7 @@ private:
 public:
     CentroVacunacion();
     CentroVacunacion(int _id, UTM _direccion);
-    void alarmaFaltaDosis(nombreFabricante fab);
+    void alarmaFaltaDosis();
     void anadirUsuarioLista(Usuario* nuevo);
     bool administrarDosis(Usuario* vacunando, nombreFabricante tipo);
     bool queAdministro(Usuario *vacunando);//Encuentra la dosis recomendada que administrar a un usuario
