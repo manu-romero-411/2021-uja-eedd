@@ -17,11 +17,11 @@ using namespace std;
 class GestionVacunas {
 
 private:
-    map<string,Usuario> listausuarios;
-    vector<CentroVacunacion> listacentros;
-    vector<Dosis> dosis;
+    map<string,Usuario*> listausuarios;
+    vector<CentroVacunacion*> listacentros;
+    vector<Dosis*> dosis;
     vector<string> listaNSS;
-    vector<Usuario *> noRecomendados;
+    vector<Usuario*> noRecomendados;
     int vacAlmacen;
     int lecturaVacunas=0;
     vector<Dosis> dosisAdministradas;
@@ -31,30 +31,37 @@ private:
     int primeraDosis;
     int segundaDosis;
     int terceraDosis;
+    vector<int> numVacTipo;
 public:
     GestionVacunas(); //Constructor por defecto // arreglao
     GestionVacunas(std::string fileDosis, std::string fileUsuarios, std::string fileCentros);//Constructor parametrizado //arreglao
     virtual ~GestionVacunas(); //Destructor //arreglao //TODO Composicion de centros
     Usuario *buscarUsuario(string nss); //Busca un usuario en el arbol con el nss //arreglao
-    void suministrarNdosisCentro(CentroVacunacion centro, int numerovacunas);
+    void suministrarNdosisCentro(CentroVacunacion* centro, int numerovacunas);
 
     vector<string> listadoNSS(); //Listado de los nss de todos los usuarios //arreglao
     float pautaCompleta(); //Duevuelve el porcentaje de los usuarios con la pauta completa //arreglao
-    vector<Usuario *> listadoVacunacionNR(); //Devuelve los usuarios con la pauta no recomendada
-    const map<string,Usuario> getListausuarios() const; //devuelve el arbol de usuarios
+    vector<Usuario*> listadoVacunacionNR(); //Devuelve los usuarios con la pauta no recomendada
+    vector<CentroVacunacion*> getCentros(); //Devuelve los centros de vacunación existentes en el sistema
+
+    const map<string,Usuario*> getListausuarios() const; //devuelve el arbol de usuarios
     int getVacAlmacen() const;
     void setVacAlmacen(int vacAlmacen);
     void printStatus();//devuelve el estado de las vacunas
     void comprobarCorreccionDosis(); // No sale
-    const vector<Dosis> &getDosis() const; //Devuelve el Vdinamico de las dosis
+    const vector<Dosis*> getDosis() const;
     int getPrimeraDosis() const;
     void setPrimeraDosis();
     int getSegundaDosis() const;
     void setSegundaDosis();
     int getTerceraDosis() const;
     void setTerceraDosis();
-
-
+    int numTotalVacunasTipo(nombreFabricante fabricante);
+    vector<int> getContadoresVacunasTipo();
+    void sustraerDosisDisponiblesDeContador(nombreFabricante fab);
+    CentroVacunacion* centroMasCercano(Usuario* usuario);
+    std::string getNombreFabricanteDado(nombreFabricante fab);
+    void print();
 };
 
 #endif //EEDD_GESTIONVACUNAS_H

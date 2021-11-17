@@ -27,9 +27,8 @@ Dosis::Dosis() {
  * @param[in] -identificador de la dosis y fabricante, fecha
  * @param[out] -
  * @return -
- * 
- * 
  */
+    
 Dosis::Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno, int _estado) {
     this->id = id;
     this->idLote = idLote;
@@ -184,7 +183,7 @@ string Dosis::getnombrefabricante(){
     if(this->getFabricante()==1)
         return "Moderna";
     if(this->getFabricante()==2)
-        return "Astrazeneca";
+        return "AstraZeneca";
     if(this->getFabricante()==3)
         return "Johnson";
 

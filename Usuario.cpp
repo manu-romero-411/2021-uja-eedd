@@ -248,13 +248,13 @@ nombreFabricante Usuario::getdosisRecomendable(){
     if ( edad >= 12 && edad < 30)
         return Johnson;
     if (edad >= 30 && edad < 50)
-       return AstraZeneca;
+        return AstraZeneca;
     if (edad >= 50 && edad < 65)
         return Moderna;
     if (edad >= 65)
         return Pfizer;
-
-
+    if (edad < 12)
+        return ninguno;
 }
 
 bool Usuario::isDosisRec(){
@@ -267,4 +267,10 @@ void Usuario::tieneDosisRec(bool rec){
 
 Usuario::~Usuario() {
 
+}
+
+int Usuario::dosisPorAdministrar(){
+    if (edad >= 75) return 3 - misDosis.size();
+    if (edad < 12) return 0;
+    if (edad >= 12 && edad < 75) return 2 - misDosis.size();
 }

@@ -22,6 +22,7 @@ enum nombreFabricante {
     Moderna = 1,
     AstraZeneca = 2,
     Johnson = 3,
+    ninguno = 4,
 };
 
 enum estado {

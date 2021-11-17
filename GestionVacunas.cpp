@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include "GestionVacunas.h"
+#include <float.h>
 
 
 /**
@@ -52,15 +53,22 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
         palabra.erase(0, corte + 1);
 
         anno = stoi(palabra);
-        Dosis nuevaDosis(id, idLote, fabricante, dia, mes, anno);
+        Dosis* nuevaDosis = new Dosis(id, idLote, fabricante, dia, mes, anno);
         dosis.insert(dosis.begin(), nuevaDosis);
     }
     archivoDosis.close();
+
+    for (int k = 0; k < 4; ++k){
+        numVacTipo.push_back(0);
+    }
+
     vacAlmacen = 0;
     for (int i = 0; i < dosis.size(); ++i) {
-        dosis[i].setStatus(enAlmacen);
+        Dosis *p = dosis[i];
+        p->setStatus(enAlmacen);
         vacAlmacen++;
         cuantasDosis++;
+        numVacTipo[p->getFabricante()]++;
     }
 
     ifstream archivoUsuarios(fileUsuarios);
@@ -103,8 +111,8 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
         latitud = stoi(palabraB);
         Fecha fecha;
         fecha.asignarDia(dia, mes, anno);
-        Usuario nuevoUsuario(nombre, apellido, nss, fecha);
-        listausuarios.insert(pair<string, Usuario>(nss, nuevoUsuario));
+        Usuario* nuevoUsuario = new Usuario(nombre, apellido, nss, fecha);
+        listausuarios.insert(pair<string, Usuario*>(nss, nuevoUsuario));
         cuantosUsuarios++;
     }
     archivoUsuarios.close();
@@ -115,7 +123,7 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
     ifstream archivoCentros(fileCentros);
     std::string palabraC;
     int contcentro = 0;
-    while (getline(archivoUsuarios, palabraC)) {
+    while (getline(archivoCentros, palabraC)) {
         corte = palabraC.find(';');
         nuevaId = stoi(palabraC.substr(0, corte));
         palabraC.erase(0, corte + 1);
@@ -127,11 +135,13 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
         nuevalongitud = stof(palabraC);
 
         UTM ubicacionCentro(nuevalatitud, nuevalongitud);
-        CentroVacunacion nuevoCentro(contcentro, ubicacionCentro);
-        listacentros.push_back(nuevoCentro);
+        CentroVacunacion* nuevoCentro = new CentroVacunacion(this, contcentro, ubicacionCentro);
 
+        listacentros.push_back(nuevoCentro);
         contcentro++;
     }
+
+    cout << "" << endl;
 }
 /**
 * @brief Busca un usuario dependiendo de su nss
@@ -142,7 +152,7 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
 *
 */
 Usuario* GestionVacunas::buscarUsuario (string nss){
-    Usuario *encontrado= &(listausuarios.find(nss)->second);
+    Usuario *encontrado= (listausuarios.find(nss)->second);
     return encontrado;
 }
 
@@ -167,11 +177,11 @@ Usuario* GestionVacunas::buscarUsuario (string nss){
 float GestionVacunas::pautaCompleta() {
     float numusuarios=this->listausuarios.size();
     float numpautascompletas;
-    for(std::map<string,Usuario>::iterator it = listausuarios.begin(); it != listausuarios.end(); ++it)  {
-        if(it->second.getmisdosis().size()==2)
+    for(std::map<string,Usuario*>::iterator it = listausuarios.begin(); it != listausuarios.end(); ++it)  {
+        if(it->second->getmisdosis().size()==2)
             numpautascompletas++;
         else{
-            if(it->second.getedad()>=75 && it->second.getmisdosis().size()==3)
+            if(it->second->getedad()>=75 && it->second->getmisdosis().size()==3)
             numpautascompletas++;
 
         }
@@ -190,7 +200,7 @@ float GestionVacunas::pautaCompleta() {
 */
 void GestionVacunas::printStatus(){
     for (int i = 0; i < dosis.size(); ++i){
-        std::cout << dosis[i].getStatus() << " | ";
+        std::cout << dosis[i]->getStatus() << " | ";
     }
 }
 
@@ -202,6 +212,7 @@ void GestionVacunas::printStatus(){
 *
 *
 */
+
 vector<Usuario*> GestionVacunas::listadoVacunacionNR(){
     return noRecomendados;
 }
@@ -214,37 +225,27 @@ vector<Usuario*> GestionVacunas::listadoVacunacionNR(){
 *
 *
 */
+
 vector<string> GestionVacunas::listadoNSS(){
     vector<string> resultado;
-    for(std::map<string,Usuario>::iterator it = listausuarios.begin(); it != listausuarios.end(); ++it) {
+    for(std::map<string,Usuario*>::iterator it = listausuarios.begin(); it != listausuarios.end(); ++it) {
 
-        resultado.push_back(it->second.getNss());
+        resultado.push_back(it->second->getNss());
     }
     std::sort(resultado.begin(),resultado.end());
     return resultado;
 }
 
-
-/**
-* @brief Destructor por defecto
-* @param[in]
-* @param[out] -
-* @return -
-*
-*
-*/
-GestionVacunas::~GestionVacunas() {
-
-}
-
-void GestionVacunas::suministrarNdosisCentro(CentroVacunacion centro, int numerovacunas) {
-    vector<Dosis> auxiliar;
-    for(int i=0; i<numerovacunas; i++){
-        Dosis* p = &dosis[lecturaVacunas];
-        auxiliar.push_back(*p);
+void GestionVacunas::suministrarNdosisCentro(CentroVacunacion* centro, int numerovacunas) {
+    vector<Dosis*> auxiliar;
+    int cont = 0;
+    for(int i = 0; cont < numerovacunas; i++) {
+        Dosis *p = dosis[lecturaVacunas];
+        auxiliar.push_back(p);
         lecturaVacunas++;
-}
-
+        cont++;
+    }
+    centro->anadirNDosisAlmacen(auxiliar);
 }
 
 int GestionVacunas::getVacAlmacen() const {
@@ -255,11 +256,11 @@ void GestionVacunas::setVacAlmacen(int vacAlmacen) {
     GestionVacunas::vacAlmacen = vacAlmacen;
 }
 
-const map<string,Usuario> GestionVacunas::getListausuarios() const {
+const map<string,Usuario*> GestionVacunas::getListausuarios() const {
     return listausuarios;
 }
 
-const vector<Dosis> &GestionVacunas::getDosis() const {
+const vector<Dosis*> GestionVacunas::getDosis() const {
     return dosis;
 }
 
@@ -287,4 +288,67 @@ void GestionVacunas::setTerceraDosis() {
     terceraDosis++;
 }
 
+vector<CentroVacunacion*> GestionVacunas::getCentros(){
+    return listacentros;
+}
 
+int GestionVacunas::numTotalVacunasTipo(nombreFabricante fabricante){
+    return numVacTipo[fabricante];
+}
+
+vector<int> GestionVacunas::getContadoresVacunasTipo(){
+    return numVacTipo;
+}
+
+void GestionVacunas::sustraerDosisDisponiblesDeContador(nombreFabricante fab){
+    numVacTipo[fab]--;
+}
+
+/**
+* @brief Destructor por defecto
+* @param[in]
+* @param[out] -
+* @return -
+*
+*
+*/
+GestionVacunas::~GestionVacunas() {
+
+}
+
+CentroVacunacion* GestionVacunas::centroMasCercano(Usuario* usuario){
+    double distancia = DBL_MAX;
+    int centroCercano = -1;
+    for(int i = 0; i < listacentros.size(); ++i){
+        double centroDist = listacentros[i]->getUbicacion().distancia(usuario->getDomicilio());
+        if(centroDist < distancia){
+            centroCercano = i;
+            distancia = centroDist;
+        }
+    }
+    return listacentros[centroCercano];
+}
+
+void GestionVacunas::print(){
+    for (int i = 0; i < dosis.size(); ++i){
+        cout << dosis[i]->getStatus() << " | " ;
+    }
+    cout << endl;
+}
+
+std::string GestionVacunas::getNombreFabricanteDado(nombreFabricante fab){
+    switch(fab) {
+        case (0):
+            return "Pfizer";
+            break;
+        case (1):
+            return "Moderna";
+            break;
+        case (2):
+            return "AstraZeneca";
+            break;
+        case (3):
+            return "Johnson";
+            break;
+    }
+}

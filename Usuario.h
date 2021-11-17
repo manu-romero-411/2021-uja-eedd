@@ -53,6 +53,7 @@ public:
     bool isDosisRec();
     void tieneDosisRec(bool rec);
     friend ostream &operator<<(ostream &os, const Usuario &usuario); //Operador para imprimir por pantalla
+    int dosisPorAdministrar();
 };
 
 
