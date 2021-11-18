@@ -9,20 +9,41 @@
 CentroVacunacion::CentroVacunacion() {
 
 }
-
+/**
+* @brief Constructor por defecto
+* @param[in] Puntero al gestor, id del centro, su dirección
+* @param[out] -
+* @return -
+*
+*
+*/
 CentroVacunacion::CentroVacunacion(GestionVacunas* centro, int _id, UTM _direccion) {
     this->centroGestor = centro;
     this->id = _id;
     this->direccion = _direccion;
 }
-
+/**
+* @brief Metodo que llama al gestor para pedir nuevas dosis si no quedan dosis
+* @param[in]
+* @param[out] -
+* @return -
+*
+*
+*/
 void CentroVacunacion::alarmaFaltaDosis(){
     if(listaDosis.size() <= 0)
         centroGestor->suministrarNdosisCentro(this,100);
 }
-
+/**
+* @brief Añade un usuario a la lista de vacunación
+* @param[in] Usuario que añadir
+* @param[out] -
+* @return -
+*
+*
+*/
 void CentroVacunacion::anadirUsuarioLista(Usuario* nuevo){
-    bool esta = false;
+    bool esta = false; //Comprobación si el usuario ya está en el vector
     for (std::list<Usuario*>::iterator it1 = listaUsuarios.begin(); it1 != listaUsuarios.end() && !esta; ++it1) {
         if (*it1 == nuevo) {
             esta = true;
@@ -34,11 +55,18 @@ void CentroVacunacion::anadirUsuarioLista(Usuario* nuevo){
         listaUsuarios.push_back(nuevo);
     }
 }
-
+/**
+* @brief Administra una dosis a un usuario
+* @param[in] Usuario que vacunar, tipo de dosis recomendada
+* @param[out] -
+* @return -
+*
+*
+*/
 bool CentroVacunacion::administrarDosis(Usuario* vacunando, nombreFabricante vacunada) {
     if(listaDosis.size() <= 0)
-        //alarmaFaltaDosis();
-        cout << "nodosis" << endl;
+        alarmaFaltaDosis();
+        //cout << "nodosis" << endl;
     bool encontrado = false;
     for (std::list<Usuario*>::iterator it1 = listaUsuarios.begin(); it1 != listaUsuarios.end(); ++it1) {
         if (*it1 == vacunando) {
@@ -56,6 +84,8 @@ bool CentroVacunacion::administrarDosis(Usuario* vacunando, nombreFabricante vac
                 it2->second->setStatus(administrada);
                 vacunando->tieneDosisRec(true);
                 listaUsuarios.remove(vacunando);
+                listaDosis.erase(it2);
+
                 centroGestor->sustraerDosisDisponiblesDeContador(vacunada); // Con esto le restamos uno al contador de vacunas en almacén de x tipo
                 //vacunado = true;
                 return true;
@@ -69,6 +99,7 @@ bool CentroVacunacion::administrarDosis(Usuario* vacunando, nombreFabricante vac
                     vacunando->tieneDosisRec(false);
                     listaUsuarios.remove(vacunando);
                     centroGestor->sustraerDosisDisponiblesDeContador(vacunada); // Con esto le restamos uno al contador de vacunas en almacén de x tipo
+                    listaDosis.erase(it2);
                     //vacunado = true;
                     return true;
                 }
@@ -77,7 +108,14 @@ bool CentroVacunacion::administrarDosis(Usuario* vacunando, nombreFabricante vac
         return true;
     } else return false;
 }
-
+/**
+* @brief Añade nuevas dosis a las dosis disponibles
+* @param[in] vector con nuevas dosis
+* @param[out] -
+* @return -
+*
+*
+*/
 void CentroVacunacion::anadirNDosisAlmacen(vector<Dosis*> packDosis){
     for(int i = 0; i < packDosis.size(); ++i){
         Dosis* nueva = packDosis[i];
@@ -88,7 +126,14 @@ void CentroVacunacion::anadirNDosisAlmacen(vector<Dosis*> packDosis){
 int CentroVacunacion::numVacunasTipo(nombreFabricante tipo){
     return numDosisPorFabricante[tipo];
 }
-
+/**
+* @brief Encuentra la dosis recomendada que administrar a un usuario
+* @param Usuario al que vacunar
+* @param[out] -
+* @return -
+*
+*
+*/
 bool CentroVacunacion::queAdministro(Usuario *vacunando) {
     bool labuena;
     int edad = vacunando->getedad();

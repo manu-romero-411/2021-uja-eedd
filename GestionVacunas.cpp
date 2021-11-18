@@ -9,7 +9,7 @@
 
 /**
 * @brief Constructor parametrizado
-* @param[in] String con los nombres de los ficheros de las listaDosis y ususarios
+* @param[in] String con los nombres de los ficheros de las dosis, usuarios y centros
 * @param[out] -
 * @return -
 *
@@ -226,6 +226,14 @@ vector<string> GestionVacunas::listadoNSS(){
     return resultado;
 }
 
+/**
+* @brief Suministra un numero de dosis a un centro
+* @param[in] Puntero al centro que recibe las dosis, numero de vacunas a recibir
+* @param[out] -
+* @return -
+*
+*
+*/
 void GestionVacunas::suministrarNdosisCentro(CentroVacunacion* centro, int numerovacunas) {
     vector<Dosis*> auxiliar;
     int cont = 0;
@@ -253,11 +261,25 @@ const map<string,Usuario*> GestionVacunas::getListausuarios() const {
 const vector<Dosis*> GestionVacunas::getDosis() const {
     return listaDosis;
 }
-
+/**
+* @brief Devuelve el vector con los centros
+* @param[in]
+* @param[out] -
+* @return -
+*
+*
+*/
 vector<CentroVacunacion*> GestionVacunas::getCentros(){
     return listaCentros;
 }
-
+/**
+* @brief Devuelve el numero de vacunas de un fabricante
+* @param[in] Fabricante a comprobar
+* @param[out] -
+* @return -
+*
+*
+*/
 int GestionVacunas::numTotalVacunasTipo(nombreFabricante fabricante){
     return numVacTipo[fabricante];
 }
@@ -265,7 +287,14 @@ int GestionVacunas::numTotalVacunasTipo(nombreFabricante fabricante){
 vector<int> GestionVacunas::getContadoresVacunasTipo(){
     return numVacTipo;
 }
-
+/**
+* @brief Decrementa el numero de vacunas de un fabricante en el vector
+* @param[in]
+* @param[out] -
+* @return -
+*
+*
+*/
 void GestionVacunas::sustraerDosisDisponiblesDeContador(nombreFabricante fab){
     numVacTipo[fab]--;
 }
@@ -279,9 +308,20 @@ void GestionVacunas::sustraerDosisDisponiblesDeContador(nombreFabricante fab){
 *
 */
 GestionVacunas::~GestionVacunas() {
+    for(int i=0; i<listacentros.size();i++){
+        delete listacentros[i];
+
+    }
 
 }
-
+/**
+* @brief Devuelve el centro mas cercano a un usuario
+* @param[in]
+* @param[out] -
+* @return -
+*
+*
+*/
 CentroVacunacion* GestionVacunas::centroMasCercano(Usuario* usuario){
     double distancia = DBL_MAX;
     int centroCercano = -1;
@@ -294,14 +334,28 @@ CentroVacunacion* GestionVacunas::centroMasCercano(Usuario* usuario){
     }
     return listaCentros[centroCercano];
 }
-
+/**
+* @brief Devuelve el estado de todas las dosis, 0 si está administrada, 1 si está en el almacén
+* @param[in]
+* @param[out] -
+* @return -
+*
+*
+*/
 void GestionVacunas::print(){
     for (int i = 0; i < listaDosis.size(); ++i){
         cout << listaDosis[i]->getStatus() << " | " ;
     }
     cout << endl;
 }
-
+/**
+* @brief Devuelve un string de un enum de fabricante
+* @param[in]
+* @param[out] -
+* @return -
+*
+*
+*/
 std::string GestionVacunas::getNombreFabricanteDado(nombreFabricante fab){
     switch(fab) {
         case (0):
