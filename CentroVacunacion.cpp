@@ -68,7 +68,7 @@ bool CentroVacunacion::administrarDosis(Usuario* vacunando, nombreFabricante vac
         cout << "Vector de dosis en un CentroVacunacion es de tamaño 0. Alarma lanzada" << endl;
         alarmaFaltaDosis();
     }
-    
+
     bool encontrado = false;
     for (std::list<Usuario*>::iterator it1 = listaUsuarios.begin(); it1 != listaUsuarios.end(); ++it1) {
         if (*it1 == vacunando) {
