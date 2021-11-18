@@ -24,12 +24,12 @@ private:
 public:
     CentroVacunacion();
     CentroVacunacion(GestionVacunas* centro, int _id, UTM _direccion);
-    void alarmaFaltaDosis();
-    void anadirUsuarioLista(Usuario* nuevo);
-    bool administrarDosis(Usuario* vacunando, nombreFabricante tipo);
+    void alarmaFaltaDosis(); //Metodo que llama al gestor para pedir nuevas dosis si no quedan
+    void anadirUsuarioLista(Usuario* nuevo); //Añade un usuario a la lista de vacunacion
+    bool administrarDosis(Usuario* vacunando, nombreFabricante tipo); //Administra una dosis a un usuario
     bool queAdministro(Usuario *vacunando);//Encuentra la dosis recomendada que administrar a un usuario
-    void anadirNDosisAlmacen(vector<Dosis*> packDosis);
-    int numVacunasTipo(nombreFabricante tipo);
+    void anadirNDosisAlmacen(vector<Dosis*> packDosis); //Añade un vector de dosis a las dosis disponibles en este centro
+    int numVacunasTipo(nombreFabricante tipo); //Devuelve el numero de vacunas disponibles de un tipo
     bool noMenor(Usuario* vacunando);
     UTM getUbicacion();
 };
