@@ -308,11 +308,9 @@ void GestionVacunas::sustraerDosisDisponiblesDeContador(nombreFabricante fab){
 *
 */
 GestionVacunas::~GestionVacunas() {
-    for(int i=0; i<listacentros.size();i++){
-        delete listacentros[i];
-
+    for(int i=0; i<listaCentros.size();i++){
+        delete listaCentros[i];
     }
-
 }
 /**
 * @brief Devuelve el centro mas cercano a un usuario
