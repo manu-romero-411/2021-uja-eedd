@@ -15,7 +15,7 @@ Usuario::Usuario(){
 
 }
 
-Usuario::Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento) {
+Usuario::Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento, const UTM _ubicacion) {
     this->nombre = _nombre;
     this->apellidos = _apellidos;
     this->nss = _nss;
@@ -32,7 +32,7 @@ Usuario::Usuario(const string _nombre, const string _apellidos, const string _ns
         }
     }
     this->edad = edad;
-
+    this->domicilio = _ubicacion;
 }
 
 /**

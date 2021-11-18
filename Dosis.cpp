@@ -24,7 +24,7 @@ Dosis::Dosis() {
 }
 
     /* @brief Constructor parametrizado
- * @param[in] -identificador de la dosis y fabricante, fecha
+ * @param[in] -identificador de la listaDosis y fabricante, fecha
  * @param[out] -
  * @return -
  */
@@ -50,7 +50,7 @@ Dosis::Dosis(int id, int idLote, int idFabricante, int dia, int mes, int anno) {
 }
 
     /* @brief Constructor copia
- * @param[in] -Referencia a objeto dosis
+ * @param[in] -Referencia a objeto listaDosis
  * @param[out] -
  * @return -
  * 
@@ -153,7 +153,7 @@ bool Dosis::operator>(const Dosis &otra) const {
     return (otra.id < this->id); 
 }
 
-/* @brief Muestra por pantalla la información de la dosis
+/* @brief Muestra por pantalla la información de la listaDosis
  * @param[in] -
  * @param[out] -
  * @return -

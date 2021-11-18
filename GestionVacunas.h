@@ -17,20 +17,14 @@ using namespace std;
 class GestionVacunas {
 
 private:
-    map<string,Usuario*> listausuarios;
-    vector<CentroVacunacion*> listacentros;
-    vector<Dosis*> dosis;
+    map<string,Usuario*> listaUsuarios;
+    vector<CentroVacunacion*> listaCentros;
+    vector<Dosis*> listaDosis;
     vector<string> listaNSS;
-    vector<Usuario*> noRecomendados;
     int vacAlmacen;
-    int lecturaVacunas=0;
-    vector<Dosis> dosisAdministradas;
-    vector<bool> dosisAdministradasBin;
+    int lecturaVacunas;
     int cuantasDosis;
     int cuantosUsuarios;
-    int primeraDosis;
-    int segundaDosis;
-    int terceraDosis;
     vector<int> numVacTipo;
 public:
     GestionVacunas(); //Constructor por defecto // arreglao

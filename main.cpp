@@ -16,10 +16,10 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char* argv[]) {
     try {
         cout << "==== INSTANCIACIÓN DE ARCHIVOS DENTRO DE GestionVacunas ====" << endl;
-        GestionVacunas gestionVacunas("dosis.txt","usuarios.txt","centros.txt");
+        GestionVacunas gestionVacunas(argv[1],argv[2],argv[3]);
 
         cout << "\n==== AÑADIR DOSIS A CENTROS DE VACUNACIÓN ====" << endl;
         vector<Dosis*> v;
@@ -113,7 +113,7 @@ int main() {
         }
 
         cout << "\n==== ADMINISTRAR DOSIS RESTANTES ====" << endl;
-        cout << "Usuarios con sus dosis recomendadas: " << endl;
+        cout << "Usuarios con sus listaDosis recomendadas: " << endl;
         for (int i = 0; i < vecAuxilia.size(); ++i){
             Usuario* vacunable = gestionVacunas.buscarUsuario(vecAuxilia[i]);
             if(vacunable) {

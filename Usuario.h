@@ -25,7 +25,7 @@ private:
 
 public:
     Usuario();
-    Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento); //Constructor Parametrizado
+    Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento, const UTM _ubicacion); //Constructor Parametrizado
     Usuario(const Usuario &orig); //Constructor copia
     const string &getApellidos() const;
     void setApellidos(const string &apellidos);

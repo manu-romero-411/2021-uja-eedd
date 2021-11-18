@@ -16,7 +16,7 @@
 #include <cstdlib>
 #include <ostream>
 #include "Fecha.h"
-//fabricante de la dosis
+//fabricante de la listaDosis
 enum nombreFabricante {
     Pfizer = 0,
     Moderna = 1,
@@ -32,9 +32,9 @@ enum estado {
 
 class Dosis {
 private:
-    int id; //identificador de la dosis concreta
+    int id; //identificador de la listaDosis concreta
     int idLote; //identificador del lote en la que se contiene
-    nombreFabricante fabricante; //Fabricante de la dosis
+    nombreFabricante fabricante; //Fabricante de la listaDosis
     Fecha fechaFabricacion;
     Fecha fechaCaducidad;
     estado status;
@@ -51,21 +51,21 @@ public:
     int getFabricante() const;//Devuelve el fabricante
     void setIdLote(int idLote);//Cambia el identificador del lote
     int getIdLote() const;//Devuelve el identificador del lote
-    void setId(int id);//Cambia el identificador de dosis
-    int getId() const;//Cambia el identificador de dosis
+    void setId(int id);//Cambia el identificador de listaDosis
+    int getId() const;//Cambia el identificador de listaDosis
     int getStatus() const;
     string getnombrefabricante();
     void setStatus(estado status);
-    bool operator<(const Dosis &otra) const;//Compara dosis dependiendo de su identificador
-    Dosis& operator=(const Dosis &otro);//Asigna dosis dependiendo de su identificador
-    bool operator>(const Dosis &otra) const;//Compara dosis dependiendo de su identificador
-    bool operator==(const Dosis &otra) const;//Compara dosis dependiendo de su identificador
-    bool operator!=(const Dosis &otra) const;//Compara dosis dependiendo de su identificador
+    bool operator<(const Dosis &otra) const;//Compara listaDosis dependiendo de su identificador
+    Dosis& operator=(const Dosis &otro);//Asigna listaDosis dependiendo de su identificador
+    bool operator>(const Dosis &otra) const;//Compara listaDosis dependiendo de su identificador
+    bool operator==(const Dosis &otra) const;//Compara listaDosis dependiendo de su identificador
+    bool operator!=(const Dosis &otra) const;//Compara listaDosis dependiendo de su identificador
 
     void imprimir();
 
     friend ostream &operator<<(ostream &os, const Dosis &dosis);
-//Muestra por pantalla información básica de la dosis
+//Muestra por pantalla información básica de la listaDosis
 };
 #endif /* DOSIS_H */
 
