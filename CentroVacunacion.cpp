@@ -64,9 +64,11 @@ void CentroVacunacion::anadirUsuarioLista(Usuario* nuevo){
 *
 */
 bool CentroVacunacion::administrarDosis(Usuario* vacunando, nombreFabricante vacunada) {
-    if(listaDosis.size() <= 0)
+    if (listaDosis.size() <= 0){
+        cout << "Vector de dosis en un CentroVacunacion es de tamaño 0. Alarma lanzada" << endl;
         alarmaFaltaDosis();
-        //cout << "nodosis" << endl;
+    }
+
     bool encontrado = false;
     for (std::list<Usuario*>::iterator it1 = listaUsuarios.begin(); it1 != listaUsuarios.end(); ++it1) {
         if (*it1 == vacunando) {
