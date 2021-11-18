@@ -163,7 +163,8 @@ Usuario* GestionVacunas::buscarUsuario (string nss){
 */
 
 float GestionVacunas::pautaCompleta() {
-    float numusuarios=this->listaUsuarios.size();
+    //TODO
+   /* float numusuarios=this->listaUsuarios.size();
     float numpautascompletas;
     for(std::map<string,Usuario*>::iterator it = listaUsuarios.begin(); it != listaUsuarios.end(); ++it) {
         if (it->second->dosisPorAdministrar() == 0){
@@ -172,6 +173,7 @@ float GestionVacunas::pautaCompleta() {
     }
     float porcentaje = (numpautascompletas/numusuarios)*100;
     return porcentaje;
+    */
 }
 
 /**
@@ -198,12 +200,15 @@ void GestionVacunas::printStatus(){
 */
 
 vector<Usuario*> GestionVacunas::listadoVacunacionNR(){
+    //TODO
+     /*
     vector<Usuario*> vectorDevuelto;
     for(std::map<string,Usuario*>::iterator it = listaUsuarios.begin(); it != listaUsuarios.end(); ++it)  {
         if(!it->second->isDosisRec()){
             vectorDevuelto.push_back(it->second);
         }
     }
+     */
 }
 
 

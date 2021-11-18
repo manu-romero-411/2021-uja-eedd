@@ -21,6 +21,7 @@ private:
     vector<CentroVacunacion*> listaCentros;
     vector<Dosis*> listaDosis;
     vector<string> listaNSS;
+
     int vacAlmacen;
     int lecturaVacunas;
     int cuantasDosis;

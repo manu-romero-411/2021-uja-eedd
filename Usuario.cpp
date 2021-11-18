@@ -49,7 +49,6 @@ Usuario::Usuario(const Usuario &orig){
     this->nss = orig.nss;
     this->fechaNacimiento.asignarDia(orig.fechaNacimiento.verDia(),orig.fechaNacimiento.verMes(),orig.fechaNacimiento.verAnio());
     this->edad=orig.edad;
-    this->misDosis = orig.misDosis;
 }
 /**
  * @brief Operador de asignación
@@ -67,10 +66,7 @@ Usuario& Usuario::operator=(const Usuario* &elDeLaDerecha){
         apellidos = elDeLaDerecha->apellidos;
         nss = elDeLaDerecha->nss;
         fechaNacimiento = elDeLaDerecha->fechaNacimiento;
-        misDosis = elDeLaDerecha->misDosis;
         edad=elDeLaDerecha->edad;
-        this->misDosis = elDeLaDerecha->misDosis;
-
     }
 
     return (*this);
@@ -116,21 +112,6 @@ void Usuario::setDomicilio(const UTM &dom) {
     Usuario::domicilio = dom;
 }
 
-Dosis& Usuario::getDosis(int cual){
-
-    if(cual < misDosis.size()) {
-      return *misDosis[cual];
-    }
-    else
-        throw std::out_of_range("[Usuario] Posición no valida al llamar a VDinamico<Dosis>");
-}
-
-void Usuario::nuevaDosis(Dosis* nueva){
-    Dosis* p= nueva;
-    misDosis.push_back(p);
-    p->setStatus(administrada);
-}
-
 /**
  * @brief Operador de igualdad
  * @param[in] -Referencia a objeto de tipo Usuario
@@ -144,8 +125,7 @@ bool Usuario::operator==(const Usuario &elDeLaDerecha) const {
     return nombre == elDeLaDerecha.nombre &&
            apellidos == elDeLaDerecha.apellidos &&
            nss == elDeLaDerecha.nss &&
-           fechaNacimiento.mismoDia(elDeLaDerecha.fechaNacimiento) &&
-           this->misDosis == elDeLaDerecha.misDosis;
+           fechaNacimiento.mismoDia(elDeLaDerecha.fechaNacimiento);
 }
 
 /**
@@ -226,51 +206,9 @@ ostream &operator<<(ostream &os, const Usuario &usuario) {
 
 
 int Usuario::getedad() {
-   /* int anyoActual = 2021;
-    int mesActual = 10;
-    int diaActual = 19;
-    int edad = anyoActual- this->fechaNacimiento.verAnio();
-    if  (this->fechaNacimiento.verMes() > mesActual) {
-        edad--;
-    } else {
-        if ((fechaNacimiento.verDia() > diaActual) && ((this->fechaNacimiento.verMes() == mesActual))){
-            edad--;
-        }
-    }*/
     return edad;
-}
-
-vector<Dosis*> Usuario::getmisdosis(){
-    return misDosis;
-}
-
-nombreFabricante Usuario::getdosisRecomendable(){
-    if ( edad >= 12 && edad < 30)
-        return Johnson;
-    if (edad >= 30 && edad < 50)
-        return AstraZeneca;
-    if (edad >= 50 && edad < 65)
-        return Moderna;
-    if (edad >= 65)
-        return Pfizer;
-    if (edad < 12)
-        return ninguno;
-}
-
-bool Usuario::isDosisRec(){
-    return dosisRecomendada;
-}
-
-void Usuario::tieneDosisRec(bool rec){
-    dosisRecomendada = rec;
 }
 
 Usuario::~Usuario() {
 
-}
-
-int Usuario::dosisPorAdministrar(){
-    if (edad >= 75) return 3 - misDosis.size();
-    if (edad < 12) return 0;
-    if (edad >= 12 && edad < 75) return 2 - misDosis.size();
 }
