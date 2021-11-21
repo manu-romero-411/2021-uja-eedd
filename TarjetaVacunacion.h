@@ -23,8 +23,8 @@ public:
     TarjetaVacunacion(Usuario* _usuario);
     Dosis& getDosis(int cual);
     void nuevaDosis(Dosis* nueva);
-    vector<Dosis*> getmisdosis();
-    nombreFabricante getdosisRecomendable();
+    vector<Dosis*> getDosisAdministradas();
+    nombreFabricante getFabricanteRecomendado();
     bool isDosisRec();
     void tieneDosisRec(bool rec);
     int dosisPorAdministrar();

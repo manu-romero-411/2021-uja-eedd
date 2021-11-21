@@ -29,11 +29,11 @@ void TarjetaVacunacion::nuevaDosis(Dosis* nueva){
     p->setStatus(administrada);
 }
 
-vector<Dosis*> TarjetaVacunacion::getmisdosis(){
+vector<Dosis*> TarjetaVacunacion::getDosisAdministradas(){
     return dosisAdministradas;
 }
 
-nombreFabricante TarjetaVacunacion::getdosisRecomendable(){
+nombreFabricante TarjetaVacunacion::getFabricanteRecomendado(){
     if (propietario->getedad() >= 12 && propietario->getedad() < 30)
         return Johnson;
     if (propietario->getedad() >= 30 && propietario->getedad() < 50)
@@ -101,7 +101,7 @@ const vector<Dosis *> &TarjetaVacunacion::getDosisAdministradas() const {
 }
 
 string TarjetaVacunacion::pasaporteCovidCode(){
-    return "todo";
+
 
 }
 

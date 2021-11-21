@@ -18,7 +18,12 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
     try {
-        cout << "toc toc" << " holi" << " jaja no que pacha" << endl;
+        Fecha fe;
+        fe.asignarDia(1,1,2001);
+        UTM ub;
+        Usuario us("a","b","0",fe,ub);
+        TarjetaVacunacion tar(&us);
+        int dos = tar.dosisPorAdministrar();
         return 0;
     } catch (std::exception &e) {
         cout << e.what();
