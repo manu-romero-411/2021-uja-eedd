@@ -13,6 +13,7 @@
 #include "Usuario.h"
 #include "GestionVacunas.h"
 #include <chrono>
+#include "THashTarjetaVacunacion.h"
 
 using namespace std;
 
