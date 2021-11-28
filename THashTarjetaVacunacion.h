@@ -5,6 +5,7 @@
 #ifndef INC_2021_EEDD_PRACTICAS_THASHTARJETAVACUNACION_H
 #define INC_2021_EEDD_PRACTICAS_THASHTARJETAVACUNACION_H
 #include "TarjetaVacunacion.h"
+#include "RandomPrimeGenerator.h"
 
 class CasillaHash{
     friend class THashTarjetaVacunacion;
@@ -18,8 +19,6 @@ private:
     EstadoCasillaHash estado;
     TarjetaVacunacion* dato;
 public:
-
-
     explicit CasillaHash(TarjetaVacunacion* newdato){
        this->dato = newdato ;
        this->estado= vacia;
@@ -31,21 +30,53 @@ public:
 class THashTarjetaVacunacion {
 private:
     unsigned long hash(unsigned long clave, int intento);
+    unsigned long hash2(unsigned long clave, int intento);
+    unsigned long hash3(unsigned long clave, int intento);
     int taml, tamf, numColisiones, maximasColisiones;
     vector<CasillaHash> tabla;
 public:
+    THashTarjetaVacunacion();
     THashTarjetaVacunacion(int tamTabla);
     THashTarjetaVacunacion(const THashTarjetaVacunacion &thash);
-    THashTarjetaVacunacion& operator=(const THashTarjetaVacunacion &thash);
-    ~THashTarjetaVacunacion();
+    THashTarjetaVacunacion& operator=(const THashTarjetaVacunacion* &thash);
+    virtual ~THashTarjetaVacunacion();
     bool insertar(unsigned long clave, TarjetaVacunacion &pal);
-    bool buscar(unsigned long clave, string &id, TarjetaVacunacion &pal);
+    bool buscar(unsigned long clave, TarjetaVacunacion &pal);
     bool borrar(unsigned long clave, string &id);
     unsigned int numTarjetas();
 };
 
 unsigned long THashTarjetaVacunacion::hash(unsigned long clave, int intento){
     return (clave + (intento * intento)) % tamf;
+}
+
+unsigned long THashTarjetaVacunacion::hash2(unsigned long clave, int intento) {
+    int primo = 14341;
+    unsigned long h1 = (clave + (intento * intento)) % tamf;
+    unsigned long h2 = primo - (clave % primo);
+    return (h1 + intento * h2) % tamf;
+}
+
+/**
+ * @brief Funcion de dispersion doble 2
+ */
+unsigned long THashTarjetaVacunacion::hash3(unsigned long clave, int intento) {
+    int primo = 12611;
+    unsigned long h1 = (clave + (intento * intento)) % tamf;
+    unsigned long h2 = 1 + (clave % primo);
+    return (h1 + intento * h2) % tamf;
+}
+
+THashTarjetaVacunacion::THashTarjetaVacunacion(){
+    taml = 0;
+    tamf = 100000;
+    numColisiones = 0;
+    tabla = vector<CasillaHash>();
+    for (int i=0; i<tamf; i++) {
+        TarjetaVacunacion* tarjeta = new TarjetaVacunacion();
+        CasillaHash* nueva = new CasillaHash(tarjeta);
+        tabla.push_back(*nueva);
+    }
 }
 
 THashTarjetaVacunacion::THashTarjetaVacunacion(int tamTabla){
@@ -55,7 +86,9 @@ THashTarjetaVacunacion::THashTarjetaVacunacion(int tamTabla){
     numColisiones=0;
     maximasColisiones=0;
     for (int i=0; i<tamf; i++) {
-        tabla.push_back(Entrada());//TODO
+        TarjetaVacunacion* tarjeta = new TarjetaVacunacion();
+        CasillaHash* nueva = new CasillaHash(tarjeta);
+        tabla.push_back(*nueva);
     }
 }
 
@@ -67,35 +100,36 @@ THashTarjetaVacunacion::THashTarjetaVacunacion(const THashTarjetaVacunacion &tha
     tamf = thash.tamf;
 }
 
-THashTarjetaVacunacion& THashTarjetaVacunacion::operator=(const THashTarjetaVacunacion &elDeLaDerecha){
-    tabla = elDeLaDerecha.tabla;
-    maximasColisiones = elDeLaDerecha.maximasColisiones;
-    numColisiones = elDeLaDerecha.numColisiones;
-    taml = elDeLaDerecha.taml;
-    tamf = elDeLaDerecha.tamf;
+THashTarjetaVacunacion& THashTarjetaVacunacion::operator=(const THashTarjetaVacunacion* &elDeLaDerecha){
+    if(this != elDeLaDerecha) {
+        tabla = elDeLaDerecha->tabla;
+        maximasColisiones = elDeLaDerecha->maximasColisiones;
+        numColisiones = elDeLaDerecha->numColisiones;
+        taml = elDeLaDerecha->taml;
+        tamf = elDeLaDerecha->tamf;
+    }
+    return *this;
 }
 
-~THashTarjetaVacunacion(){
+THashTarjetaVacunacion::~THashTarjetaVacunacion(){
 
 }
 
-bool THashTarjetaVacunacion::insertar(unsigned long clave, TarjetaVacunacion &pal){
+bool THashTarjetaVacunacion::insertar(unsigned long clave, TarjetaVacunacion& pal){
     int intentos = 0, colisiones = 0;
     bool insertado = false;
     TarjetaVacunacion *copiaDato = &pal;
-    if ((this->buscar(clave, dni, copiaDato)) == false)//TODO
-         {
+    if ((this->buscar(clave, *copiaDato) == false)){
         do {
             int pos = hash(clave, intentos);
             intentos++;
-            if (tabla[pos].estado == 0) {
-                tabla[pos].dato = *pal;
-                tabla[pos].estado = ocupada;
+            if (tabla[pos].estado == CasillaHash::vacia || tabla[pos].estado == CasillaHash::borrada) {
+                tabla[pos].dato = &pal;
+                tabla[pos].estado = CasillaHash::ocupada;
                 insertado = true;
                 taml++;
-                tabla[pos].
             } else {
-                if (tabla[pos].estado == ocupada) {
+                if (tabla[pos].estado == CasillaHash::ocupada) {
                     colisiones++;
                 }
             }
@@ -103,31 +137,29 @@ bool THashTarjetaVacunacion::insertar(unsigned long clave, TarjetaVacunacion &pa
 
         if (colisiones > maximasColisiones)
             maximasColisiones = colisiones;
-
         numColisiones+=colisiones;
-
         return true;
-    } else
+    } else {
         return false;
+    }
 }
 
-bool THashTarjetaVacunacion::buscar(unsigned long clave, string &id, TarjetaVacunacion &pal){
+bool THashTarjetaVacunacion::buscar(unsigned long clave, TarjetaVacunacion &pal){
     bool encontrado = false;
     bool parar = false;
     int intentos = 0;
     do {
         int pos = hash3(clave, intentos);
         ++intentos;
-        if (tabla[pos].estado == 0) {
+        if (tabla[pos].estado == CasillaHash::borrada || tabla[pos].estado == CasillaHash::vacia) {
             parar = true;
 
         } else {
-            if (tabla[pos].dato.GetDni() == dni) {
-                cli = &(tabla[pos].dato);
+            if (tabla[pos].dato->getId() == pal.getId()) {
+                //pal = &(tabla[pos].dato);
                 encontrado = true;
             }
         }
-
     } while (encontrado == false && parar == false);
 
     return encontrado;
@@ -140,17 +172,17 @@ bool THashTarjetaVacunacion::borrar(unsigned long clave, string &id){
     do {
         int pos=hash3(clave, intentos);
         ++intentos;
-        if(tabla[pos].estado==vacia){
-            if(tabla[pos].estado!=disponible)
+        if(tabla[pos].estado==CasillaHash::vacia){
+            if(tabla[pos].estado!=CasillaHash::borrada)
                 parar=true;
-        }else
-        if(tabla[pos].dato.GetDni()==dni){
-            tabla[pos].estado=disponible;
+        } else
+        if(tabla[pos].dato->getId()==id){
+            tabla[pos].estado = CasillaHash::borrada;
+            //tabla[pos].dato = nullptr;
             borrado=true;
             --taml;
         }
-    } while(parar == false && borrado == false);
-
+    } while (parar == false && borrado == false);
     return borrado;
 }
 

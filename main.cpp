@@ -14,46 +14,27 @@
 #include "GestionVacunas.h"
 #include <chrono>
 #include "THashTarjetaVacunacion.h"
+#include "RandomPrimeGenerator.h"
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
     try {
-        Fecha fe;
-        fe.asignarDia(1,1,2001);
-        UTM ub;
-        Usuario us("a","b","0",fe,ub);
-        TarjetaVacunacion tar(&us);
-        int dos = tar.dosisPorAdministrar();
+        cout << "hola" << endl;
+        Fecha f(1,1,2001,1,1);
+        UTM ub(37,-3);
+        Usuario* u = new Usuario("a","b","1",f,ub);
+        TarjetaVacunacion* a = new TarjetaVacunacion(u);
+        THashTarjetaVacunacion* tabla = new THashTarjetaVacunacion(10000);
+        tabla->insertar(1,*a);
+        if (tabla->buscar(1,*a)) cout << "si" << endl;
+        string idd = a->getId();
+        tabla->borrar(1, idd);
+        tabla->insertar(1,*a);
+        tabla->insertar(2,*a);
+        tabla->borrar(2,idd);
 
-        cout << "==== Programa de entrenamiento 1 ====" << endl;
-
-        cout << "==== Programa de entrenamiento 2 ====" << endl;
-
-        cout << "*** Instanciación de objetos" << endl;
-
-        cout << "*** Generación de tarjetas de vacunación" << endl;
-
-        cout << "*** Factor de carga de la tabla" << endl;
-
-        cout << "*** Eliminar tarjetas de vacunación de NSS acabados en 0" << endl;
-
-        cout << "*** Número de colisiones máximo producido" << endl;
-
-        cout << "*** Primera dosis a NSS pares" << endl;
-
-        cout << "*** Segunda dosis entre 20 y 50 años" << endl;
-
-        cout << "*** NSS acabados en 2 y 6 sin pauta completa" << endl;
-
-        cout << "*** Reañadir tarjetas de vacunación de NSS acabados en 30" << endl;
-
-        cout << "*** Redispersión" << endl;
-
-        cout << "*** Mostrar usuarios sin pauta recomendada" << endl;
-
-        cout << "*** Diferencia de tiempos" << endl;
-        
+        THashTarjetaVacunacion* tabla2 = tabla;
         return 0;
     } catch (std::exception &e) {
         cout << e.what();
