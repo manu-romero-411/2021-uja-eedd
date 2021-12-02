@@ -13,6 +13,7 @@
 #include <vector>
 #include <cstdlib>
 #include <string>
+#include "THashTarjetaVacunacion.h"
 using namespace std;
 class GestionVacunas {
 
@@ -21,6 +22,7 @@ private:
     vector<CentroVacunacion*> listaCentros;
     vector<Dosis*> listaDosis;
     vector<string> listaNSS;
+    THashTarjetaVacunacion tablaTarjetas;
 
     int vacAlmacen;
     int lecturaVacunas;

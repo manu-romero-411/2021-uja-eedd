@@ -25,8 +25,6 @@ public:
     }
 };
 
-
-
 class THashTarjetaVacunacion {
 private:
     unsigned long hash(unsigned long clave, int intento);
@@ -111,10 +109,6 @@ THashTarjetaVacunacion& THashTarjetaVacunacion::operator=(const THashTarjetaVacu
     return *this;
 }
 
-THashTarjetaVacunacion::~THashTarjetaVacunacion(){
-
-}
-
 bool THashTarjetaVacunacion::insertar(unsigned long clave, TarjetaVacunacion& pal){
     int intentos = 0, colisiones = 0;
     bool insertado = false;
@@ -175,12 +169,13 @@ bool THashTarjetaVacunacion::borrar(unsigned long clave, string &id){
         if(tabla[pos].estado==CasillaHash::vacia){
             if(tabla[pos].estado!=CasillaHash::borrada)
                 parar=true;
-        } else
-        if(tabla[pos].dato->getId()==id){
-            tabla[pos].estado = CasillaHash::borrada;
-            //tabla[pos].dato = nullptr;
-            borrado=true;
-            --taml;
+        } else {
+            if (tabla[pos].dato->getId() == id) {
+                tabla[pos].estado = CasillaHash::borrada;
+                //tabla[pos].dato = nullptr;
+                borrado = true;
+                --taml;
+            }
         }
     } while (parar == false && borrado == false);
     return borrado;
@@ -188,6 +183,14 @@ bool THashTarjetaVacunacion::borrar(unsigned long clave, string &id){
 
 unsigned int THashTarjetaVacunacion::numTarjetas(){
     return taml;
+}
+
+THashTarjetaVacunacion::~THashTarjetaVacunacion(){
+    for (int i = 0; i < tabla.size(); ++i){
+        delete tabla[i].dato;
+        tabla[i].dato = nullptr;
+        tabla[i].estado = CasillaHash::borrada;
+    }
 }
 
 #endif //INC_2021_EEDD_PRACTICAS_THASHTARJETAVACUNACION_H
