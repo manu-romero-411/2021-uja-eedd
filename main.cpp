@@ -14,27 +14,14 @@
 #include "GestionVacunas.h"
 #include <chrono>
 #include "THashTarjetaVacunacion.h"
-#include "RandomPrimeGenerator.h"
+#include "MallaRegular.h"
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
     try {
-        cout << "hola" << endl;
-        Fecha f(1,1,2001,1,1);
-        UTM ub(37,-3);
-        Usuario* u = new Usuario("a","b","1",f,ub);
-        TarjetaVacunacion* a = new TarjetaVacunacion(u);
-        THashTarjetaVacunacion* tabla = new THashTarjetaVacunacion(10000);
-        tabla->insertar(1,*a);
-        if (tabla->buscar(1,*a)) cout << "si" << endl;
-        string idd = a->getId();
-        tabla->borrar(1, idd);
-        tabla->insertar(1,*a);
-        tabla->insertar(2,*a);
-        tabla->borrar(2,idd);
-
-        THashTarjetaVacunacion* tabla2 = tabla;
+        MallaRegular<int> malla;
+        malla.insertar(100,50,1);
         return 0;
     } catch (std::exception &e) {
         cout << e.what();
