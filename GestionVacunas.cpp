@@ -373,5 +373,8 @@ std::string GestionVacunas::getNombreFabricanteDado(nombreFabricante fab){
         case (3):
             return "Johnson";
             break;
+        default:
+            return "ninguna";
+            break;
     }
 }

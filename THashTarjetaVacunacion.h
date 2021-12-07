@@ -32,22 +32,34 @@ private:
     unsigned long hash(unsigned long clave, int intento);
     unsigned long hash2(unsigned long clave, int intento);
     unsigned long hash3(unsigned long clave, int intento);
+    unsigned long djb2(char* claveStr);
     int taml, tamf, numColisiones, maximasColisiones;
     vector<CasillaHash> tabla;
+    bool buscaEnHash(unsigned long clave, TarjetaVacunacion &pal);
+    bool insertaEnHash(unsigned long clave, TarjetaVacunacion &pal);
 public:
     THashTarjetaVacunacion();
     THashTarjetaVacunacion(int tamTabla);
     THashTarjetaVacunacion(const THashTarjetaVacunacion &thash);
     THashTarjetaVacunacion& operator=(const THashTarjetaVacunacion* &thash);
     virtual ~THashTarjetaVacunacion();
-    bool insertar(unsigned long clave, TarjetaVacunacion &pal);
-    bool buscar(unsigned long clave, TarjetaVacunacion &pal);
+    bool insertar(char *clave, TarjetaVacunacion &pal);
+    bool buscar(char *clave, TarjetaVacunacion &pal);
     bool borrar(unsigned long clave, string &id);
     unsigned int numTarjetas();
 };
 
 unsigned long THashTarjetaVacunacion::hash(unsigned long clave, int intento){
     return (clave + (intento * intento)) % tamf;
+}
+
+unsigned long THashTarjetaVacunacion::djb2(char* claveStr){ // https://theartincode.stanis.me/008-djb2/
+    unsigned long hash = 5381;
+    int c;
+    while (c = *claveStr++){
+        hash = ((hash << 5) + hash) + c;
+    }
+    return hash;
 }
 
 unsigned long THashTarjetaVacunacion::hash2(unsigned long clave, int intento) {
@@ -115,11 +127,11 @@ THashTarjetaVacunacion::~THashTarjetaVacunacion(){
 
 }
 
-bool THashTarjetaVacunacion::insertar(unsigned long clave, TarjetaVacunacion& pal){
+bool THashTarjetaVacunacion::insertaEnHash(unsigned long clave, TarjetaVacunacion& pal){
     int intentos = 0, colisiones = 0;
     bool insertado = false;
     TarjetaVacunacion *copiaDato = &pal;
-    if ((this->buscar(clave, *copiaDato) == false)){
+    if ((this->buscaEnHash(clave, *copiaDato) == false)){
         do {
             int pos = hash(clave, intentos);
             intentos++;
@@ -144,7 +156,11 @@ bool THashTarjetaVacunacion::insertar(unsigned long clave, TarjetaVacunacion& pa
     }
 }
 
-bool THashTarjetaVacunacion::buscar(unsigned long clave, TarjetaVacunacion &pal){
+bool THashTarjetaVacunacion::insertar(char *clave, TarjetaVacunacion &pal){
+    return insertaEnHash(djb2(clave), pal);
+}
+
+bool THashTarjetaVacunacion::buscaEnHash(unsigned long clave, TarjetaVacunacion &pal){
     bool encontrado = false;
     bool parar = false;
     int intentos = 0;
@@ -163,6 +179,10 @@ bool THashTarjetaVacunacion::buscar(unsigned long clave, TarjetaVacunacion &pal)
     } while (encontrado == false && parar == false);
 
     return encontrado;
+}
+
+bool THashTarjetaVacunacion::buscar(char *clave, TarjetaVacunacion &pal){
+    return buscaEnHash(djb2(clave), pal);
 }
 
 bool THashTarjetaVacunacion::borrar(unsigned long clave, string &id){
