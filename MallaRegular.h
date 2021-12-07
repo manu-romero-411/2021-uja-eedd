@@ -18,6 +18,9 @@ class Casilla {
 public:
     friend class MallaRegular<T>;
 
+    /**
+ * @brief Constructor por defecto de la clase Casilla
+ */
     Casilla() : puntos() {
     }
 
@@ -154,7 +157,6 @@ template<typename T>
 Casilla<T>* MallaRegular<T>::obtenerCasilla(float x, float y) {
     int i = (x - xMin) / tamCasillaX;
     int j = (y - yMin) / tamCasillaY;
-
     return &mr[j][i];
 }
 
