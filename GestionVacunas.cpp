@@ -140,8 +140,20 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
         contcentro++;
     }
 
-    cout << "" << endl;
+    this->listaTarjetas = THashTarjetaVacunacion(listaUsuarios.size());
 }
+
+void GestionVacunas::generaTarjetas(){
+    for(std::map<string,Usuario*>::iterator it = listaUsuarios.begin(); it != listaUsuarios.end(); ++it){
+        Usuario* elquetoca = it->second;
+        TarjetaVacunacion nueva = TarjetaVacunacion(elquetoca);
+        listaTarjetas.insertar(listaTarjetas.djb2((unsigned char *) nueva.getId().c_str()), nueva);
+    }
+
+}
+
+
+
 /**
 * @brief Busca un usuario dependiendo de su nss
 * @param[in] string con el nss del usuario
@@ -377,4 +389,8 @@ std::string GestionVacunas::getNombreFabricanteDado(nombreFabricante fab){
             return "ninguna";
             break;
     }
+}
+
+THashTarjetaVacunacion GestionVacunas::getListaTarjetas()  {
+    return listaTarjetas;
 }

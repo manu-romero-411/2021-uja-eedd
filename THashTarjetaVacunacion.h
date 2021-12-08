@@ -5,7 +5,6 @@
 #ifndef INC_2021_EEDD_PRACTICAS_THASHTARJETAVACUNACION_H
 #define INC_2021_EEDD_PRACTICAS_THASHTARJETAVACUNACION_H
 #include "TarjetaVacunacion.h"
-#include "RandomPrimeGenerator.h"
 
 class CasillaHash{
     friend class THashTarjetaVacunacion;
@@ -19,6 +18,11 @@ private:
     EstadoCasillaHash estado;
     TarjetaVacunacion* dato;
 public:
+    CasillaHash(){
+        this->dato= nullptr;
+        estado=vacia;
+
+    }
     explicit CasillaHash(TarjetaVacunacion* newdato){
        this->dato = newdato ;
        this->estado= vacia;
@@ -30,184 +34,26 @@ public:
 class THashTarjetaVacunacion {
 private:
     unsigned long hash(unsigned long clave, int intento);
-    unsigned long hash2(unsigned long clave, int intento);
-    unsigned long hash3(unsigned long clave, int intento);
-    unsigned long djb2(char* claveStr);
-    int taml, tamf, numColisiones, maximasColisiones;
+    int taml, tamf, numColisiones, maximasColisiones, numMax10;
     vector<CasillaHash> tabla;
-    bool buscaEnHash(unsigned long clave, TarjetaVacunacion &pal);
-    bool insertaEnHash(unsigned long clave, TarjetaVacunacion &pal);
+
 public:
     THashTarjetaVacunacion();
+    int tamTabla() const;
+    int MaximasColisiones() const;
+    int NumMax10() const;
     THashTarjetaVacunacion(int tamTabla);
     THashTarjetaVacunacion(const THashTarjetaVacunacion &thash);
-    THashTarjetaVacunacion& operator=(const THashTarjetaVacunacion* &thash);
+    THashTarjetaVacunacion& operator=(const THashTarjetaVacunacion &thash);
     virtual ~THashTarjetaVacunacion();
-    bool insertar(char *clave, TarjetaVacunacion &pal);
-    bool buscar(char *clave, TarjetaVacunacion &pal);
+    bool insertar(unsigned long clave, TarjetaVacunacion &pal);
+    bool buscar(unsigned long clave, string &id, TarjetaVacunacion &pal);
     bool borrar(unsigned long clave, string &id);
     unsigned int numTarjetas();
+    float promedioColisiones() const;
+    float factorCarga();
+    unsigned long djb2(unsigned char* claveStr);
 };
 
-unsigned long THashTarjetaVacunacion::hash(unsigned long clave, int intento){
-    return (clave + (intento * intento)) % tamf;
-}
-
-unsigned long THashTarjetaVacunacion::djb2(char* claveStr){ // https://theartincode.stanis.me/008-djb2/
-    unsigned long hash = 5381;
-    int c;
-    while (c = *claveStr++){
-        hash = ((hash << 5) + hash) + c;
-    }
-    return hash;
-}
-
-unsigned long THashTarjetaVacunacion::hash2(unsigned long clave, int intento) {
-    int primo = 14341;
-    unsigned long h1 = (clave + (intento * intento)) % tamf;
-    unsigned long h2 = primo - (clave % primo);
-    return (h1 + intento * h2) % tamf;
-}
-
-/**
- * @brief Funcion de dispersion doble 2
- */
-unsigned long THashTarjetaVacunacion::hash3(unsigned long clave, int intento) {
-    int primo = 12611;
-    unsigned long h1 = (clave + (intento * intento)) % tamf;
-    unsigned long h2 = 1 + (clave % primo);
-    return (h1 + intento * h2) % tamf;
-}
-
-THashTarjetaVacunacion::THashTarjetaVacunacion(){
-    taml = 0;
-    tamf = 100000;
-    numColisiones = 0;
-    tabla = vector<CasillaHash>();
-    for (int i=0; i<tamf; i++) {
-        TarjetaVacunacion* tarjeta = new TarjetaVacunacion();
-        CasillaHash* nueva = new CasillaHash(tarjeta);
-        tabla.push_back(*nueva);
-    }
-}
-
-THashTarjetaVacunacion::THashTarjetaVacunacion(int tamTabla){
-    tabla = vector<CasillaHash>();
-    taml = 0;
-    tamf = tamTabla;
-    numColisiones=0;
-    maximasColisiones=0;
-    for (int i=0; i<tamf; i++) {
-        TarjetaVacunacion* tarjeta = new TarjetaVacunacion();
-        CasillaHash* nueva = new CasillaHash(tarjeta);
-        tabla.push_back(*nueva);
-    }
-}
-
-THashTarjetaVacunacion::THashTarjetaVacunacion(const THashTarjetaVacunacion &thash){
-    tabla = thash.tabla;
-    maximasColisiones = thash.maximasColisiones;
-    numColisiones = thash.numColisiones;
-    taml = thash.taml;
-    tamf = thash.tamf;
-}
-
-THashTarjetaVacunacion& THashTarjetaVacunacion::operator=(const THashTarjetaVacunacion* &elDeLaDerecha){
-    if(this != elDeLaDerecha) {
-        tabla = elDeLaDerecha->tabla;
-        maximasColisiones = elDeLaDerecha->maximasColisiones;
-        numColisiones = elDeLaDerecha->numColisiones;
-        taml = elDeLaDerecha->taml;
-        tamf = elDeLaDerecha->tamf;
-    }
-    return *this;
-}
-
-THashTarjetaVacunacion::~THashTarjetaVacunacion(){
-
-}
-
-bool THashTarjetaVacunacion::insertaEnHash(unsigned long clave, TarjetaVacunacion& pal){
-    int intentos = 0, colisiones = 0;
-    bool insertado = false;
-    TarjetaVacunacion *copiaDato = &pal;
-    if ((this->buscaEnHash(clave, *copiaDato) == false)){
-        do {
-            int pos = hash(clave, intentos);
-            intentos++;
-            if (tabla[pos].estado == CasillaHash::vacia || tabla[pos].estado == CasillaHash::borrada) {
-                tabla[pos].dato = &pal;
-                tabla[pos].estado = CasillaHash::ocupada;
-                insertado = true;
-                taml++;
-            } else {
-                if (tabla[pos].estado == CasillaHash::ocupada) {
-                    colisiones++;
-                }
-            }
-        } while (insertado == false);
-
-        if (colisiones > maximasColisiones)
-            maximasColisiones = colisiones;
-        numColisiones+=colisiones;
-        return true;
-    } else {
-        return false;
-    }
-}
-
-bool THashTarjetaVacunacion::insertar(char *clave, TarjetaVacunacion &pal){
-    return insertaEnHash(djb2(clave), pal);
-}
-
-bool THashTarjetaVacunacion::buscaEnHash(unsigned long clave, TarjetaVacunacion &pal){
-    bool encontrado = false;
-    bool parar = false;
-    int intentos = 0;
-    do {
-        int pos = hash3(clave, intentos);
-        ++intentos;
-        if (tabla[pos].estado == CasillaHash::borrada || tabla[pos].estado == CasillaHash::vacia) {
-            parar = true;
-
-        } else {
-            if (tabla[pos].dato->getId() == pal.getId()) {
-                //pal = &(tabla[pos].dato);
-                encontrado = true;
-            }
-        }
-    } while (encontrado == false && parar == false);
-
-    return encontrado;
-}
-
-bool THashTarjetaVacunacion::buscar(char *clave, TarjetaVacunacion &pal){
-    return buscaEnHash(djb2(clave), pal);
-}
-
-bool THashTarjetaVacunacion::borrar(unsigned long clave, string &id){
-    bool borrado=false;
-    bool parar=false;
-    int intentos=0;
-    do {
-        int pos=hash3(clave, intentos);
-        ++intentos;
-        if(tabla[pos].estado==CasillaHash::vacia){
-            if(tabla[pos].estado!=CasillaHash::borrada)
-                parar=true;
-        } else
-        if(tabla[pos].dato->getId()==id){
-            tabla[pos].estado = CasillaHash::borrada;
-            //tabla[pos].dato = nullptr;
-            borrado=true;
-            --taml;
-        }
-    } while (parar == false && borrado == false);
-    return borrado;
-}
-
-unsigned int THashTarjetaVacunacion::numTarjetas(){
-    return taml;
-}
 
 #endif //INC_2021_EEDD_PRACTICAS_THASHTARJETAVACUNACION_H
