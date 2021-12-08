@@ -11,9 +11,28 @@
  *
  *
  */
-Usuario::Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento,
-                 Dosis &_miDosis)
-        : nombre(_nombre), apellidos(_apellidos), nss(_nss), fechaNacimiento(_fechaNacimiento), miDosis(&_miDosis) {
+Usuario::Usuario(){
+
+}
+
+Usuario::Usuario(const string _nombre, const string _apellidos, const string _nss, const Fecha _fechaNacimiento, const UTM _ubicacion) {
+    this->nombre = _nombre;
+    this->apellidos = _apellidos;
+    this->nss = _nss;
+    this->fechaNacimiento = _fechaNacimiento;
+    int anyoActual = 2021;
+    int mesActual = 10;
+    int diaActual = 19;
+    int edad = anyoActual - this->fechaNacimiento.verAnio();
+    if (this->fechaNacimiento.verMes() > mesActual) {
+        edad--;
+    } else {
+        if ((fechaNacimiento.verDia() > diaActual) && ((this->fechaNacimiento.verMes() == mesActual))) {
+            edad--;
+        }
+    }
+    this->edad = edad;
+    this->domicilio = _ubicacion;
 }
 
 /**
@@ -29,7 +48,7 @@ Usuario::Usuario(const Usuario &orig){
     this->apellidos = orig.apellidos;
     this->nss = orig.nss;
     this->fechaNacimiento.asignarDia(orig.fechaNacimiento.verDia(),orig.fechaNacimiento.verMes(),orig.fechaNacimiento.verAnio());
-    this->miDosis = orig.miDosis;
+    this->edad=orig.edad;
 }
 /**
  * @brief Operador de asignación
@@ -40,14 +59,14 @@ Usuario::Usuario(const Usuario &orig){
  *
  */
 
-Usuario& Usuario::operator=(const Usuario &elDeLaDerecha){
+Usuario& Usuario::operator=(const Usuario* &elDeLaDerecha){
 
-    if(this != &elDeLaDerecha) {
-        nombre = elDeLaDerecha.nombre;
-        apellidos = elDeLaDerecha.apellidos;
-        nss = elDeLaDerecha.nss;
-        fechaNacimiento = elDeLaDerecha.fechaNacimiento;
-        miDosis = elDeLaDerecha.miDosis;
+    if(this != elDeLaDerecha) {
+        nombre = elDeLaDerecha->nombre;
+        apellidos = elDeLaDerecha->apellidos;
+        nss = elDeLaDerecha->nss;
+        fechaNacimiento = elDeLaDerecha->fechaNacimiento;
+        edad=elDeLaDerecha->edad;
     }
 
     return (*this);
@@ -85,21 +104,14 @@ void Usuario::setFechaNacimiento(const Fecha &fechaNacimiento) {
     Usuario::fechaNacimiento = fechaNacimiento;
 }
 
-/*const UTM &Usuario::getDomicilio() const {
+const UTM Usuario::getDomicilio()  {
     return domicilio;
 }
 
 void Usuario::setDomicilio(const UTM &dom) {
     Usuario::domicilio = dom;
-}*/
-
-Dosis &Usuario::getMiDosis() const {
-    return *miDosis;
 }
 
-void Usuario::setMiDosis(Dosis *miDosis) {
-    this->miDosis = miDosis;
-}
 /**
  * @brief Operador de igualdad
  * @param[in] -Referencia a objeto de tipo Usuario
@@ -113,8 +125,7 @@ bool Usuario::operator==(const Usuario &elDeLaDerecha) const {
     return nombre == elDeLaDerecha.nombre &&
            apellidos == elDeLaDerecha.apellidos &&
            nss == elDeLaDerecha.nss &&
-           fechaNacimiento.mismoDia(elDeLaDerecha.fechaNacimiento) &&
-           miDosis == elDeLaDerecha.miDosis;
+           fechaNacimiento.mismoDia(elDeLaDerecha.fechaNacimiento);
 }
 
 /**
@@ -150,7 +161,7 @@ bool Usuario::operator<(const Usuario &elDeLaDerecha) const {
         return true;
     if (elDeLaDerecha.nss < nss)
         return false;*/
-    if ((fechaNacimiento.verAnio() < elDeLaDerecha.fechaNacimiento.verAnio()) && (fechaNacimiento.verMes() < elDeLaDerecha.fechaNacimiento.verMes()) && (fechaNacimiento.verDia() < elDeLaDerecha.fechaNacimiento.verDia()))
+    if (this->nss < elDeLaDerecha.nss)
         return true;
     else
         return false;
@@ -158,7 +169,9 @@ bool Usuario::operator<(const Usuario &elDeLaDerecha) const {
 }
 
 bool Usuario::operator>(const Usuario &rhs) const {
-    return rhs < *this;
+    if(this->nss > rhs.nss)
+        return true;
+    else return false;
 }
 
 bool Usuario::operator<=(const Usuario &rhs) const {
@@ -179,7 +192,7 @@ bool Usuario::operator>=(const Usuario &rhs) const {
  */
 ostream &operator<<(ostream &os, const Usuario &usuario) {
     os << "Nombre: " << usuario.nombre << " | Apellidos: " << usuario.apellidos << " | NSS: " << usuario.nss
-       << " | Fecha de Nacimiento: " << usuario.fechaNacimiento.cadenaDia() << " | Dosis: " << usuario.miDosis->GetId();
+       << " | Fecha de Nacimiento: " << usuario.fechaNacimiento.cadenaDia();
     return os;
 }
 /**
@@ -190,6 +203,12 @@ ostream &operator<<(ostream &os, const Usuario &usuario) {
  *
  *
  */
+
+
+int Usuario::getedad() {
+    return edad;
+}
+
 Usuario::~Usuario() {
 
 }
