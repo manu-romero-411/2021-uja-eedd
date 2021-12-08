@@ -26,20 +26,22 @@ int main(int argc, char* argv[]) {
         TarjetaVacunacion tar(&us);
         int dos = tar.dosisPorAdministrar();
 
-        cout << "==== Programa de entrenamiento 1 ====" << endl;
-
-        cout << "==== Programa de entrenamiento 2 ====" << endl;
+        cout << "==== Programa de entrenamiento ====" << endl;
 
         cout << "*** Instanciación de objetos" << endl;
-
+        GestionVacunas gestor(argv[1],argv[2],argv[3]);
         cout << "*** Generación de tarjetas de vacunación" << endl;
-
+        gestor.generaTarjetas();
         cout << "*** Factor de carga de la tabla" << endl;
+        float factor = gestor.getListaTarjetas().numTarjetas();
+        factor = factor / gestor.getListaTarjetas().tamTabla();
+        std::cout<<"Factor de carga: "<<factor <<std::endl;
 
         cout << "*** Eliminar tarjetas de vacunación de NSS acabados en 0" << endl;
 
         cout << "*** Número de colisiones máximo producido" << endl;
-
+        int max = gestor.getListaTarjetas().MaximasColisiones();
+        cout<<max <<std::endl;
         cout << "*** Primera dosis a NSS pares" << endl;
 
         cout << "*** Segunda dosis entre 20 y 50 años" << endl;

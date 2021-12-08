@@ -4,7 +4,14 @@
 
 #include "TarjetaVacunacion.h"
 
-TarjetaVacunacion::TarjetaVacunacion() {}
+TarjetaVacunacion::TarjetaVacunacion()  {
+
+    this->id="0";
+    this->pautaCompleta= false;
+    this->idCentroCercano=0;
+    this->pautaRecomendada= false;
+    this->propietario= nullptr;
+}
 
 TarjetaVacunacion::TarjetaVacunacion(Usuario* _usuario) {
     this->propietario = _usuario;
