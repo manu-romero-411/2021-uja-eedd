@@ -41,7 +41,9 @@ int main(int argc, char* argv[]) {
 
         cout << "*** Número de colisiones máximo producido" << endl;
         int max = gestor.getListaTarjetas().MaximasColisiones();
+        int numi = gestor.getListaTarjetas().numTarjetas();
         cout<<max <<std::endl;
+        cout << numi << endl;
         cout << "*** Primera dosis a NSS pares" << endl;
 
         cout << "*** Segunda dosis entre 20 y 50 años" << endl;

@@ -1,0 +1,22 @@
+[
+{
+  "directory": "/pcgrande/Desarrollo/uja4-practicas/eedd/build",
+  "command": "/bin/x86_64-linux-gnu-g++-10   -g -std=gnu++11 -o CMakeFiles/eedd.dir/main.cpp.o -c /pcgrande/Desarrollo/uja4-practicas/eedd/main.cpp",
+  "file": "/pcgrande/Desarrollo/uja4-practicas/eedd/main.cpp"
+},
+{
+  "directory": "/pcgrande/Desarrollo/uja4-practicas/eedd/build",
+  "command": "/bin/x86_64-linux-gnu-g++-10   -g -std=gnu++11 -o CMakeFiles/eedd.dir/Fecha.cpp.o -c /pcgrande/Desarrollo/uja4-practicas/eedd/Fecha.cpp",
+  "file": "/pcgrande/Desarrollo/uja4-practicas/eedd/Fecha.cpp"
+},
+{
+  "directory": "/pcgrande/Desarrollo/uja4-practicas/eedd/build",
+  "command": "/bin/x86_64-linux-gnu-g++-10   -g -std=gnu++11 -o CMakeFiles/eedd.dir/Dosis.cpp.o -c /pcgrande/Desarrollo/uja4-practicas/eedd/Dosis.cpp",
+  "file": "/pcgrande/Desarrollo/uja4-practicas/eedd/Dosis.cpp"
+},
+{
+  "directory": "/pcgrande/Desarrollo/uja4-practicas/eedd/build",
+  "command": "/bin/x86_64-linux-gnu-g++-10   -g -std=gnu++11 -o CMakeFiles/eedd.dir/Usuario.cpp.o -c /pcgrande/Desarrollo/uja4-practicas/eedd/Usuario.cpp",
+  "file": "/pcgrande/Desarrollo/uja4-practicas/eedd/Usuario.cpp"
+}
+]

@@ -6,7 +6,7 @@
 
 
 unsigned long THashTarjetaVacunacion::hash(unsigned long clave, int intento){
-    return (clave + (intento * intento)) % tamf;
+    return (((clave + (intento * intento)) % tamf) + intento) % tamf;
 }
 
 unsigned long THashTarjetaVacunacion::djb2(unsigned char* claveStr){
@@ -72,29 +72,31 @@ bool THashTarjetaVacunacion::insertar(unsigned long clave, TarjetaVacunacion &pa
         do {
             int pos = hash(clave, intentos);
             intentos++;
-            if (tabla[pos].estado == 0) {
+            if (tabla[pos].estado == CasillaHash::vacia || tabla[pos].estado == CasillaHash::borrada) {
                 tabla[pos].dato = &pal;
                 tabla[pos].estado = CasillaHash::ocupada;
                 insertado = true;
                 taml++;
             } else {
+                cout << "Colisión" << endl;
                 if (tabla[pos].estado == CasillaHash::ocupada) {
                     colisiones++;
                 }
             }
         } while (!insertado);
 
-        if (colisiones > 10){
-            numMax10++;
 
-        }
         if (colisiones > maximasColisiones)
             maximasColisiones = colisiones;
 
         numColisiones+=colisiones;
 
         return true;
-    } else
+    }
+    if (colisiones > 10){
+        numMax10++;
+    }
+    else
         return false;
 }
 
@@ -106,10 +108,11 @@ bool THashTarjetaVacunacion::buscar(unsigned long clave, string &id, TarjetaVacu
     do {
         int pos = hash(clave, intentos);
         ++intentos;
-        if (tabla[pos].estado == 0) {
+        if (tabla[pos].estado == CasillaHash::vacia || tabla[pos].estado == CasillaHash::borrada) {
+            cout << "Para" << endl;
             parar = true;
-
         } else {
+            cout << "no para" << endl;
             if (tabla[pos].dato->getId() == id) {
                 pal = *tabla[pos].dato; //TODO CREO QUE ESTO ESTA MAL MIRALO JOSAN DEL FUTURO
                 encontrado = true;

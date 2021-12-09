@@ -1,0 +1,3 @@
+/pcgrande/Desarrollo/uja4-practicas/eedd/build/CMakeFiles/rebuild_cache.dir
+/pcgrande/Desarrollo/uja4-practicas/eedd/build/CMakeFiles/edit_cache.dir
+/pcgrande/Desarrollo/uja4-practicas/eedd/build/CMakeFiles/eedd.dir

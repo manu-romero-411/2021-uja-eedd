@@ -144,11 +144,15 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
 }
 
 void GestionVacunas::generaTarjetas(){
+    cout << "usuarios = " << listaUsuarios.size() << endl;
+    int coont = 0;
     for(std::map<string,Usuario*>::iterator it = listaUsuarios.begin(); it != listaUsuarios.end(); ++it){
         Usuario* elquetoca = it->second;
         TarjetaVacunacion nueva = TarjetaVacunacion(elquetoca);
         listaTarjetas.insertar(listaTarjetas.djb2((unsigned char *) nueva.getId().c_str()), nueva);
+        coont++;
     }
+    cout << "tarjetas = " << listaTarjetas.numTarjetas() << endl;
 
 }
 
