@@ -140,8 +140,18 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
         contcentro++;
     }
 
-    cout << "" << endl;
 }
+
+void GestionVacunas::generaTarjetas(){
+    for(std::map<string,Usuario*>::iterator it = listaUsuarios.begin(); it != listaUsuarios.end(); ++it){
+        Usuario* elquetoca = it->second;
+        TarjetaVacunacion *nueva = new TarjetaVacunacion(elquetoca);
+        tablaTarjetas.insert(pair<string,TarjetaVacunacion*>(nueva->getId(), nueva));
+    }
+}
+
+
+
 /**
 * @brief Busca un usuario dependiendo de su nss
 * @param[in] string con el nss del usuario
@@ -163,17 +173,15 @@ Usuario* GestionVacunas::buscarUsuario (string nss){
 */
 
 float GestionVacunas::pautaCompleta() {
-    //TODO
-   /* float numusuarios=this->listaUsuarios.size();
+    float numusuarios=this->listaUsuarios.size();
     float numpautascompletas;
-    for(std::map<string,Usuario*>::iterator it = listaUsuarios.begin(); it != listaUsuarios.end(); ++it) {
+    for(std::map<string,TarjetaVacunacion*>::iterator it = tablaTarjetas.begin(); it != tablaTarjetas.end(); ++it) {
         if (it->second->dosisPorAdministrar() == 0){
             numpautascompletas++;
         }
     }
     float porcentaje = (numpautascompletas/numusuarios)*100;
     return porcentaje;
-    */
 }
 
 /**
@@ -200,15 +208,13 @@ void GestionVacunas::printStatus(){
 */
 
 vector<Usuario*> GestionVacunas::listadoVacunacionNR(){
-    //TODO
-     /*
     vector<Usuario*> vectorDevuelto;
-    for(std::map<string,Usuario*>::iterator it = listaUsuarios.begin(); it != listaUsuarios.end(); ++it)  {
+    for(std::map<string,TarjetaVacunacion*>::iterator it = tablaTarjetas.begin(); it != tablaTarjetas.end(); ++it) {
         if(!it->second->isDosisRec()){
-            vectorDevuelto.push_back(it->second);
+            Usuario* nuevo = &(it->second->getPropietario());
+            vectorDevuelto.push_back(nuevo);
         }
     }
-     */
 }
 
 
@@ -224,7 +230,6 @@ vector<Usuario*> GestionVacunas::listadoVacunacionNR(){
 vector<string> GestionVacunas::listadoNSS(){
     vector<string> resultado;
     for(std::map<string,Usuario*>::iterator it = listaUsuarios.begin(); it != listaUsuarios.end(); ++it) {
-
         resultado.push_back(it->second->getNss());
     }
     std::sort(resultado.begin(),resultado.end());
@@ -373,5 +378,12 @@ std::string GestionVacunas::getNombreFabricanteDado(nombreFabricante fab){
         case (3):
             return "Johnson";
             break;
+        default:
+            return "ninguna";
+            break;
     }
+}
+
+map<string,TarjetaVacunacion*> GestionVacunas::getListaTarjetas()  {
+    return tablaTarjetas;
 }

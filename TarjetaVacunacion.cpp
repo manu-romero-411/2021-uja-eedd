@@ -3,8 +3,16 @@
 //
 
 #include "TarjetaVacunacion.h"
+#include "picosha2.h"
 
-TarjetaVacunacion::TarjetaVacunacion() {}
+TarjetaVacunacion::TarjetaVacunacion()  {
+
+    this->id="0";
+    this->pautaCompleta= false;
+    this->idCentroCercano=0;
+    this->pautaRecomendada= false;
+    this->propietario= nullptr;
+}
 
 TarjetaVacunacion::TarjetaVacunacion(Usuario* _usuario) {
     this->propietario = _usuario;
@@ -100,13 +108,41 @@ const vector<Dosis *> &TarjetaVacunacion::getDosisAdministradas() const {
     return dosisAdministradas;
 }
 
-string TarjetaVacunacion::pasaporteCovidCode(){
-
-
+string TarjetaVacunacion::pasaporteCovidCode(bool valido){
+    if (valido){
+        std::string hash_hex_str;
+        std::string h = (id
+                         + getNombreFabricanteDado(nombreFabricante(getDosisAdministradas()[0]->getFabricante()))
+                         + to_string(getDosisAdministradas().size()));
+        picosha2::hash256_hex_string(h,
+        hash_hex_str); // ESTA FUNCIÓN ES LA QUE NOS PERMITE SABER EL HASH DE CADA PASAPORTE COVID
+        return hash_hex_str;
+    } else {
+        string hashVacio;
+        picosha2::hash256_hex_string("",hashVacio);
+        return hashVacio;
+    }
 }
 
 bool TarjetaVacunacion::operator==(const TarjetaVacunacion &ladeladerecha) {
     return (this->id == ladeladerecha.id);
 }
 
- TarjetaVacunacion::~TarjetaVacunacion(){}
+TarjetaVacunacion::~TarjetaVacunacion(){}
+
+std::string TarjetaVacunacion::getNombreFabricanteDado(nombreFabricante fab){
+    switch(fab) {
+        case (0):
+            return "Pfizer";
+            break;
+        case (1):
+            return "Moderna";
+            break;
+        case (2):
+            return "AstraZeneca";
+            break;
+        case (3):
+            return "Johnson";
+            break;
+    }
+}

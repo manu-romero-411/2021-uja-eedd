@@ -361,11 +361,6 @@ namespace picosha2 {
     }
 
     template <typename InContainer>
-    void hash256_hex_string(const InContainer& src, std::string& hex_str) {
-        hash256_hex_string(src.begin(), src.end(), hex_str);
-    }
-
-    template <typename InContainer>
     std::string hash256_hex_string(const InContainer& src) {
         return hash256_hex_string(src.begin(), src.end());
     }

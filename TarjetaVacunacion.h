@@ -41,9 +41,10 @@ public:
     void setPautaRecomendada(bool pautaRecomendada);
     const vector<Dosis *> &getDosisAdministradas() const;
 
-    string pasaporteCovidCode();
+    string pasaporteCovidCode(bool valido);
     bool operator==(const TarjetaVacunacion& ladeladerecha );
-};
+    std::string getNombreFabricanteDado(nombreFabricante fab);
+    };
 
 
 #endif //INC_2021_EEDD_PRACTICAS_TARJETAVACUNACION_H

@@ -9,6 +9,7 @@
 #include "Dosis.h"
 #include <fstream>
 #include "CentroVacunacion.h"
+#include "THashTarjetaVacunacion.h"
 #include <map>
 #include <vector>
 #include <cstdlib>
@@ -22,13 +23,16 @@ private:
     vector<CentroVacunacion*> listaCentros;
     vector<Dosis*> listaDosis;
     vector<string> listaNSS;
-    THashTarjetaVacunacion tablaTarjetas;
+    map<string,TarjetaVacunacion*> tablaTarjetas;
 
     int vacAlmacen;
     int lecturaVacunas;
     int cuantasDosis;
     int cuantosUsuarios;
     vector<int> numVacTipo;
+public:
+    const string *getFabricantes() const;
+
 public:
     GestionVacunas(); //Constructor por defecto
     GestionVacunas(std::string fileDosis, std::string fileUsuarios, std::string fileCentros);//Constructor parametrizado
@@ -59,6 +63,8 @@ public:
     CentroVacunacion* centroMasCercano(Usuario* usuario); //Devuelve un puntero al centro de vacunación mas cercano
     std::string getNombreFabricanteDado(nombreFabricante fab); //Devuelve un string del enum de nombrefabricante
     void print();
+    void generaTarjetas();
+    map<string,TarjetaVacunacion*> getListaTarjetas();
 };
 
 #endif //EEDD_GESTIONVACUNAS_H
