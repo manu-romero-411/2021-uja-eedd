@@ -77,6 +77,11 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
     anno = 0;
     float longitud, latitud;
     string nombre, apellido, nss;
+    float longitudMayor = std::numeric_limits<unsigned int>::min();
+    float latitudMayor = std::numeric_limits<unsigned int>::min();
+    float longitudMenor = UINT_MAX;
+    float latitudMenor = UINT_MAX;
+
     while (getline(archivoUsuarios, palabraB)) {
         corte = palabraB.find(';');
         nombre = palabraB.substr(0, corte);
@@ -107,6 +112,11 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
         palabraB.erase(0, corte + 1);
 
         latitud = stof(palabraB);
+        if (latitud < latitudMenor) latitudMenor = latitud;
+        if (longitud < longitudMenor) longitudMenor = longitud;
+        if (latitud > latitudMayor) latitudMayor = latitud;
+        if (longitud > longitudMayor) longitudMayor = latitud;
+
         Fecha fecha;
         fecha.asignarDia(dia, mes, anno);
         UTM ubic(longitud,latitud);
@@ -139,14 +149,16 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
         listaCentros.push_back(nuevoCentro);
         contcentro++;
     }
-
+    MallaRegular<TarjetaVacunacion*> nuevaMalla(latitudMenor, longitudMenor, latitudMayor, longitudMayor, 20, 20);
+    malla = nuevaMalla;
 }
 
 void GestionVacunas::generaTarjetas(){
     for(std::map<string,Usuario*>::iterator it = listaUsuarios.begin(); it != listaUsuarios.end(); ++it){
         Usuario* elquetoca = it->second;
         TarjetaVacunacion *nueva = new TarjetaVacunacion(elquetoca);
-        tablaTarjetas.insert(pair<string,TarjetaVacunacion*>(nueva->getId(), nueva));
+        //tablaTarjetas.insert(pair<string,TarjetaVacunacion*>(nueva->getId(), nueva));
+        malla.insertar(nueva->getPropietario().getDomicilio().latitud,nueva->getPropietario().getDomicilio().longitud,nueva);
     }
 }
 

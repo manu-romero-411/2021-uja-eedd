@@ -20,8 +20,8 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
     try {
-        MallaRegular<int> malla;
-        malla.insertar(100,50,1);
+        GestionVacunas* gestionVacunas = new GestionVacunas(argv[1],argv[2],argv[3]);
+        gestionVacunas->generaTarjetas();
         return 0;
     } catch (std::exception &e) {
         cout << e.what();

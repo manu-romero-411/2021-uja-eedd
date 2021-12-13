@@ -15,6 +15,7 @@
 #include <cstdlib>
 #include <string>
 #include "THashTarjetaVacunacion.h"
+#include "MallaRegular.h"
 using namespace std;
 class GestionVacunas {
 
@@ -24,12 +25,14 @@ private:
     vector<Dosis*> listaDosis;
     vector<string> listaNSS;
     map<string,TarjetaVacunacion*> tablaTarjetas;
+    MallaRegular<TarjetaVacunacion*> malla;
 
     int vacAlmacen;
     int lecturaVacunas;
     int cuantasDosis;
     int cuantosUsuarios;
     vector<int> numVacTipo;
+
 public:
     const string *getFabricantes() const;
 

@@ -59,7 +59,8 @@ class MallaRegular {
     int nDivX, nDivY;
 public:
     MallaRegular();
-    MallaRegular(float aXMin, float aYMin, float aXMax, float aYMax, int nDivX, int nDivY);
+    MallaRegular(float aXMin, float aYMin, float aXMax, float aYMax, int _nDivX, int _nDivY);
+    MallaRegular<T>& operator=(const MallaRegular<T>& orig);
     vector<Casilla<T>>& operator[](int posicion);
     T buscarCercano(float x, float y);
     bool fueraRango(float x, float y);
@@ -82,7 +83,14 @@ MallaRegular<T>::MallaRegular() : xMin(0), yMin(0), xMax(10), yMax(10), numEleme
 }
 
 template <typename T>
-MallaRegular<T>::MallaRegular(float aXMin, float aYMin, float aXMax, float aYMax, int nDivX, int nDivY) : xMin(aXMin), yMin(aYMin), xMax(aXMax), yMax(aYMax) {
+MallaRegular<T>::MallaRegular(float aXMin, float aYMin, float aXMax, float aYMax, int _nDivX, int _nDivY){
+    this->xMin = aXMin;
+    this->yMin = aYMin;
+    this->xMax = aXMax;
+    this->yMax = aYMax;
+    this->nDivY = _nDivY;
+    this->nDivX = _nDivX;
+    this->numElementos = 0;
     tamCasillaX = (xMax - xMin) / nDivX;
     tamCasillaY = (yMax - yMin) / nDivY;
     mr.insert(mr.begin(), nDivY, vector<Casilla<T> >(nDivX));
@@ -185,6 +193,21 @@ int MallaRegular<T>::tamEjeX() {
 template<typename T>
 int MallaRegular<T>::tamEjeY() {
     return this->mr.size();
+}
+
+template<typename T>
+MallaRegular<T>& MallaRegular<T>::operator=(const MallaRegular<T>& orig){
+    xMin = orig.xMin;
+    yMin = orig.yMin;
+    xMax = orig.xMax;
+    yMax = orig.yMax;
+    tamCasillaX = orig.tamCasillaX;
+    tamCasillaY = orig.tamCasillaY;
+    mr = orig.mr;
+    numElementos = orig.numElementos;
+    nDivX = orig.nDivX;
+    nDivY = orig.nDivY;
+    return *this;
 }
 
 
