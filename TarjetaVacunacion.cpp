@@ -7,11 +7,11 @@
 
 TarjetaVacunacion::TarjetaVacunacion()  {
 
-    this->id="0";
-    this->pautaCompleta= false;
-    this->idCentroCercano=0;
-    this->pautaRecomendada= false;
-    this->propietario= nullptr;
+    this->id = "0";
+    this->pautaCompleta = false;
+    this->idCentroCercano = 0;
+    this->pautaRecomendada = false;
+    this->propietario = nullptr;
 }
 
 TarjetaVacunacion::TarjetaVacunacion(Usuario* _usuario) {
@@ -28,7 +28,7 @@ Dosis& TarjetaVacunacion::getDosis(int cual){
         return *dosisAdministradas[cual];
     }
     else
-        throw std::out_of_range("[Usuario] Posición no valida al llamar a VDinamico<Dosis>");
+        throw std::out_of_range("[Usuario] Posición no valida al llamar a vector<Dosis>");
 }
 
 void TarjetaVacunacion::nuevaDosis(Dosis* nueva){
@@ -42,15 +42,15 @@ vector<Dosis*> TarjetaVacunacion::getDosisAdministradas(){
 }
 
 nombreFabricante TarjetaVacunacion::getFabricanteRecomendado(){
-    if (propietario->getedad() >= 12 && propietario->getedad() < 30)
+    if (propietario->getEdad() >= 12 && propietario->getEdad() < 30)
         return Johnson;
-    if (propietario->getedad() >= 30 && propietario->getedad() < 50)
+    if (propietario->getEdad() >= 30 && propietario->getEdad() < 50)
         return AstraZeneca;
-    if (propietario->getedad() >= 50 && propietario->getedad() < 65)
+    if (propietario->getEdad() >= 50 && propietario->getEdad() < 65)
         return Moderna;
-    if (propietario->getedad() >= 65)
+    if (propietario->getEdad() >= 65)
         return Pfizer;
-    if (propietario->getedad() < 12)
+    if (propietario->getEdad() < 12)
         return ninguno;
 }
 
@@ -63,9 +63,9 @@ void TarjetaVacunacion::tieneDosisRec(bool rec){
 }
 
 int TarjetaVacunacion::dosisPorAdministrar(){
-    if (propietario->getedad() >= 75) return 3 - dosisAdministradas.size();
-    if (propietario->getedad() < 12) return 0;
-    if (propietario->getedad() >= 12 && propietario->getedad() < 75) return 2 - dosisAdministradas.size();
+    if (propietario->getEdad() >= 75) return 3 - dosisAdministradas.size();
+    if (propietario->getEdad() < 12) return 0;
+    if (propietario->getEdad() >= 12 && propietario->getEdad() < 75) return 2 - dosisAdministradas.size();
 }
 
 Usuario& TarjetaVacunacion::getPropietario(){

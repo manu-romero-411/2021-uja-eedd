@@ -15,6 +15,7 @@
 #include <chrono>
 #include "THashTarjetaVacunacion.h"
 #include "MallaRegular.h"
+#include "img.h"
 
 using namespace std;
 
@@ -22,6 +23,8 @@ int main(int argc, char* argv[]) {
     try {
         GestionVacunas* gestionVacunas = new GestionVacunas(argv[1],argv[2],argv[3]);
         gestionVacunas->generaTarjetas();
+        RGBColor color('1','2','3');
+        Img img(200,200,color);
         return 0;
     } catch (std::exception &e) {
         cout << e.what();

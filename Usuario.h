@@ -38,7 +38,7 @@ public:
     const Fecha &getFechaNacimiento() const;
     void setFechaNacimiento(const Fecha &fechaNacimiento);
 
-    int getedad();
+    int getEdad();
 
     const UTM getDomicilio();
     void setDomicilio(const UTM &dom);

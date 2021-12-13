@@ -205,7 +205,7 @@ ostream &operator<<(ostream &os, const Usuario &usuario) {
  */
 
 
-int Usuario::getedad() {
+int Usuario::getEdad() {
     return edad;
 }
 

@@ -8,13 +8,14 @@
 #ifndef MALLAREGULAR_H
 #define MALLAREGULAR_H
 #include <vector>
+#include "img.h"
 
 template<typename T>
 class MallaRegular;
 
 template<typename T>
 class Casilla {
-    list<T> puntos;
+    list<T> puntos = new list<T>();
 public:
     friend class MallaRegular<T>;
 
@@ -22,10 +23,12 @@ public:
  * @brief Constructor por defecto de la clase Casilla
  */
     Casilla() : puntos() {
+
     }
 
     void insertar(const T &dato) {
-        puntos.push_back(dato);
+        typename std::list<T>::iterator it = puntos.end();
+        puntos.insert(it,dato);
     }
 
     T *buscar(const T &dato){
@@ -51,28 +54,66 @@ public:
 
 template<typename T>
 class MallaRegular {
-    float xMin, yMin, xMax, yMax; // Tamaño real global
+    float xMin, yMin, xMax, yMax;
+public:
+    float getXMin() const;
+
+    float getYMin() const;
+
+    float getXMax() const;
+
+    float getYMax() const;
+
+    float getTamCasillaX() const;
+
+    float getTamCasillaY() const;
+
+    unsigned int getNumElementos() const;
+
+    int getNDivX() const;
+
+    int getNDivY() const;
+
+private:
+    // Tamaño real global
     float tamCasillaX, tamCasillaY; // Tamaño real de cada casilla
     vector<vector<Casilla<T> > > mr; // Vector 2D de casillas
     Casilla<T> *obtenerCasilla(float x, float y);
+
     unsigned int numElementos;
     int nDivX, nDivY;
 public:
     MallaRegular();
+
     MallaRegular(float aXMin, float aYMin, float aXMax, float aYMax, int _nDivX, int _nDivY);
-    MallaRegular<T>& operator=(const MallaRegular<T>& orig);
-    vector<Casilla<T>>& operator[](int posicion);
+
+    MallaRegular<T> &operator=(const MallaRegular<T> &orig);
+
+    vector<Casilla<T>> &operator[](int posicion);
+
     T buscarCercano(float x, float y);
+
     bool fueraRango(float x, float y);
+
     T buscaEnCasilla(float x, float y);
+
     T buscaDadaCasilla(float x, float y, Casilla<T> casilla);
+
     unsigned maxElementosPorCelda();
+
     unsigned mediaElementosPorCelda();
+
     void insertar(float x, float y, const T &dato);
+
     T *buscar(float x, float y, const T &dato);
+
     bool borrar(float x, float y, const T &dato);
+
     int tamEjeX();
+
     int tamEjeY();
+
+    void generarMapaMalla();
 };
 
 template <typename T>
@@ -210,5 +251,48 @@ MallaRegular<T>& MallaRegular<T>::operator=(const MallaRegular<T>& orig){
     return *this;
 }
 
+template<typename T>
+float MallaRegular<T>::getXMin() const {
+    return xMin;
+}
 
+template<typename T>
+float MallaRegular<T>::getYMin() const {
+    return yMin;
+}
+
+template<typename T>
+float MallaRegular<T>::getXMax() const {
+    return xMax;
+}
+
+template<typename T>
+float MallaRegular<T>::getYMax() const {
+    return yMax;
+}
+
+template<typename T>
+float MallaRegular<T>::getTamCasillaX() const {
+    return tamCasillaX;
+}
+
+template<typename T>
+float MallaRegular<T>::getTamCasillaY() const {
+    return tamCasillaY;
+}
+
+template<typename T>
+unsigned int MallaRegular<T>::getNumElementos() const {
+    return numElementos;
+}
+
+template<typename T>
+int MallaRegular<T>::getNDivX() const {
+    return nDivX;
+}
+
+template<typename T>
+int MallaRegular<T>::getNDivY() const {
+    return nDivY;
+}
 #endif /* MALLAREGULAR_H */

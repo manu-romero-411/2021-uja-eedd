@@ -16,6 +16,7 @@
 #include <string>
 #include "THashTarjetaVacunacion.h"
 #include "MallaRegular.h"
+#include "img.h"
 using namespace std;
 class GestionVacunas {
 
@@ -68,6 +69,7 @@ public:
     void print();
     void generaTarjetas();
     map<string,TarjetaVacunacion*> getListaTarjetas();
+    void generarMapaMalla();
 };
 
 #endif //EEDD_GESTIONVACUNAS_H

@@ -131,7 +131,7 @@ int CentroVacunacion::numVacunasTipo(nombreFabricante tipo){
 
 
 bool CentroVacunacion::noMenor(Usuario* vacunando){
-    if(vacunando->getedad() > 0 && vacunando->getedad() < 12) return false;
+    if(vacunando->getEdad() > 0 && vacunando->getEdad() < 12) return false;
     else return true;
 }
 
