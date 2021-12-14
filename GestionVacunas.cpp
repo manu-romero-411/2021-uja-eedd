@@ -4,9 +4,7 @@
 
 #include <algorithm>
 #include "GestionVacunas.h"
-#include "img.h"
 #include <float.h>
-
 
 /**
 * @brief Constructor parametrizado
@@ -78,8 +76,8 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
     anno = 0;
     float longitud, latitud;
     string nombre, apellido, nss;
-    float longitudMayor = std::numeric_limits<unsigned int>::min();
-    float latitudMayor = std::numeric_limits<unsigned int>::min();
+    float longitudMayor = INT32_MIN;
+    float latitudMayor = INT32_MIN;
     float longitudMenor = UINT_MAX;
     float latitudMenor = UINT_MAX;
 
@@ -116,7 +114,7 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
         if (latitud < latitudMenor) latitudMenor = latitud;
         if (longitud < longitudMenor) longitudMenor = longitud;
         if (latitud > latitudMayor) latitudMayor = latitud;
-        if (longitud > longitudMayor) longitudMayor = latitud;
+        if (longitud > longitudMayor) longitudMayor = longitud;
 
         Fecha fecha;
         fecha.asignarDia(dia, mes, anno);
@@ -150,16 +148,20 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
         listaCentros.push_back(nuevoCentro);
         contcentro++;
     }
-    MallaRegular<TarjetaVacunacion*> nuevaMalla(longitudMenor, latitudMenor, longitudMayor, latitudMayor, 20, 20);
-    malla = nuevaMalla;
+    malla = new MallaRegular<TarjetaVacunacion*>(longitudMenor, latitudMenor, longitudMayor, latitudMayor, 20, 20); // hemos calculado que así la media de elementos por celda es 25
+    generaTarjetas();
+    vector<TarjetaVacunacion*> vec = malla->buscarRadio(38, -3, 0.3);
+    //cout << "Num elementos por cada link hembra: " << malla->mediaElementosPorCelda() << endl;
 }
 
 void GestionVacunas::generaTarjetas(){
+    int i = 0;
     for(std::map<string,Usuario*>::iterator it = listaUsuarios.begin(); it != listaUsuarios.end(); ++it){
         Usuario* elquetoca = it->second;
+
         TarjetaVacunacion *nueva = new TarjetaVacunacion(elquetoca);
         //tablaTarjetas.insert(pair<string,TarjetaVacunacion*>(nueva->getId(), nueva));
-        malla.insertar(nueva->getPropietario().getDomicilio().latitud,nueva->getPropietario().getDomicilio().longitud,nueva);
+        malla->insertar(nueva->getPropietario().getDomicilio().latitud,nueva->getPropietario().getDomicilio().longitud,nueva);
     }
 }
 
@@ -177,6 +179,22 @@ Usuario* GestionVacunas::buscarUsuario (string nss){
     Usuario *encontrado= (listaUsuarios.find(nss)->second);
     return encontrado;
 }
+
+Usuario* GestionVacunas::buscarUsuario (TarjetaVacunacion* tarjeta){
+    // POTENCIAL PROBLEMA CON PUNTEROS
+    TarjetaVacunacion* encontrado = *malla->buscar(tarjeta->getPropietario().getDomicilio().getLatitud(),
+                                        tarjeta->getPropietario().getDomicilio().getLongitud(),
+                                        tarjeta);
+    Usuario* usuario = &encontrado->getPropietario();
+    return usuario;
+}
+
+/*TarjetaVacunacion* GestionVacunas::buscarTarjeta (Usuario* us){
+    TarjetaVacunacion* encontrado = *malla.buscar(us->getDomicilio().getLatitud(),
+                                                  us->getDomicilio().getLongitud(),
+                                                  tarjeta);
+
+}*/
 
 /**
 * @brief Funcion que calcula el porcentaje de personas con pauta completa
@@ -277,11 +295,11 @@ void GestionVacunas::setVacAlmacen(int vacAlmacen) {
     GestionVacunas::vacAlmacen = vacAlmacen;
 }
 
-const map<string,Usuario*> GestionVacunas::getListausuarios() const {
+const map<string,Usuario*> GestionVacunas::getListaUsuarios() const {
     return listaUsuarios;
 }
 
-const vector<Dosis*> GestionVacunas::getDosis() const {
+const vector<Dosis*> GestionVacunas::getListaDosis() const {
     return listaDosis;
 }
 /**

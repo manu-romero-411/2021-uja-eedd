@@ -16,7 +16,7 @@
 #include <string>
 #include "THashTarjetaVacunacion.h"
 #include "MallaRegular.h"
-#include "img.h"
+
 using namespace std;
 class GestionVacunas {
 
@@ -26,7 +26,7 @@ private:
     vector<Dosis*> listaDosis;
     vector<string> listaNSS;
     map<string,TarjetaVacunacion*> tablaTarjetas;
-    MallaRegular<TarjetaVacunacion*> malla;
+    MallaRegular<TarjetaVacunacion*>* malla;
 
     int vacAlmacen;
     int lecturaVacunas;
@@ -41,7 +41,8 @@ public:
     GestionVacunas(); //Constructor por defecto
     GestionVacunas(std::string fileDosis, std::string fileUsuarios, std::string fileCentros);//Constructor parametrizado
     virtual ~GestionVacunas(); //Destructor //arreglao //TODO Composicion de centros
-    Usuario *buscarUsuario(string nss); //Busca un usuario en el arbol con el nss //arreglao
+    Usuario* buscarUsuario(string nss); //Busca un usuario en el arbol con el nss
+    Usuario* buscarUsuario (TarjetaVacunacion* tarjeta);
     void suministrarNdosisCentro(CentroVacunacion* centro, int numerovacunas);
 
     vector<string> listadoNSS(); //Listado de los nss de todos los usuarios
@@ -49,12 +50,12 @@ public:
     vector<Usuario*> listadoVacunacionNR(); //Devuelve los usuarios con la pauta no recomendada
     vector<CentroVacunacion*> getCentros(); //Devuelve los centros de vacunación existentes en el sistema
 
-    const map<string,Usuario*> getListausuarios() const; //devuelve el arbol de usuarios
+    const map<string,Usuario*> getListaUsuarios() const; //devuelve el arbol de usuarios
     int getVacAlmacen() const;
     void setVacAlmacen(int vacAlmacen);
     void printStatus();//devuelve el estado de las vacunas
     void comprobarCorreccionDosis(); // No sale
-    const vector<Dosis*> getDosis() const;
+    const vector<Dosis*> getListaDosis() const;
     int getPrimeraDosis() const;
     void setPrimeraDosis();
     int getSegundaDosis() const;

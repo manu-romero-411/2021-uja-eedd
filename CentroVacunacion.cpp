@@ -55,6 +55,12 @@ void CentroVacunacion::anadirTarjetaLista(TarjetaVacunacion* nuevo){
         listaTarjetas.push_back(nuevo);
     }
 }
+
+/*void CentroVacunacion::anadirTarjetaLista(Usuario* nuevo) {
+    //centroGestor.bus
+    true;
+}*/
+
 /**
 * @brief Administra una dosis a un usuario
 * @param[in] Usuario que vacunar, tipo de dosis recomendada
