@@ -48,7 +48,9 @@ public:
     string pasaporteCovidCode(bool &valido);
     bool operator==(const TarjetaVacunacion& ladeladerecha );
     std::string getNombreFabricanteDado(nombreFabricante fab);
-    };
+
+    int dosisPorAdministrar2();
+};
 
 
 #endif //INC_2021_EEDD_PRACTICAS_TARJETAVACUNACION_H

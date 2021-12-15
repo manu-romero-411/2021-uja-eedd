@@ -74,7 +74,7 @@ public:
     unsigned int mediaElementosPorCelda();
     int getNumElem();
     int getNumCeldas();
-
+    vector<T> getAll();
 };
 
 
@@ -270,10 +270,24 @@ int MallaRegular<T>::getNumElem(){
 }
 
 template<class T>
+vector<T> MallaRegular<T>::getAll(){
+    vector<T> result;
+    for (int i = 0; i < malla.size(); ++i){
+        for (int j = 0; j < malla[i].size(); ++j){
+            list<T>* cc = &malla[i][j].puntos;
+            for(typename std::list<T>::iterator it = cc->begin(); it != cc->end(); ++it){
+                result.push_back(*it);
+            }
+        }
+    }
+    return result;
+}
+
+template<class T>
 int MallaRegular<T>::getNumCeldas(){
     int resultado = 0;
     for(int i = 0; i < malla.size(); i++){
-        resultado = resultado + malla[i].size();
+        resultado += malla[i].size();
     }
     return resultado;
 }

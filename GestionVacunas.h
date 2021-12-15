@@ -40,10 +40,11 @@ public:
     virtual ~GestionVacunas(); //Destructor //arreglao //TODO Composicion de centros
     Usuario* buscarUsuario(string nss); //Busca un usuario en el arbol con el nss
     Usuario* buscarUsuario (TarjetaVacunacion* tarjeta);
+    TarjetaVacunacion* buscarTarjeta (TarjetaVacunacion* tarjeta);
     void suministrarNdosisCentro(CentroVacunacion* centro, int numerovacunas);
 
     vector<string> listadoNSS(); //Listado de los nss de todos los usuarios
-    float pautaCompleta(); //Duevuelve el porcentaje de los usuarios con la pauta completa
+    float pautaCompleta(int criterio); //Duevuelve el porcentaje de los usuarios con la pauta completa
     vector<Usuario*> listadoVacunacionNR(); //Devuelve los usuarios con la pauta no recomendada
     vector<CentroVacunacion*> getCentros(); //Devuelve los centros de vacunación existentes en el sistema
 

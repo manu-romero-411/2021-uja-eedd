@@ -69,6 +69,12 @@ int TarjetaVacunacion::dosisPorAdministrar(){
     if (propietario->getEdad() >= 12 && propietario->getEdad() < 75) return 2 - dosisAdministradas.size();
 }
 
+int TarjetaVacunacion::dosisPorAdministrar2(){
+    if (propietario->getEdad() >= 60) return 3 - dosisAdministradas.size();
+    if (propietario->getEdad() < 5) return 0;
+    if (propietario->getEdad() >= 5 && propietario->getEdad() < 60) return 2 - dosisAdministradas.size();
+}
+
 Usuario& TarjetaVacunacion::getPropietario(){
     return *propietario;
 }
@@ -122,7 +128,7 @@ string TarjetaVacunacion::pasaporteCovidCode(bool &valido){
     } else {
         string hashVacio;
         picosha2::hash256_hex_string("",hashVacio);
-        valido = false; //Valido es un parametro para ver si se ha hecho el pasaporte o no
+        valido = false; //Valido es un parámetro para ver si se ha hecho el pasaporte o no
         return hashVacio;
     }
 }

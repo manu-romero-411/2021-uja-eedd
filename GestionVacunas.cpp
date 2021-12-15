@@ -150,7 +150,7 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
     }
     malla = new MallaRegular<TarjetaVacunacion*>(longitudMenor, latitudMenor, longitudMayor, latitudMayor, 20, 20); // hemos calculado que así la media de elementos por celda es 25
     generaTarjetas();
-    vector<TarjetaVacunacion*> vec = malla->buscarRadio(38.03, -2.5, 2);
+    //vector<TarjetaVacunacion*> vec = malla->buscarRadio(38.03, -2.5, 2);
     //cout << "Num elementos por cada link hembra: " << malla->mediaElementosPorCelda() << endl;
 }
 
@@ -189,12 +189,12 @@ Usuario* GestionVacunas::buscarUsuario (TarjetaVacunacion* tarjeta){
     return usuario;
 }
 
-/*TarjetaVacunacion* GestionVacunas::buscarTarjeta (Usuario* us){
-    TarjetaVacunacion* encontrado = *malla.buscar(us->getDomicilio().getLatitud(),
-                                                  us->getDomicilio().getLongitud(),
+TarjetaVacunacion* GestionVacunas::buscarTarjeta (TarjetaVacunacion* tarjeta){
+    TarjetaVacunacion* encontrado = *malla->buscar(tarjeta->getPropietario().getDomicilio().getLatitud(),
+                                                  tarjeta->getPropietario().getDomicilio().getLongitud(),
                                                   tarjeta);
-
-}*/
+    return encontrado;
+}
 
 /**
 * @brief Funcion que calcula el porcentaje de personas con pauta completa
@@ -203,15 +203,20 @@ Usuario* GestionVacunas::buscarUsuario (TarjetaVacunacion* tarjeta){
 * @return Porcentaje de las personas con la pauta completa
 */
 
-float GestionVacunas::pautaCompleta() {
-    float numusuarios=this->listaUsuarios.size();
-    float numpautascompletas;
-    for(std::map<string,TarjetaVacunacion*>::iterator it = tablaTarjetas.begin(); it != tablaTarjetas.end(); ++it) {
-        if (it->second->dosisPorAdministrar() == 0){
-            numpautascompletas++;
+float GestionVacunas::pautaCompleta(int criterio) {
+    float numUsuarios = this->listaUsuarios.size();
+    float numPautas = 0;
+    vector<TarjetaVacunacion*> lisTar = malla->getAll();
+    for(int i = 0; i < lisTar.size(); ++i) {
+        if (criterio == 0 && lisTar[i]->dosisPorAdministrar() == 0){
+            numPautas++;
+        } else {
+            if (criterio == 1 && lisTar[i]->dosisPorAdministrar2() == 0) {
+                numPautas++;
+            }
         }
     }
-    float porcentaje = (numpautascompletas/numusuarios)*100;
+    float porcentaje = (numPautas / numUsuarios) * 100;
     return porcentaje;
 }
 
@@ -416,7 +421,12 @@ std::string GestionVacunas::getNombreFabricanteDado(nombreFabricante fab){
 }
 
 map<string,TarjetaVacunacion*> GestionVacunas::getListaTarjetas()  {
-    return tablaTarjetas;
+    map<string,TarjetaVacunacion*> mapAux;
+    vector<TarjetaVacunacion*> vecAux = malla->getAll();
+    for(int i = 0; i < vecAux.size(); ++i){
+        mapAux.insert(pair<string,TarjetaVacunacion*>(vecAux[i]->getId(), vecAux[i]));
+    }
+    return mapAux;
 }
 
 const vector<Dosis*> GestionVacunas::getDosis() const {
