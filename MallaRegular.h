@@ -6,6 +6,7 @@
 #ifndef MALLAREGULAR_H
 #define MALLAREGULAR_H
 #include <vector>
+#include <climits>
 
 template<typename T>
 class MallaRegular;
@@ -52,9 +53,9 @@ void Casilla<T>::insertar(const T& dato){
 
 template<class T>
 class MallaRegular{
-    float xMin, yMin, xMax, yMax;
+    float xMin{}, yMin{}, xMax{}, yMax{};
     float tamCasillaX,tamCasillaY;
-    int numElem;
+    int numElem{};
     std::vector<std::vector<Casilla<T>>> malla;
     Casilla<T>* casilla(float X, float Y);
     float teoremaPitagoras(float a, float b);
@@ -166,7 +167,8 @@ T* MallaRegular<T>::buscarCercano(double x, double y){
     return cercano;
 }
 
-template<class T>
+/*
+ * template<class T>
 vector<T> MallaRegular<T>::buscarRadio(double xCentro, double yCentro, double radio){
     vector<T> result;
     int i = (xCentro - xMin) / tamCasillaX;
@@ -188,6 +190,7 @@ vector<T> MallaRegular<T>::buscarRadio(double xCentro, double yCentro, double ra
             }
         }
     }
+    **/
 
     /*// ESTOY PENSANDO QUE ESTO SERÍA MÁS EFICIENTE CON UNA LISTA QUE NO UN VECTOR
     for (int i = 0; i < result.size(); ++i){
@@ -197,10 +200,10 @@ vector<T> MallaRegular<T>::buscarRadio(double xCentro, double yCentro, double ra
         if (teoremaPitagoras(xDist, yDist) > radio){
             result.erase(i);
         }
-    }*/
+    }
     return result;
 }
-
+**/
 template <class T>
 float MallaRegular<T>::teoremaPitagoras(float a, float b){
     return sqrt((pow(a, 2)) + (pow(b, 2)));
