@@ -40,8 +40,10 @@ public:
     bool isPautaRecomendada() const;
     void setPautaRecomendada(bool pautaRecomendada);
     const vector<Dosis *> &getDosisAdministradas() const;
+    void isCompleta();
 
-    string pasaporteCovidCode(bool valido);
+
+    string pasaporteCovidCode(bool &valido);
     bool operator==(const TarjetaVacunacion& ladeladerecha );
     std::string getNombreFabricanteDado(nombreFabricante fab);
     };

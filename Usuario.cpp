@@ -184,7 +184,7 @@ bool Usuario::operator>=(const Usuario &rhs) const {
 
 /**
  * @brief Operador de impresión
- * @param[in] - Referecnia a la clase de salida por pantalla, una referencia a un objeto de tipo usuario
+ * @param[in] - Referencia a la clase de salida por pantalla, una referencia a un objeto de tipo usuario
  * @param[out] -
  * @return -
  *

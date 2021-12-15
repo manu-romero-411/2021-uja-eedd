@@ -73,6 +73,7 @@ public:
     unsigned int mediaElementosPorCelda();
     int getNumElem();
     int getNumCeldas();
+
 };
 
 
