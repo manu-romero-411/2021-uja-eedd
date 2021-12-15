@@ -24,10 +24,13 @@ public:
     Dosis& getDosis(int cual);
     void nuevaDosis(Dosis* nueva);
     vector<Dosis*> getDosisAdministradas();
-    nombreFabricante getFabricanteRecomendado();
+    nombreFabricante getFabricanteRecomendado(int criterio);
     bool isDosisRec();
     void tieneDosisRec(bool rec);
     int dosisPorAdministrar();
+    int dosisPorAdministrar2();
+    int dosisPorAdministrar3();
+
     virtual ~TarjetaVacunacion();
 
     Usuario& getPropietario();
@@ -48,8 +51,6 @@ public:
     string pasaporteCovidCode(bool &valido);
     bool operator==(const TarjetaVacunacion& ladeladerecha );
     std::string getNombreFabricanteDado(nombreFabricante fab);
-
-    int dosisPorAdministrar2();
 };
 
 

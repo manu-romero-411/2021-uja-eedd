@@ -32,6 +32,7 @@ public:
     int numVacunasTipo(nombreFabricante tipo); //Devuelve el numero de vacunas disponibles de un tipo
     bool noMenor(Usuario* vacunando);
     UTM getUbicacion();
+    vector<TarjetaVacunacion*> buscarCercanos(float radio);
 };
 
 

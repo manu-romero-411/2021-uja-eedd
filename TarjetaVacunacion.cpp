@@ -42,7 +42,7 @@ vector<Dosis*> TarjetaVacunacion::getDosisAdministradas(){
     return dosisAdministradas;
 }
 
-nombreFabricante TarjetaVacunacion::getFabricanteRecomendado(){
+nombreFabricante TarjetaVacunacion::getFabricanteRecomendado(int criterio){
     if (propietario->getEdad() >= 12 && propietario->getEdad() < 30)
         return Johnson;
     if (propietario->getEdad() >= 30 && propietario->getEdad() < 50)
@@ -51,7 +51,7 @@ nombreFabricante TarjetaVacunacion::getFabricanteRecomendado(){
         return Moderna;
     if (propietario->getEdad() >= 65)
         return Pfizer;
-    if (propietario->getEdad() < 12)
+    if (propietario->getEdad() < 12 && criterio != 0)
         return ninguno;
 }
 
@@ -73,6 +73,12 @@ int TarjetaVacunacion::dosisPorAdministrar2(){
     if (propietario->getEdad() >= 60) return 3 - dosisAdministradas.size();
     if (propietario->getEdad() < 5) return 0;
     if (propietario->getEdad() >= 5 && propietario->getEdad() < 60) return 2 - dosisAdministradas.size();
+}
+
+int TarjetaVacunacion::dosisPorAdministrar3(){
+    if (propietario->getEdad() >= 60) return 3 - dosisAdministradas.size();
+    if (propietario->getEdad() < 5) return 0;
+    if (propietario->getEdad() >= 5 && propietario->getEdad() < 60) return 1 - dosisAdministradas.size();
 }
 
 Usuario& TarjetaVacunacion::getPropietario(){

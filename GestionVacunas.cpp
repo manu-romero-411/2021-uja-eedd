@@ -190,9 +190,9 @@ Usuario* GestionVacunas::buscarUsuario (TarjetaVacunacion* tarjeta){
 }
 
 TarjetaVacunacion* GestionVacunas::buscarTarjeta (TarjetaVacunacion* tarjeta){
-    TarjetaVacunacion* encontrado = *malla->buscar(tarjeta->getPropietario().getDomicilio().getLatitud(),
+    TarjetaVacunacion* encontrado = *(malla->buscar(tarjeta->getPropietario().getDomicilio().getLatitud(),
                                                   tarjeta->getPropietario().getDomicilio().getLongitud(),
-                                                  tarjeta);
+                                                  tarjeta));
     return encontrado;
 }
 
@@ -213,6 +213,10 @@ float GestionVacunas::pautaCompleta(int criterio) {
         } else {
             if (criterio == 1 && lisTar[i]->dosisPorAdministrar2() == 0) {
                 numPautas++;
+            } else {
+                if (criterio == 2 && lisTar[i]->dosisPorAdministrar3() == 0) {
+                    numPautas++;
+                }
             }
         }
     }
@@ -429,7 +433,7 @@ map<string,TarjetaVacunacion*> GestionVacunas::getListaTarjetas()  {
     return mapAux;
 }
 
-const vector<Dosis*> GestionVacunas::getDosis() const {
+const vector<Dosis*> GestionVacunas::getDosis() {
     return listaDosis;
 }
 
@@ -509,3 +513,11 @@ void GestionVacunas::generarMapaMalla(){
 
     cout << "Operación realizada con exito, ahora visualizarlo con cualquier visor de imágenes" << endl;*/
 }
+
+vector<TarjetaVacunacion*> GestionVacunas::buscarTarjetasRadio(float x, float y, float radio){
+    return malla->buscarRadio(x,y,radio);
+}
+
+/*vector<string> GestionVacunas::avisoColetivo(float radio){
+    vector<TarjetaVacunacion*> todas = buscarRadio(x,y,radio);
+}*/

@@ -144,3 +144,8 @@ bool CentroVacunacion::noMenor(Usuario* vacunando){
 UTM CentroVacunacion::getUbicacion(){
     return direccion;
 }
+
+vector<TarjetaVacunacion*> CentroVacunacion::buscarCercanos(float radio){
+    return centroGestor->buscarTarjetasRadio(radio, direccion.getLongitud(),direccion.getLatitud());
+}
+
