@@ -57,9 +57,10 @@ class MallaRegular{
     float tamCasillaX,tamCasillaY;
     int numElem{};
     std::vector<std::vector<Casilla<T>>> malla;
-    Casilla<T>* casilla(float X, float Y);
+    Casilla<T>* getCasilla(float X, float Y);
     float teoremaPitagoras(float a, float b);
     float teoremaPitagorasInverso(float c, float b);
+    int divX,divY;
 public:
     MallaRegular(float _xMin, float _yMin, float _xMax, float _yMax, int nDivX, int nDivY);
     MallaRegular<T>& operator=(const MallaRegular<T>& orig);
@@ -84,6 +85,8 @@ MallaRegular<T>::MallaRegular(float _xMin, float _yMin, float _xMax, float _yMax
     this->xMax = _xMax + 0.01;
     this->yMax = _yMax + 0.01; // HAY QUE HACER ESTO DE SUMAR/RESTAR 0.01, PARA QUE NO HAYA BAD ACCESS AL INSERTAR LOS PUNTOS EXTREMOS
     this->numElem = 0;
+    this->divX = nDivX;
+    this->divY = nDivY;
     tamCasillaX = ((xMax - xMin) / nDivX);
     tamCasillaY = ((yMax - yMin) / nDivY);
     malla.insert(malla.begin(), nDivX, std::vector<Casilla<T>>(nDivY));
@@ -103,7 +106,7 @@ MallaRegular<T>& MallaRegular<T>::operator=(const MallaRegular<T>& orig){
 }
 
 template<class T>
-Casilla<T>* MallaRegular<T>::casilla(float X, float Y){
+Casilla<T>* MallaRegular<T>::getCasilla(float X, float Y){
     int i = (X-xMin)/tamCasillaX;
     int j = (Y-yMin)/tamCasillaY;
     return &malla[i][j];
@@ -111,7 +114,7 @@ Casilla<T>* MallaRegular<T>::casilla(float X, float Y){
 
 template<class T>
 bool MallaRegular<T>::borrar(float x, float y, const T& dato){
-    Casilla<T>* c = casilla(x, y);
+    Casilla<T>* c = getCasilla(x, y);
     bool resultado;
     resultado = c->borrar(dato);
     if(resultado){
@@ -122,14 +125,14 @@ bool MallaRegular<T>::borrar(float x, float y, const T& dato){
 
 template<class T>
 void MallaRegular<T>::insertar(float x, float y, const T& dato){
-    Casilla<T>* c = casilla(x, y);
+    Casilla<T>* c = getCasilla(x, y);
     c->insertar(dato);
     numElem++;
 }
 
 template<class T>
 T* MallaRegular<T>::buscar(float x, float y, const T& dato){
-    Casilla<T> *c = casilla(x, y);
+    Casilla<T> *c = getCasilla(x, y);
     return c->buscar(dato);
 }
 
@@ -142,14 +145,13 @@ T* MallaRegular<T>::buscarCercano(double x, double y){
     int distancia = UINT_MAX;
     T* cercano = nullptr;
 
-    /*while(!encontrado){
+    while(!encontrado){
         for (int f = (i - 1); f <= (auxi + 1); ++f){
             for (int c = (j - 1); c <= (auxj + 1); ++c){
                 if(i > 0 && j > 0){
                     if(malla[f][c].puntos.size() > 0){
                         encontrado = true;
-                        typename std::list<T>::iterator it;
-                        for (it = malla[f][c].puntos.begin(); it != malla[f][c].puntos.end(); ++it){
+                        for (auto it = malla[f][c].puntos.begin(); it != malla[f][c].puntos.end(); ++it){
                             float dist = teoremaPitagoras(it->getX() - x, it->getY() - y);
                             if (dist < distancia){
                                 distancia = dist;
@@ -164,56 +166,55 @@ T* MallaRegular<T>::buscarCercano(double x, double y){
         j = j - 1;
         auxi = auxi + 1;
         auxj = auxj + 1;
-    }*/
+    }
     return cercano;
 }
 
-/*
- * template<class T>
+template<class T>
 vector<T> MallaRegular<T>::buscarRadio(double xCentro, double yCentro, double radio){
     vector<T> result;
-    int i = (xCentro - xMin) / tamCasillaX;
-    int j = (yCentro - yMin) / tamCasillaY;
-    int auxi = i,auxj = j;
-    bool encontrado = false;
-    int distancia = UINT_MAX;
-    T* cercano = nullptr;
+    int iMinima = (xCentro - radio - xMin) / tamCasillaX;
+    int jMinima = (yCentro - radio - yMin) / tamCasillaY;
+    int iMaxima = (xCentro + radio - xMin) / tamCasillaX;
+    int jMaxima = (yCentro + radio - yMin) / tamCasillaY;
+    //int cuantosHaVisto = 0;
 
-    for (int f = (i - 1); f <= (auxi + 1); ++f){
-        for (int c = (j - 1); c <= (auxj + 1); ++c){
-            if(i > 0 && j > 0){
-                if(malla[f][c].puntos.size() > 0){
-                    for (typename std::list<T>::iterator it = malla[f][c].puntos.begin(); it != malla[f][c].puntos.end(); ++it){
-                        int a = malla[f][c].puntos.size();
-                        auto iti = it;
-                        cout << "iti" << endl;
-                        //result.push_back(it);
+    if(iMinima < 0) iMinima = 0;
+    if(jMinima < 0) jMinima = 0;
+    if(iMaxima > divX - 1) iMaxima = divX;
+    if(jMaxima > divY - 1) jMaxima = divY;
+
+    for (int f = iMinima; f < iMaxima; ++f){
+        for (int c = jMinima; c < jMaxima; ++c){
+            if(malla[f][c].puntos.size() > 0){
+                list<T>* ll = &malla[f][c].puntos;
+                //cuantosHaVisto += ll->size();
+                for (typename std::list<T>::iterator it = ll->begin(); it != ll->end(); ++it){
+                    double xDist = abs(xCentro - (*it)->getX());
+                    double yDist = abs(yCentro - (*it)->getY());
+                    double distanciaF = teoremaPitagoras(xDist, yDist);
+                    if (distanciaF <= radio){
+                        result.push_back(*it);
                     }
                 }
             }
         }
     }
-    **/
-
-    // ESTOY PENSANDO QUE ESTO SERÍA MÁS EFICIENTE CON UNA LISTA QUE NO UN VECTOR
-    /*for (int i = 0; i < result.size(); ++i){
-        double xDist = abs(xCentro - result[i]->getPropietario().getDomicilio().getLatitud());
-        double yDist = abs(yCentro - result[i]->getPropietario().getDomicilio().getLongitud());
-        if (teoremaPitagoras(xDist, yDist) > radio){
-            result.erase(i);
-        }
-    }
     return result;
 }
-**/
+
 template <class T>
 float MallaRegular<T>::teoremaPitagoras(float a, float b){
-    return sqrt((pow(a, 2)) + (pow(b, 2)));
+    float aCuad = (pow(a,2));
+    float bCuad = (pow(b,2));
+    return sqrt(aCuad + bCuad);
 }
 
 template <class T>
 float MallaRegular<T>::teoremaPitagorasInverso(float b, float c){
-    return sqrt((pow(c, 2)) - (pow(b, 2)));
+    float cCuad = (pow(c,2));
+    float bCuad = (pow(b,2));
+    return sqrt(cCuad - bCuad);
 }
 
 template<class T>

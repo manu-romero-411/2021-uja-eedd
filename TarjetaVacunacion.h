@@ -32,6 +32,8 @@ public:
 
     Usuario& getPropietario();
     const string &getId() const;
+    const double getX();
+    const double getY();
     void setId(const string &id);
     bool isPautaCompleta() const;
     void setPautaCompleta(bool pautaCompleta);

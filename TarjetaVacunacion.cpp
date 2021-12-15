@@ -161,3 +161,12 @@ std::string TarjetaVacunacion::getNombreFabricanteDado(nombreFabricante fab){
             break;
     }
 }
+
+const double TarjetaVacunacion::getX(){
+    return propietario->getDomicilio().getLatitud();
+}
+
+const double TarjetaVacunacion::getY(){
+    return propietario->getDomicilio().getLongitud();
+}
+

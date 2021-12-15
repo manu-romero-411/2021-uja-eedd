@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
             vecAuxiliaBool.push_back(0);
         }
 
-        for (int i = 0; i < vecAuxilia.size(); ++i){
+        /*for (int i = 0; i < vecAuxilia.size(); ++i){
             if((stoi(vecAuxilia[i]) % 2) == 0){
                 Usuario* vacunable = gestionVacunas.buscarUsuario(vecAuxilia[i]);
                 if(vacunable){
@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
                     }
                 }
             }
-        }
+        }*/
 
 
 
