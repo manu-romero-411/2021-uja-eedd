@@ -189,12 +189,12 @@ Usuario* GestionVacunas::buscarUsuario (TarjetaVacunacion* tarjeta){
     return usuario;
 }
 
-/*TarjetaVacunacion* GestionVacunas::buscarTarjeta (Usuario* us){
-    TarjetaVacunacion* encontrado = *malla.buscar(us->getDomicilio().getLatitud(),
-                                                  us->getDomicilio().getLongitud(),
+TarjetaVacunacion* GestionVacunas::buscarTarjeta (TarjetaVacunacion* tarjeta){
+    TarjetaVacunacion* encontrado = *malla->buscar(tarjeta->getPropietario().getDomicilio().getLatitud(),
+                                                  tarjeta->getPropietario().getDomicilio().getLongitud(),
                                                   tarjeta);
-
-}*/
+    return encontrado;
+}
 
 /**
 * @brief Funcion que calcula el porcentaje de personas con pauta completa
@@ -208,6 +208,18 @@ float GestionVacunas::pautaCompleta() {
     float numpautascompletas;
     for(std::map<string,TarjetaVacunacion*>::iterator it = tablaTarjetas.begin(); it != tablaTarjetas.end(); ++it) {
         if (it->second->dosisPorAdministrar() == 0){
+            numpautascompletas++;
+        }
+    }
+    float porcentaje = (numpautascompletas/numusuarios)*100;
+    return porcentaje;
+}
+
+float GestionVacunas::pautaCompleta2() {
+    float numusuarios=this->listaUsuarios.size();
+    float numpautascompletas;
+    for(std::map<string,TarjetaVacunacion*>::iterator it = tablaTarjetas.begin(); it != tablaTarjetas.end(); ++it) {
+        if (it->second->dosisPorAdministrar2() == 0){
             numpautascompletas++;
         }
     }

@@ -40,6 +40,7 @@ public:
     virtual ~GestionVacunas(); //Destructor //arreglao //TODO Composicion de centros
     Usuario* buscarUsuario(string nss); //Busca un usuario en el arbol con el nss
     Usuario* buscarUsuario (TarjetaVacunacion* tarjeta);
+    TarjetaVacunacion* buscarTarjeta (TarjetaVacunacion* tarjeta);
     void suministrarNdosisCentro(CentroVacunacion* centro, int numerovacunas);
 
     vector<string> listadoNSS(); //Listado de los nss de todos los usuarios
@@ -69,6 +70,7 @@ public:
     map<string,TarjetaVacunacion*> getListaTarjetas();
     void generarMapaMalla();
     const vector<Dosis *> getDosis() const;
+    float pautaCompleta2();
 };
 
 #endif //EEDD_GESTIONVACUNAS_H
