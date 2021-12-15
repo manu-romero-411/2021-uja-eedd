@@ -419,6 +419,11 @@ map<string,TarjetaVacunacion*> GestionVacunas::getListaTarjetas()  {
     return tablaTarjetas;
 }
 
+const vector<Dosis*> GestionVacunas::getDosis() const {
+    return listaDosis;
+}
+
+
 void GestionVacunas::generarMapaMalla(){
     /*RGBColor blanco (255,255,255);
 

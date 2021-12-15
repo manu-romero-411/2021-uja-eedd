@@ -35,9 +35,6 @@ private:
     vector<int> numVacTipo;
 
 public:
-    const string *getFabricantes() const;
-
-public:
     GestionVacunas(); //Constructor por defecto
     GestionVacunas(std::string fileDosis, std::string fileUsuarios, std::string fileCentros);//Constructor parametrizado
     virtual ~GestionVacunas(); //Destructor //arreglao //TODO Composicion de centros
@@ -71,6 +68,7 @@ public:
     void generaTarjetas();
     map<string,TarjetaVacunacion*> getListaTarjetas();
     void generarMapaMalla();
+    const vector<Dosis *> getDosis() const;
 };
 
 #endif //EEDD_GESTIONVACUNAS_H
