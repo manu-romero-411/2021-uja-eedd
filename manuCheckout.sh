@@ -2,5 +2,5 @@
 
 git checkout josanDev
 git pull
-git checkout manuDev
+git checkout manuDev-alt
 git merge --no-ff josanDev || code .

@@ -6,6 +6,7 @@
 #ifndef MALLAREGULAR_H
 #define MALLAREGULAR_H
 #include <vector>
+#include <algorithm>
 
 template<typename T>
 class MallaRegular;
@@ -140,7 +141,7 @@ T* MallaRegular<T>::buscarCercano(double x, double y){
     int distancia = UINT_MAX;
     T* cercano = nullptr;
 
-    while(!encontrado){
+    /*while(!encontrado){
         for (int f = (i - 1); f <= (auxi + 1); ++f){
             for (int c = (j - 1); c <= (auxj + 1); ++c){
                 if(i > 0 && j > 0){
@@ -162,7 +163,7 @@ T* MallaRegular<T>::buscarCercano(double x, double y){
         j = j - 1;
         auxi = auxi + 1;
         auxj = auxj + 1;
-    }
+    }*/
     return cercano;
 }
 
@@ -180,19 +181,20 @@ vector<T> MallaRegular<T>::buscarRadio(double xCentro, double yCentro, double ra
         for (int c = (j - 1); c <= (auxj + 1); ++c){
             if(i > 0 && j > 0){
                 if(malla[f][c].puntos.size() > 0){
-
-                    for (auto const& it : malla[f][c].puntos){
-                        i
+                    for (typename std::list<T>::iterator it = malla[f][c].puntos.begin(); it != malla[f][c].puntos.end(); ++it){
+                        int a = malla[f][c].puntos.size();
+                        auto iti = it;
+                        cout << "iti" << endl;
+                        //result.push_back(it);
                     }
                 }
             }
         }
     }
 
-    /*// ESTOY PENSANDO QUE ESTO SERÍA MÁS EFICIENTE CON UNA LISTA QUE NO UN VECTOR
-    for (int i = 0; i < result.size(); ++i){
-        float xx = result[i]-;
-        double xDist = abs();
+    // ESTOY PENSANDO QUE ESTO SERÍA MÁS EFICIENTE CON UNA LISTA QUE NO UN VECTOR
+    /*for (int i = 0; i < result.size(); ++i){
+        double xDist = abs(xCentro - result[i]->getPropietario().getDomicilio().getLatitud());
         double yDist = abs(yCentro - result[i]->getPropietario().getDomicilio().getLongitud());
         if (teoremaPitagoras(xDist, yDist) > radio){
             result.erase(i);

@@ -151,7 +151,7 @@ GestionVacunas::GestionVacunas(std::string fileDosis, std::string fileUsuarios, 
     malla = new MallaRegular<TarjetaVacunacion*>(longitudMenor, latitudMenor, longitudMayor, latitudMayor, 20, 20); // hemos calculado que así la media de elementos por celda es 25
     generaTarjetas();
     vector<TarjetaVacunacion*> vec = malla->buscarRadio(38, -3, 0.3);
-    //cout << "Num elementos por cada link hembra: " << malla->mediaElementosPorCelda() << endl;
+    cout << "Num elementos por cada link hembra: " << malla->mediaElementosPorCelda() << endl;
 }
 
 void GestionVacunas::generaTarjetas(){
