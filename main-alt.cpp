@@ -54,7 +54,6 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        cout << "Número de personas: " << doceCincoSiete.size() << endl;
         gestionVacunas.vacunarConjuntoTarjetas(doceCincoSiete,0);
 
         cout << "\n==== ADMINISTRAR DOSIS A MAYORES DE 25" << endl;
@@ -68,7 +67,6 @@ int main(int argc, char* argv[]) {
                 }
             }
         }
-        cout << "Número de personas: " << mayVeinticinco.size() << endl;
 
         gestionVacunas.vacunarConjuntoTarjetas(mayVeinticinco,0);
 
@@ -77,25 +75,27 @@ int main(int argc, char* argv[]) {
 
         cout << "\n==== ADMINISTRAR DOSIS A NIÑOS ENTRE 5 Y 11 AÑOS" << endl;
 
-        int cont  = 0;
         vector<CentroVacunacion*> vecCentros = gestionVacunas.getCentros();
+        vector<TarjetaVacunacion*> colectivoA;
         for (int i = 0; i < vecCentros.size(); ++i){
             vector<TarjetaVacunacion*> usuariosCercanos = vecCentros[i]->buscarCercanos(0.35);
             for(int j = 0; j < usuariosCercanos.size(); ++j) {
                 if (usuariosCercanos[j]) {
                     if (usuariosCercanos[j]->getPropietario().getEdad() >= 5 && usuariosCercanos[j]->getPropietario().getEdad() <= 11) {
-                        cont++;
-                        vecCentros[i]->anadirTarjetaLista(usuariosCercanos[j]);
-                        vecCentros[i]->administrarDosis(usuariosCercanos[j],
-                                                        usuariosCercanos[j]->getFabricanteRecomendado(1));
+                        colectivoA.push_back(usuariosCercanos[j]);
                     }
                 }
             }
         }
-        cout << "Num. de pers: " << cont << endl;
+        for (int i = 0; i < colectivoA.size(); ++i) {
+            vecCentros[i]->anadirTarjetaLista(colectivoA[i]);
+            vecCentros[i]->administrarDosis(colectivoA[i],
+                                            colectivoA[i]->getFabricanteRecomendado(1));
+        }
+
+
         cout << "\n==== ADMINISTRAR DOSIS A GENTE CON 5 EN ID DE TARJETA" <<  endl;
 
-        cont = 0;
         for (int i = 0; i < vecAuxilia.size(); ++i){
             string str = vecAuxilia[i]->getId();
             bool found = false;
@@ -107,7 +107,6 @@ int main(int argc, char* argv[]) {
             if (found){
                 TarjetaVacunacion* vacunable = gestionVacunas.buscarTarjeta(vecAuxilia[i]);
                 if(vacunable){
-                    cont++;
                 CentroVacunacion* centro = gestionVacunas.centroMasCercano(&vacunable->getPropietario());
                     centro->anadirTarjetaLista(vacunable);
                     centro->anadirTarjetaLista(vecAuxilia[i]);
@@ -116,34 +115,33 @@ int main(int argc, char* argv[]) {
                 }
             }
         }
-        cout << "Num. de pers: " << cont << endl;
-
 
         cout << "\n==== ADMINISTRAR DOSIS A MAYORES DE 60" <<  endl;
 
-        cont = 0;
+        vector<TarjetaVacunacion*> colectivoB;
+        int cont = 0;
         for (int i = 0; i < vecCentros.size(); ++i){
             vector<TarjetaVacunacion*> usuariosCercanos = vecCentros[i]->buscarCercanos(0.5);
             for(int j = 0; j < usuariosCercanos.size(); ++j) {
                 if (usuariosCercanos[j]) {
                     if (usuariosCercanos[j]->getPropietario().getEdad() > 60) {
-                        cont++;
-                        vecCentros[i]->anadirTarjetaLista(usuariosCercanos[j]);
-                        vecCentros[i]->administrarDosis(usuariosCercanos[j],
-                                                        usuariosCercanos[j]->getFabricanteRecomendado(1));
+                        colectivoB.push_back(usuariosCercanos[j]);
                     }
                 }
             }
         }
-        cout << "Num. de pers: " << cont << endl;
 
-        cont = 0;
+        for (int i = 0; i < colectivoB.size(); ++i) {
+            vecCentros[i]->anadirTarjetaLista(colectivoB[i]);
+            vecCentros[i]->administrarDosis(colectivoB[i],
+                                            colectivoB[i]->getFabricanteRecomendado(1));
+        }
+
         cout << "\n==== VACUNAR AL 90%" <<  endl;
 
         for (int i = 0; i < vecAuxilia.size() * 0.91; ++i) {
             TarjetaVacunacion *tarjVacunable = gestionVacunas.buscarTarjeta(vecAuxilia[i]);
             if (tarjVacunable) {
-                cont++;
                 CentroVacunacion *centro = gestionVacunas.centroMasCercano(&tarjVacunable->getPropietario());
                 centro->anadirTarjetaLista(tarjVacunable);
                 nombreFabricante fab = tarjVacunable->getFabricanteRecomendado(1);
@@ -151,22 +149,6 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        cout << "Num. de pers: " << cont << endl;
-
-        cout << "\n==== FIESTA" <<  endl;
-        vector<TarjetaVacunacion*> fiesta;
-        for (int i = 0; i < vecAuxilia.size(); ++i){
-            if(vecAuxilia[i]->getPropietario().getEdad() == 18){
-                TarjetaVacunacion* tarj = gestionVacunas.buscarTarjeta(vecAuxilia[i]);
-                if(tarj) {
-                    fiesta.push_back(tarj);
-                }
-            }
-        }
-
-        vector<string> avisados = gestionVacunas.avisoColetivo(fiesta,0.075);
-        cout << "USUARIOS AVISADOS POR FIESTA: " << avisados.size() << endl;
-        //vector<TarjetaVacunacion*> vecAuxilia2;
         return 0;
     } catch (std::exception &e) {
         cout << e.what();

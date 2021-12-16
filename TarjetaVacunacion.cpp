@@ -49,9 +49,9 @@ nombreFabricante TarjetaVacunacion::getFabricanteRecomendado(int criterio){
         return AstraZeneca;
     if (propietario->getEdad() >= 50 && propietario->getEdad() < 65)
         return Moderna;
-    if (propietario->getEdad() >= 65)
+    if (propietario->getEdad() >= 65 || (criterio != 0 && propietario->getEdad() >= 5 && propietario->getEdad() <= 11))
         return Pfizer;
-    if (propietario->getEdad() < 12 && criterio != 0)
+    if (propietario->getEdad() < 12 && criterio == 0)
         return ninguno;
 }
 

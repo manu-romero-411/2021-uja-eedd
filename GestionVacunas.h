@@ -75,7 +75,8 @@ public:
     void generarMapaMalla();
     const vector<Dosis *> getDosis();
     vector<TarjetaVacunacion *> buscarTarjetasRadio(float x, float y, float radio);
-    //vector<string> avisoColetivo(float radio); //TODO 16 de diciembre
+    vector<string> avisoColetivo(vector<TarjetaVacunacion*>& avisados, float radio);
+    void vacunarConjuntoTarjetas(vector<TarjetaVacunacion*>& conjunto, int criterio);
 };
 
 #endif //EEDD_GESTIONVACUNAS_H

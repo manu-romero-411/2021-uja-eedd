@@ -182,9 +182,9 @@ Usuario* GestionVacunas::buscarUsuario (string nss){
 
 Usuario* GestionVacunas::buscarUsuario (TarjetaVacunacion* tarjeta){
     // POTENCIAL PROBLEMA CON PUNTEROS
-    TarjetaVacunacion* encontrado = *malla->buscar(tarjeta->getPropietario().getDomicilio().getLatitud(),
+    TarjetaVacunacion* encontrado = *(malla->buscar(tarjeta->getPropietario().getDomicilio().getLatitud(),
                                         tarjeta->getPropietario().getDomicilio().getLongitud(),
-                                        tarjeta);
+                                        tarjeta));
     Usuario* usuario = &encontrado->getPropietario();
     return usuario;
 }
@@ -518,6 +518,29 @@ vector<TarjetaVacunacion*> GestionVacunas::buscarTarjetasRadio(float x, float y,
     return malla->buscarRadio(x,y,radio);
 }
 
-/*vector<string> GestionVacunas::avisoColetivo(float radio){
-    vector<TarjetaVacunacion*> todas = buscarRadio(x,y,radio);
-}*/
+vector<string> GestionVacunas::avisoColetivo(vector<TarjetaVacunacion*>& avisados, float radio){
+    vector<string> nsss;
+    for (int i = 0; i < avisados.size(); ++i){
+        nsss.push_back(avisados[i]->getPropietario().getNss());
+        float x = avisados[i]->getX();
+        float y = avisados[i]->getY();
+        vector<TarjetaVacunacion*> avisados2 = malla->buscarRadio(x,y,radio);
+        for (int j = 0; j < avisados2.size(); ++j){
+            nsss.push_back(avisados2[j]->getPropietario().getNss());
+        }
+    }
+    sort( nsss.begin(), nsss.end() );
+    nsss.erase( unique( nsss.begin(), nsss.end() ), nsss.end() );
+    return nsss;
+}
+
+void GestionVacunas::vacunarConjuntoTarjetas(vector<TarjetaVacunacion*>& conjunto, int criterio){
+    for(int i = 0; i < conjunto.size(); ++i) {
+        if (conjunto[i]) {
+            CentroVacunacion *centro = centroMasCercano(&conjunto[i]->getPropietario());
+            centro->anadirTarjetaLista(conjunto[i]);
+            nombreFabricante fab = conjunto[i]->getFabricanteRecomendado(criterio);
+            centro->administrarDosis(conjunto[i], fab);
+        }
+    }
+}

@@ -70,6 +70,10 @@ void CentroVacunacion::anadirTarjetaLista(TarjetaVacunacion* nuevo){
 *
 */
 bool CentroVacunacion::administrarDosis(TarjetaVacunacion* vacunando, nombreFabricante vacunada) {
+    if (vacunando->dosisPorAdministrar() <= 0){
+        return false;
+    }
+
     if (listaDosis.size() <= 0){
         cout << "Vector de dosis en un CentroVacunacion es de tamaño 0. Alarma lanzada" << endl;
         alarmaFaltaDosis();
