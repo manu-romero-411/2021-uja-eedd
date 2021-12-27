@@ -1,12 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
  * File:   main.cpp
- * Author: manuel
+ * Author: Manuel Jesus Romero Mateos, Jose Ángel Ángeles Santiago
  *
  * Created on 22 de septiembre de 2021, 20:36
  */
@@ -14,157 +8,168 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "VDinamico.h"
+#include <ctime>
 #include "Dosis.h"
+#include "Usuario.h"
+#include "GestionVacunas.h"
+#include <chrono>
+#include "THashTarjetaVacunacion.h"
+#include "MallaRegular.h"
 
 using namespace std;
 
-int main() {
+int main(int argc, char* argv[]) {
+    try {
+        cout << "==== INSTANCIACIÓN DE ARCHIVOS DENTRO DE GestionVacunas ====" << endl;
+        GestionVacunas gestionVacunas(argv[1],argv[2],argv[3]);
 
-    ifstream is("dosis.txt");
-    string palabra;
-    int corte = 0;
+        cout << "\n==== AÑADIR DOSIS A CENTROS DE VACUNACIÓN ====" << endl;
+        vector<Dosis*> v;
+        v = gestionVacunas.getDosis();
+        int cuantas[5]={8000,8200,8500,5000,50};
+        for (int i = 0; i < 5; ++i) {
+            gestionVacunas.suministrarNdosisCentro(gestionVacunas.getCentros()[i], cuantas[i]);
+        }
 
-    int id = 0;
-    int idLote = 0;
-    int fabricante = 0;
-    int dia = 0;
-    int mes = 0;
-    int anno = 0;
-    std::cout << "hola" <<endl;
-            std::cout << "hola" <<endl;
-    std::cout << "hola" <<endl;
-    std::cout << "hola" <<endl;
+        cout << "\n==== ADMINISTRAR A MAYORES DE 12 CUYO NSS NO ACABE EN 5 O 7 ====" << endl;
+        vector<TarjetaVacunacion*> vecAuxilia;
+        map<string,TarjetaVacunacion*> mapAuxilia = gestionVacunas.getListaTarjetas();
+        for(std::map<string,TarjetaVacunacion*>::iterator it = mapAuxilia.begin();it!= mapAuxilia.end(); ++it){
+            vecAuxilia.push_back(it->second);
+        }
+        cout << "Tamaño del vector auxiliar con los NSS: " << vecAuxilia.size() << endl;
 
-    clock_t t_ini = clock();
-    VDinamico<Dosis> vectorDosis;
+        vector<int> vecAuxiliaBool;
+        for(int i = 0; i < vecAuxilia.size();++i){
+            vecAuxiliaBool.push_back(0);
+        }
 
-    int iterador = 0;
-    while (getline(is, palabra)) {
-
-            corte = palabra.find(';');
-            id = stoi(palabra.substr(0, corte));
-            palabra.erase(0, corte + 1);
-
-            corte = palabra.find(';');
-            idLote = stoi(palabra.substr(0, corte));
-            palabra.erase(0, corte + 1);
-
-            corte = palabra.find(';');
-            fabricante = stoi(palabra.substr(0, corte));
-            palabra.erase(0, corte + 1);
-
-            corte = palabra.find('/');
-            dia = stoi(palabra.substr(0, corte));
-            palabra.erase(0, corte + 1);
-
-            corte = palabra.find('/');
-            mes = stoi(palabra.substr(0, corte));
-            palabra.erase(0, corte + 1);
-
-            anno = stoi(palabra);
-            Dosis nuevaDosis(id, idLote, fabricante, dia, mes, anno);
-            vectorDosis.insertar(nuevaDosis, iterador);
-
-            cout << "Dosis: (ID=" << vectorDosis.leer(iterador)->GetId() 
-            << "; Lote=" << vectorDosis.leer(iterador)->GetIdLote()
-            << "; Fabricante=\"" << vectorDosis.leer(iterador)->GetFabricante()
-            << "\"; Fecha="
-            << vectorDosis.leer(iterador)->GetFechaFabricacion().verDia()
-            << "/"
-            <<vectorDosis.leer(iterador)->GetFechaFabricacion().verMes()
-            << "/"
-            << vectorDosis.leer(iterador)->GetFechaFabricacion().verAnio()
-            << ")" << endl;
-            ++iterador;
-    }
-    
-    // Ordenación de dosis
-    std::cout << "\n\n***Dosis sin ordenar:\n";
-    for (unsigned i = 0; i < 50; ++i){
-        std::cout << "Dosis " << i << ": ID " << vectorDosis.leer(i)->GetId() << endl;
-    }        
-    
-    std::cout << "\n\n***Dosis ordenadas al revés:\n";
-    vectorDosis.ordenarRev();
-    for (int i = 0; i < 50; ++i){
-        std::cout << "Dosis " << i << ": ID " << vectorDosis.leer(i)->GetId() << endl;
-    }
-
-    std::cout << "\n\n***Dosis ordenadas de menor a mayor:\n";
-    vectorDosis.ordenar();
-    for (int i = 0; i < 50; ++i){
-        std::cout << "Dosis " << i << ": ID " << vectorDosis.leer(i)->GetId() << endl;
-    }
-    
-    // Búsqueda de dosis
-    Dosis dosisbusq1(346335905);
-    Dosis dosisbusq2(999930245);
-    Dosis dosisbusq3(165837);
-    Dosis dosisbusq4(486415569);
-    Dosis dosisbusq5(61385551);
-    
-    int busq1=vectorDosis.busquedaBin(dosisbusq1,0,vectorDosis.getTamLogico());
-    if(busq1==-1)
-        cout<<"Dosis " << dosisbusq1.GetId() << " no encontrada \n";
-    else   
-        cout<<"Dosis " << dosisbusq1.GetId() << " encontrada en la posición " << busq1 << "\n";
-    
-    int busq2=vectorDosis.busquedaBin(dosisbusq2,0,vectorDosis.getTamLogico());
-    if(busq2==-1)
-        cout<<"Dosis " << dosisbusq2.GetId() << " no encontrada \n";
-    else   
-        cout<<"Dosis " << dosisbusq2.GetId() << " encontrada en la posición " << busq2 << "\n";
-    
-    int busq3=vectorDosis.busquedaBin(dosisbusq3,0,vectorDosis.getTamLogico());
-    if(busq3==-1)
-        cout<<"Dosis " << dosisbusq3.GetId() << " no encontrada \n";
-    else   
-        cout<<"Dosis " << dosisbusq3.GetId() << " encontrada en la posición " << busq3 << "\n";
-    
-    int busq4=vectorDosis.busquedaBin(dosisbusq4,0,vectorDosis.getTamLogico());
-    if(busq4==-1)
-        cout<<"Dosis " << dosisbusq4.GetId() << " no encontrada \n";
-    else   
-        cout<<"Dosis " << dosisbusq4.GetId() << " encontrada en la posición " << busq4 << "\n";
-    
-    int busq5=vectorDosis.busquedaBin(dosisbusq5,0,vectorDosis.getTamLogico());
-    if(busq5==-1)
-        cout<<"Dosis " << dosisbusq5.GetId() << " no encontrada \n";
-    else   
-        cout<<"Dosis " << dosisbusq5.GetId() << " encontrada en la posición " << busq5 << "\n";
-    
-    //Dosis defectuosas
-    VDinamico<Dosis> dosisDefectuosas;
-    cout << "Vector de dosis: Tamaño lógico " << vectorDosis.getTamLogico() << endl;
-    cout << "Vector de defectuosas: Tamaño lógico " << dosisDefectuosas.getTamLogico() << endl;
-    
-    int contadorDefect = 0;
-    for (int i = 0; i < vectorDosis.getTamLogico(); ++i){
-        if(vectorDosis.leer(i)->GetFechaFabricacion().verAnio() == 2020){
-            if((vectorDosis.leer(i)->GetIdLote() % 2 == 0) || (vectorDosis.leer(i)->GetIdLote() % 5 == 0)){
-                if((vectorDosis.leer(i)->GetId() >= 10000) && (vectorDosis.leer(i)->GetId() <= 2500000)){
-                    dosisDefectuosas.insertar(vectorDosis[i], contadorDefect);
-                    contadorDefect++;
-                    vectorDosis.borrar(i);
+        vector<TarjetaVacunacion*> doceCincoSiete;
+        for (int i = 0; i < vecAuxilia.size(); ++i){
+            if(vecAuxilia[i]->getPropietario().getEdad() > 12 && stoi(vecAuxilia[i]->getPropietario().getNss()) - 5 % 10 != 0 && stoi(vecAuxilia[i]->getPropietario().getNss()) - 7 % 10 != 0 ){
+                TarjetaVacunacion* tarjVacunable = gestionVacunas.buscarTarjeta(vecAuxilia[i]);
+                if(tarjVacunable) {
+                    doceCincoSiete.push_back(tarjVacunable);
                 }
             }
         }
+
+        cout << "Número de personas: " << doceCincoSiete.size() << endl;
+        gestionVacunas.vacunarConjuntoTarjetas(doceCincoSiete,0);
+
+        cout << "\n==== ADMINISTRAR DOSIS A MAYORES DE 25" << endl;
+
+        vector<TarjetaVacunacion*> mayVeinticinco;
+        for (int i = 0; i < vecAuxilia.size(); ++i){
+            if(vecAuxilia[i]->getPropietario().getEdad() > 25 ){
+                TarjetaVacunacion* vacunable = gestionVacunas.buscarTarjeta(vecAuxilia[i]);
+                if(vacunable) {
+                    mayVeinticinco.push_back(vacunable);
+                }
+            }
+        }
+        cout << "Número de personas: " << mayVeinticinco.size() << endl;
+
+        gestionVacunas.vacunarConjuntoTarjetas(mayVeinticinco,0);
+
+        cout << "El porcentaje de usuarios con pauta completa es: " << gestionVacunas.pautaCompleta(0) << " %" << endl;
+        cout << "El porcentaje de usuarios con pauta completa en las nuevas condiciones es: " << gestionVacunas.pautaCompleta(1) << " %" << endl;
+
+        cout << "\n==== ADMINISTRAR DOSIS A NIÑOS ENTRE 5 Y 11 AÑOS" << endl;
+
+        int cont  = 0;
+        vector<CentroVacunacion*> vecCentros = gestionVacunas.getCentros();
+        for (int i = 0; i < vecCentros.size(); ++i){
+            vector<TarjetaVacunacion*> usuariosCercanos = vecCentros[i]->buscarCercanos(0.35);
+            for(int j = 0; j < usuariosCercanos.size(); ++j) {
+                if (usuariosCercanos[j]) {
+                    if (usuariosCercanos[j]->getPropietario().getEdad() >= 5 && usuariosCercanos[j]->getPropietario().getEdad() <= 11) {
+                        cont++;
+                        vecCentros[i]->anadirTarjetaLista(usuariosCercanos[j]);
+                        vecCentros[i]->administrarDosis(usuariosCercanos[j],
+                                                        usuariosCercanos[j]->getFabricanteRecomendado(1));
+                    }
+                }
+            }
+        }
+        cout << "Num. de pers: " << cont << endl;
+        cout << "\n==== ADMINISTRAR DOSIS A GENTE CON 5 EN ID DE TARJETA" <<  endl;
+
+        cont = 0;
+        for (int i = 0; i < vecAuxilia.size(); ++i){
+            string str = vecAuxilia[i]->getId();
+            bool found = false;
+            for (int k = 0; k < str.length() && !found; ++k){
+                if (str[k] == '5'){
+                    found = true;
+                }
+            }
+            if (found){
+                TarjetaVacunacion* vacunable = gestionVacunas.buscarTarjeta(vecAuxilia[i]);
+                if(vacunable){
+                    cont++;
+                CentroVacunacion* centro = gestionVacunas.centroMasCercano(&vacunable->getPropietario());
+                    centro->anadirTarjetaLista(vacunable);
+                    centro->anadirTarjetaLista(vecAuxilia[i]);
+                    centro->administrarDosis(vecAuxilia[i],
+                                                    vecAuxilia[i]->getFabricanteRecomendado(1));
+                }
+            }
+        }
+        cout << "Num. de pers: " << cont << endl;
+
+
+        cout << "\n==== ADMINISTRAR DOSIS A MAYORES DE 60" <<  endl;
+
+        cont = 0;
+        for (int i = 0; i < vecCentros.size(); ++i){
+            vector<TarjetaVacunacion*> usuariosCercanos = vecCentros[i]->buscarCercanos(0.5);
+            for(int j = 0; j < usuariosCercanos.size(); ++j) {
+                if (usuariosCercanos[j]) {
+                    if (usuariosCercanos[j]->getPropietario().getEdad() > 60) {
+                        cont++;
+                        vecCentros[i]->anadirTarjetaLista(usuariosCercanos[j]);
+                        vecCentros[i]->administrarDosis(usuariosCercanos[j],
+                                                        usuariosCercanos[j]->getFabricanteRecomendado(1));
+                    }
+                }
+            }
+        }
+        cout << "Num. de pers: " << cont << endl;
+
+        cont = 0;
+        cout << "\n==== VACUNAR AL 90%" <<  endl;
+
+        for (int i = 0; i < vecAuxilia.size() * 0.91; ++i) {
+            TarjetaVacunacion *tarjVacunable = gestionVacunas.buscarTarjeta(vecAuxilia[i]);
+            if (tarjVacunable) {
+                cont++;
+                CentroVacunacion *centro = gestionVacunas.centroMasCercano(&tarjVacunable->getPropietario());
+                centro->anadirTarjetaLista(tarjVacunable);
+                nombreFabricante fab = tarjVacunable->getFabricanteRecomendado(1);
+                centro->administrarDosis(tarjVacunable, fab);
+            }
+        }
+
+        cout << "Num. de pers: " << cont << endl;
+
+        cout << "\n==== FIESTA" <<  endl;
+        vector<TarjetaVacunacion*> fiesta;
+        for (int i = 0; i < vecAuxilia.size(); ++i){
+            if(vecAuxilia[i]->getPropietario().getEdad() == 18){
+                TarjetaVacunacion* tarj = gestionVacunas.buscarTarjeta(vecAuxilia[i]);
+                if(tarj) {
+                    fiesta.push_back(tarj);
+                }
+            }
+        }
+
+        vector<string> avisados = gestionVacunas.avisoColetivo(fiesta,0.075);
+        cout << "USUARIOS AVISADOS POR FIESTA: " << avisados.size() << endl;
+        //vector<TarjetaVacunacion*> vecAuxilia2;
+        return 0;
+    } catch (std::exception &e) {
+        cout << e.what();
+        return 1;
     }
-
-    cout << "Vector de dosis: Tamaño lógico " << vectorDosis.getTamLogico() << endl;
-    cout << "Vector de defectuosas: Tamaño lógico " << dosisDefectuosas.getTamLogico() << endl;
-
-    for(int i = 0; i < dosisDefectuosas.getTamLogico(); ++i) {
-        std::cout << "Dosis defectuosa nº " << i + 1 << ": " << "\n* ID:\t" << dosisDefectuosas.leer(i)->GetId()
-                  << "\n* ID Lote:\t";
-    }
-
-    cout << "Tiempo lectura: " << ((clock() - t_ini) / (float)CLOCKS_PER_SEC) << " segs." << endl;
-    is.close();
-    
-  return 0;
-
-    }
-  
-
+}
